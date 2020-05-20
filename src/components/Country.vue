@@ -1,6 +1,8 @@
 <template>
 	<div class="row">
-		<div class="rowElement generic">{{country.name}}</div>
+		<div class="rowElement generic">{{country.name}}
+			<div class="subNumber">({{country.population}})</div>
+		</div>
 		<div class="rowElement active">{{country.active}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
