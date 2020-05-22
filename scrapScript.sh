@@ -23,7 +23,7 @@ i=0
 worldinfoStart='<td style="display:none;" data-continent=""></td>'
 table='<table id="main_table_countries_today"'
 tableEnd='<td><strong>Total:</strong></td'
-regex='\+?(\w+\s?\w*|\d*,?\d*,?\d*\s*)+</(a|td)>'
+regex='\+?(\w+\.?\s?/?\w*|\d*,?\d*,?\d*\s*)+</(a|td)>'
 
 while IFS= read -r line
 do
@@ -72,7 +72,7 @@ do
 done < "$wFile"
 #update database
 toEval='db.worldData.update({ name: "World" }, '$data');'
-mongo --eval "$toEval" world
+mongo --eval "$toEval" world >> dbWorld
 
 
 # Parse country info
@@ -83,13 +83,13 @@ declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deat
 while IFS= read -r line
 do
 	if [[ i -eq 1 ]]; then
-		name=line;
+		name=$line;
 	fi
 
 	if [[ i -eq 14 ]]; then
 		data+="${dataFields[$i]}$line\"}"
 		toEval='db.countryData.update({ name: "'$name'" }, '$data');'
-		mongo --eval "$toEval" world
+		mongo --eval "$toEval" world >> dbCounty
 
 		data=""
 		let "i=0"

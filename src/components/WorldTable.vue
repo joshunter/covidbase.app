@@ -3,21 +3,21 @@
 		<div class="title">Global Data</div>
 		<div class="top row">
 			<div class="rowElement active">Active
-					<div>{{worldInfo.active}}</div>
-				<div class="subNumber">{{worldInfo.newActive}}</div>
+					<div>{{worldData.active}}</div>
+				<div class="subNumber">{{worldData.newActive}}</div>
 			</div>
 			<div class="rowElement recovered">Recovered
-				<div>{{worldInfo.recovered}}</div>
+				<div>{{worldData.recovered}}</div>
 			</div>
 			<div class="rowElement critical">Critical
-				<div>{{worldInfo.critical}}</div>
+				<div>{{worldData.critical}}</div>
 			</div>
 			<div class="rowElement deaths">Deaths
-				<div>{{worldInfo.deaths}}</div>
-				<div class="subNumber">{{worldInfo.newDeaths}}</div>
+				<div>{{worldData.deaths}}</div>
+				<div class="subNumber">{{worldData.newDeaths}}</div>
 			</div>
 			<div class="rowElement">Total
-				<div>{{worldInfo.total}}</div>
+				<div>{{worldData.total}}</div>
 			</div>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 <script>
 export default {
 	name: "WorldTable",
-	props: ["worldInfo"]
+	props: ["worldData"]
 }
 </script>
 
