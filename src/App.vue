@@ -17,7 +17,7 @@ export default {
     WorldTable
   },
   data(){
-    return{
+    return {
       worldInfo: {
           rank: "0",
           name: "World",

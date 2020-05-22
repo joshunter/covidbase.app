@@ -13,6 +13,8 @@ wFile="worldInfo"
 wFile2="worldFinal"
 file="countryData"
 file2="cutData"
+data=""
+cData=""
 
 found=0
 done=0
@@ -55,38 +57,45 @@ rm countryData
 
 # Global information
 i=0
-declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"")
+declare -a dataFields=( "{rank: \"0" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"")
 
 while IFS= read -r line
 do
 	if [[ i -eq 9 ]]; then
-		echo "${dataFields[$i]}$line\"}" >> $wFile2
+		data+="${dataFields[$i]}$line\"}"
 		break
 	else
-		echo "${dataFields[$i]}$line\"," >> $wFile2
+		data+="${dataFields[$i]}$line\","
 		let "i=i+1"
 	fi
 
 done < "$wFile"
+#update database
+toEval='db.worldData.update({ name: "World" }, '$data');'
+mongo --eval "$toEval" world
 
 
-
-# Country Info
-
+# Parse country info
+data=""
 i=0
 declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"" "tests: \"" "testsPM: \"" "population: \"" "continent: \"")
 
 while IFS= read -r line
 do
+	if [[ i -eq 1 ]]; then
+		name=line;
+	fi
+
 	if [[ i -eq 14 ]]; then
-		echo "${dataFields[$i]}$line\"}," >> $file
+		data+="${dataFields[$i]}$line\"}"
+		toEval='db.countryData.update({ name: "'$name'" }, '$data');'
+		mongo --eval "$toEval" world
+
+		data=""
 		let "i=0"
 	else
-		echo "${dataFields[$i]}$line\"," >> $file
+		data+="${dataFields[$i]}$line\","
 		let "i=i+1"
 	fi
 
 done < "$file2"
-
-head -n -2 $file >> $file
-
