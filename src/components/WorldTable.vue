@@ -27,7 +27,30 @@
 <script>
 export default {
 	name: "WorldTable",
-	props: ["worldData"]
+	data(){
+		return {
+			// worldData: {} <-- fixes warning but doesn't update
+			worldData: this.fetchWorldData()
+		}
+	},
+	methods: {
+		fetchWorldData: function(){
+			fetch('http://192.168.1.2:5000/api/wData')
+			.then(response => { 
+				if(response.ok){
+					return response.json()    
+				} else {
+					alert("Server returned " + response.status + " : " + response.statusText);
+				}
+			})
+			.then(response => {
+				this.worldData = response[0]; 
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		}
+	}
 }
 </script>
 

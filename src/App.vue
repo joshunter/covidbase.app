@@ -2,8 +2,8 @@
   <div id="app" class="app">
     <Header/>
     <br>
-    <WorldTable v-bind:worldData="worldData"/>
-    <CountriesTable v-bind:countries="countryData"/>
+    <WorldTable/>
+    <CountriesTable/>
   </div>
 </template>
 
@@ -18,47 +18,6 @@ export default {
     Header,
     WorldTable,
     CountriesTable
-  },
-  data(){
-    return {
-      countryData: this.fetchCountryData(),
-      worldData: this.fetchWorldData()
-    }
-  },
-  methods: {
-    fetchWorldData: function(){
-      fetch('http://192.168.1.2:5000/api/wData')
-      .then(response => { 
-          if(response.ok){
-              return response.json()    
-          } else{
-              alert("Server returned " + response.status + " : " + response.statusText);
-          }                
-      })
-      .then(response => {
-          this.worldData = response[0]; 
-      })
-      .catch(err => {
-          console.log(err);
-      });
-    },
-    fetchCountryData(){
-      fetch('http://192.168.1.2:5000/api/data')
-      .then(response => { 
-          if(response.ok){
-              return response.json()    
-          } else{
-              alert("Server returned " + response.status + " : " + response.statusText);
-          }                
-      })
-      .then(response => {
-          this.countryData = response; 
-      })
-      .catch(err => {
-          console.log(err);
-      });
-    }
-
   }
 }
 </script>

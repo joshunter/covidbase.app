@@ -1,7 +1,9 @@
 <template>
 	<div class="row">
 		<div class="rowNumber">{{country.rank}}</div>
-		<div class="rowElement">{{country.name}}</div>
+		<div class="rowElement">{{country.name}}
+			<div class="subNumber">{{country.population}}</div>
+		</div>
 		<div class="rowElement active">{{country.active}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
@@ -41,7 +43,7 @@ export default {
 }
 .rowNumber {
 	display: inline-block;
-	width: 1%;
+	width: 2%;
 	padding-right: 1%;
 }
 .subNumber {

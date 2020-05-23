@@ -83,7 +83,14 @@ declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deat
 while IFS= read -r line
 do
 	if [[ i -eq 1 ]]; then
-		name=$line;
+		if [[ $line == 'union' ]]; then
+			line='Réunion'
+		fi
+		if [[ $line == 'ao' ]]; then
+			line='Curaçao'
+		fi
+
+		name=$line
 	fi
 
 	if [[ i -eq 14 ]]; then
