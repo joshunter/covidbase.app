@@ -16,8 +16,8 @@ export default {
 <style scoped>
 .menu {
 	background-color:  #1b1b1e;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .menu > .menuItem {

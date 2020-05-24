@@ -78,11 +78,16 @@ methods: {
 		let id = sortedBy.substring(0, sortedBy.length - 1);
 
 		let el = document.getElementById(id);
+		//replace arrows for current column.
+		el.style.fontWeight = "normal";
 		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+		// el.innerHTML +='&#8597;';
 
 		switch(type){
 			case "rank":
 				el = document.getElementById("rank");
+
+				el.style.fontWeight = "bold";
 
 				if(sortedBy=='rankA'){
 					el.innerHTML='#&#8593;'
@@ -101,6 +106,8 @@ methods: {
 				break;
 			case "name":
 				el = document.getElementById("name");
+
+				el.style.fontWeight = "bold";
 
 				if(sortedBy=='nameA'){
 					el.innerHTML='Country&#8593;'
@@ -129,6 +136,8 @@ methods: {
 			case "population":
 				el = document.getElementById("population");
 
+				el.style.fontWeight = "bold";
+
 				if(sortedBy=='populationD'){
 					el.innerHTML='Population&#8593;'
 				} else {
@@ -154,6 +163,8 @@ methods: {
 				break;
 			case "active":
 				el = document.getElementById("active");
+
+				el.style.fontWeight = "bold";
 
 				if(sortedBy=='activeD'){
 					el.innerHTML='Active&#8593;'
@@ -181,6 +192,8 @@ methods: {
 			case "recovered":
 				el = document.getElementById("recovered");
 
+				el.style.fontWeight = "bold";
+
 				if(sortedBy=='recoveredD'){
 					el.innerHTML='Recovered&#8593;'
 				} else {
@@ -206,6 +219,8 @@ methods: {
 				break;
 			case "critical":
 				el = document.getElementById("critical");
+
+				el.style.fontWeight = "bold";
 
 				if(sortedBy=='criticalD'){
 					el.innerHTML='Critical&#8593;'
@@ -233,6 +248,8 @@ methods: {
 			case "deaths":
 				el = document.getElementById("deaths");
 
+				el.style.fontWeight = "bold";
+
 				if(sortedBy=='deathsD'){
 					el.innerHTML='Deaths&#8593;'
 				} else {
@@ -259,6 +276,8 @@ methods: {
 			case "total":
 				el = document.getElementById("total");
 
+				el.style.fontWeight = "bold";
+
 				if(sortedBy=='totalD'){
 					el.innerHTML='Total&#8593;'
 				} else {
@@ -284,6 +303,8 @@ methods: {
 				break;
 			case "tests":
 				el = document.getElementById("tests");
+
+				el.style.fontWeight = "bold";
 
 				if(sortedBy=='testsD'){
 					el.innerHTML='Tests&#8593;'
@@ -318,8 +339,8 @@ methods: {
 table {
 	border-collapse: collapse;
 	text-align: center;
-    width:90%; 
-	margin: 5%;
+    width:90%;
+    margin-top: 2px;
     border-radius: 15px;
     background-color: #1b395d;
 	color: #d8dbe2;

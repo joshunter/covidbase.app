@@ -1,6 +1,6 @@
 <template>
 	<div class="worldTable">
-		<div class="title">Global Data</div>
+		<div class="title">Global Info</div>
 		<div class="top row">
 			<div class="rowElement active">Active
 					<div>{{worldData.active}}</div>
@@ -59,6 +59,7 @@ export default {
 
 .worldTable {
     width:90%;
+	margin-bottom: 3%;
     border-radius: 15px;
     background-color: #1b395d;
 	color: #d8dbe2;
