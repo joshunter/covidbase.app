@@ -1,5 +1,6 @@
 <template>
 	<table>
+		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="search($event)"/>
 		<div class="row">
 			<div class="rowRank">
 				<button id="rank" class="rowRankB" @click="sortBy('rank')">#
@@ -36,7 +37,11 @@
 				</button>
 			</div>
 		</div>
-		<div v-bind:key="country._id" v-for="country in countryData">
+		<!-- <div id="thisID">Hi</div> -->
+		<div v-bind:key="country._id+'global'" v-show="show=='Global Data'" v-for="country in countryData">
+			<CountryRow v-bind:country="country" />
+		</div>
+		<div v-bind:key="country._id" v-show="show==country.continent" v-for="country in countryData">
 			<CountryRow v-bind:country="country" />
 		</div>
 	</table>
@@ -44,14 +49,18 @@
 
 <script>
 import CountryRow from './CountryRow.vue';
+import RegionFilter from './layout/RegionFilter.vue';
+
 export default{
 name:"CountryTable",
 components: {
-	CountryRow
+	CountryRow,
+	RegionFilter
 },
 data(){
 	return {
 		countryData: this.fetchCountryData(),
+		show: 'Global Data'
 	};
 },
 methods: {
@@ -72,6 +81,13 @@ methods: {
 		.catch(err => {
 			console.log(err);
 		});
+	},
+	changeCont(continent) {
+		this.show=continent;
+	},
+	search(country) {
+		let el = document.getElementById("thisID");
+		el.innerHTML=country;
 	},
 	sortBy: function(type){
 		let sortedBy = sessionStorage.getItem('sortedBy');
