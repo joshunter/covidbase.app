@@ -1,6 +1,9 @@
 <template>
-	<table>
-		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="search($event)"/>
+	<div class="Datatable">
+	<transition name="fade">
+		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="searchCountry($event)"/>
+	</transition>
+	<transition name="fade">
 		<div class="row">
 			<div class="rowRank">
 				<button id="rank" class="rowRankB" @click="sortBy('rank')">#
@@ -37,14 +40,26 @@
 				</button>
 			</div>
 		</div>
-		<!-- <div id="thisID">Hi</div> -->
-		<div v-bind:key="country._id+'global'" v-show="show=='Global Data'" v-for="country in countryData">
-			<CountryRow v-bind:country="country" />
+	</transition>
+	<transition name="fade">
+		<div v-show="show=='Global Data'">
+			<div v-bind:key="country._id+'global'" v-for="country in countryData">
+					<CountryRow v-bind:country="country" />
+			</div>
 		</div>
-		<div v-bind:key="country._id" v-show="show==country.continent" v-for="country in countryData">
-			<CountryRow v-bind:country="country" />
+	</transition>
+
+		<div v-bind:key="country._id" v-for="country in countryData">
+		<transition name="fade">
+				<CountryRow v-show="show==country.continent" v-bind:country="country"/>
+		</transition>
 		</div>
-	</table>
+		<div v-bind:key="country._id+'search'" v-for="country in countryData">
+		<transition name="fade">
+			<CountryRow v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
+		</transition>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -60,7 +75,9 @@ components: {
 data(){
 	return {
 		countryData: this.fetchCountryData(),
-		show: 'Global Data'
+		show: 'Global Data',
+		searchReq: '',
+		currentCont: 'Global Data'
 	};
 },
 methods: {
@@ -74,9 +91,10 @@ methods: {
 			}                
 		})
 		.then(response => {
-			document.getElementById("rank").innerHTML='#&#8595;';
-			sessionStorage.setItem('sortedBy', 'rankA');
+			sessionStorage.setItem('sortedBy', 'rankD');
+			sessionStorage.setItem('prevShow', this.show);
 			this.countryData = response;
+			this.sortBy('rank');
 		})
 		.catch(err => {
 			console.log(err);
@@ -84,10 +102,24 @@ methods: {
 	},
 	changeCont(continent) {
 		this.show=continent;
+		var search = document.getElementById('searchBar'); 
+		search.value = '';
+		search.focus();
+		sessionStorage.setItem('prevShow', this.show);
 	},
-	search(country) {
-		let el = document.getElementById("thisID");
-		el.innerHTML=country;
+	searchCountry(country) {
+		if(this.show!='search'){
+			this.currentCont = this.show;
+			sessionStorage.setItem('prevShow', this.show);
+			this.show = 'search'; 
+		}
+
+		if(country=='') {
+			this.show=sessionStorage.getItem('prevShow');
+		}
+
+		this.searchReq = country.toLowerCase();
+
 	},
 	sortBy: function(type){
 		let sortedBy = sessionStorage.getItem('sortedBy');
@@ -97,7 +129,6 @@ methods: {
 		//replace arrows for current column.
 		el.style.fontWeight = "normal";
 		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
-		// el.innerHTML +='&#8597;';
 
 		switch(type){
 			case "rank":
@@ -346,13 +377,17 @@ methods: {
 				});
 				break;
 		}
+	},
+	created: function(){
+		this.sortBy("rank");
 	}
 }
 }
 </script>
 
 <style scoped>
-table {
+
+.Datatable {
 	border-collapse: collapse;
 	text-align: center;
     width:90%;
@@ -388,10 +423,12 @@ table {
     vertical-align: top;
 	width: 14%;
 }
+
 button:focus {
 	outline:0;
 }
-button.change:hover {
+button:hover {
+	text-decoration: underline;
 	cursor: pointer;
 }
 button:active {

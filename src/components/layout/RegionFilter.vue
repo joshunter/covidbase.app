@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<input class="searchBar" id="searchBar" placeholder="Search for Country">
+		<input class="searchBar" id="searchBar" v-model="searchRequest" placeholder="Search for Country">
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
 			<option value="Africa">Africa</option>
@@ -18,29 +18,23 @@
 
 export default {
 	name: "RegionFilter",
-	// data(){
-	// 	return {
-	// 		searchBar: document.getElementById('searchBar').value
-	// 	};
-	// },
+	data(){
+		return {
+			searchRequest: ''
+		};
+	},
 	methods: {
 		sendContChange() {
 			const sel = document.getElementById("continentSel");
 			const option = sel.options[sel.selectedIndex].value;
+			document.getElementById("searchBar").focus(); 
 			this.$emit('changeContinent',option);
-		},
-		sendSearch() {
-			// var search = document.getElementById("searchBar").value;
-			// this.$emit('searchCountry', search);
-			console.log(this.searchBar);
 		}
+	},
+	updated: function(){
+		this.$emit('searchCountry', this.searchRequest);
 	}
-	// watch: {
-	// 	searchBar : {
-	// 		handler: 'sendSearch',
-	// 		immediate: false
-	// 	}
-	// }
+
 }
 </script>
 
@@ -51,12 +45,13 @@ input.searchBar {
 	border: 1px solid #152b47;
 	border-radius: 15px;
 	text-align: left;
-	padding-left: 10px;
-	width: 38%;
+	padding-left: 12px;
+	margin-left: 4%;
+	width: 40%;
 }
 
 .continentSel {
-	width: 62%;
+	width: 50%;
 	position: relative;
 	border: none;
 	background-color:  #1b395d;

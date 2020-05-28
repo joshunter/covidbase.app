@@ -29,8 +29,7 @@ export default {
 	name: "WorldTable",
 	data(){
 		return {
-			// worldData: {} <-- fixes warning but doesn't update
-			worldData: this.fetchWorldData()
+			worldData: {}
 		}
 	},
 	methods: {
@@ -50,6 +49,9 @@ export default {
 				console.log(err);
 			});
 		}
+	},
+	created: function() {
+		this.worldData = this.fetchWorldData()
 	}
 }
 </script>

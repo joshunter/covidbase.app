@@ -2,23 +2,22 @@
   <div id="app" class="app">
     <Header/>
     <br>
-    Updated: dateUpdated();
-    <WorldTable/>
-    <CountriesTable/>
+    <transition name="fade">
+      <Homepage/>
+    </transition>
+
   </div>
 </template>
 
 <script>
 import Header from './components/layout/Header.vue';
-import WorldTable from './components/WorldTable.vue';
-import CountriesTable from './components/CountriesTable.vue';
+import Homepage from './components/Homepage.vue';
 
 export default {
   name: 'App',
   components: {
     Header,
-    WorldTable,
-    CountriesTable
+    Homepage
   }
 }
 </script>
@@ -39,13 +38,28 @@ export default {
 
 .app {;
   display: block;
-  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 30px;
   min-width: 350px;
-  padding-bottom: 100px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color:  #1b2e4b;
   color: #d8dbe2;
+}
+
+body {
+  background-color:  #1b2e4b;
+  color: #d8dbe2;
+}
+
+.fade-enter-active {
+  transition: opacity .6s;
+}
+.fade-leave-active {
+  transition: opacity .1s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 
 

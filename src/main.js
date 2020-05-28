@@ -1,12 +1,7 @@
-import '@babel/polyfill'
 import Vue from 'vue'
 import App from './App.vue'
-// var $  = reuqire( 'jquery' );
-// var dt = require( 'datatables.net' )();
 
-// Vue.use($)
-// Vue.use(dt)
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 new Vue({
 	render: h => h(App),

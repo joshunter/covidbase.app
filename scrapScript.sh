@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# On start script, cd {{projectname}} then
+# gnome-terminal -e "node server/index.js"
+# gnome-terminal -e "npm run serve"
+# 52.13.183.45
+# bash scrapScript; end of startscript
+
 rm worldometer.html
 rm countryData
 rm worldInfo
@@ -106,3 +112,8 @@ do
 	fi
 
 done < "$file2"
+
+
+rm cutData
+rm worldFinal
+rm worldometer.html
