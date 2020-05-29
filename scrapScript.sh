@@ -74,7 +74,7 @@ done < "$wFile"
 
 #update database for world
 # toEval='db.worldData.insert('$data');'
-toEval='db.worldData.update({ name: '$name' }, '$data');'
+toEval='db.worldData.update({ name: "'$name'" }, '$data');'
 # echo $toEval >> $wFile
 mongo --eval "$toEval" world >> dbWorld
 
