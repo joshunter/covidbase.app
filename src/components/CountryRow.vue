@@ -7,7 +7,9 @@
 		<div class="rowElement active">{{country.active}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
-		<div class="rowElement recovered">{{country.recovered}}</div>
+		<div class="rowElement recovered">{{country.recovered}}
+			<div class="subNumber">{{country.newRecovered}}</div>
+		</div>
 		<div class="rowElement critical">{{country.critical}}</div>
 		<div class="rowElement deaths">{{country.deaths}}
 			<div class="subNumber">{{country.newDeaths}}</div>

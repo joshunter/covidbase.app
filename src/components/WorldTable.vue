@@ -8,6 +8,7 @@
 			</div>
 			<div class="rowElement recovered">Recovered
 				<div>{{worldData.recovered}}</div>
+				<div class="subNumber">{{worldData.newRecovered}}</div>
 			</div>
 			<div class="rowElement critical">Critical
 				<div>{{worldData.critical}}</div>

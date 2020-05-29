@@ -9,14 +9,14 @@
 rm worldometer.html
 rm countryData
 rm worldInfo
-rm worldFinal
 rm cutData
+rm cutWorldInfo
 
 curl https://www.worldometers.info/coronavirus/ >> worldometer.html
 
 input="worldometer.html"
 wFile="worldInfo"
-wFile2="worldFinal"
+wFile2="cutWorldInfo"
 file="countryData"
 file2="cutData"
 data=""
@@ -43,7 +43,6 @@ do
 	if [[ $line =~ $worldinfoStart ]]; then
 		found=1
 	fi
-	# find country (case sensitive)
 	if [[ $line == *"All</td>"* ]]; then
 		found=2
 	fi
@@ -58,16 +57,18 @@ do
 	echo "${line//'</a>'/''}" >> $file2
 done < "$file"
 
-rm countryData
+# rm countryData
 # cut data is done
 
 # Global information
+tail -n +4 $wFile > $wFile2
+
 i=0
-declare -a dataFields=( "{rank: \"0" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"")
+declare -a dataFields=( "{rank: \"0" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "newRecovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"")
 
 while IFS= read -r line
 do
-	if [[ i -eq 9 ]]; then
+	if [[ i -eq 11 ]]; then
 		data+="${dataFields[$i]}$line\"}"
 		break
 	else
@@ -75,16 +76,19 @@ do
 		let "i=i+1"
 	fi
 
-done < "$wFile"
+done < "$wFile2"
 #update database
-toEval='db.worldData.update({ name: "World" }, '$data');'
+toEval='db.worldData.insert('$data');'
+# toEval='db.worldData.update({ name: "World" }, '$data');'
+# echo $toEval >> $wFile
 mongo --eval "$toEval" world >> dbWorld
 
+tail -n +4 $file2 > $file
 
 # Parse country info
 data=""
 i=0
-declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"" "tests: \"" "testsPM: \"" "population: \"" "continent: \"")
+declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "newRecovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"" "tests: \"" "testsPM: \"" "population: \"" "continent: \"" "casePP: \"")
 
 while IFS= read -r line
 do
@@ -99,9 +103,14 @@ do
 		name=$line
 	fi
 
-	if [[ i -eq 14 ]]; then
+	if [[ i -eq 16 ]]; then
 		data+="${dataFields[$i]}$line\"}"
-		toEval='db.countryData.update({ name: "'$name'" }, '$data');'
+
+		# toEval='db.countryData.update({ name: "'$name'" }, '$data');'
+		toEval='db.countryData.insert('$data');'
+
+		# echo $toEval >> $file2
+
 		mongo --eval "$toEval" world >> dbCounty
 
 		data=""
@@ -111,9 +120,10 @@ do
 		let "i=i+1"
 	fi
 
-done < "$file2"
+done < "$file"
 
 
-rm cutData
-rm worldFinal
 rm worldometer.html
+rm countryData
+rm worldInfo
+rm cutData
