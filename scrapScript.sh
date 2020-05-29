@@ -78,8 +78,8 @@ do
 
 done < "$wFile2"
 #update database
-toEval='db.worldData.insert('$data');'
-# toEval='db.worldData.update({ name: "World" }, '$data');'
+# toEval='db.worldData.insert('$data');'
+toEval='db.worldData.update({ name: "World" }, '$data');'
 # echo $toEval >> $wFile
 mongo --eval "$toEval" world >> dbWorld
 
@@ -106,9 +106,8 @@ do
 	if [[ i -eq 16 ]]; then
 		data+="${dataFields[$i]}$line\"}"
 
-		# toEval='db.countryData.update({ name: "'$name'" }, '$data');'
-		toEval='db.countryData.insert('$data');'
-
+		# toEval='db.countryData.insert('$data');'
+		toEval='db.countryData.update({ name: "'$name'" }, '$data');'
 		# echo $toEval >> $file2
 
 		mongo --eval "$toEval" world >> dbCounty
@@ -122,7 +121,8 @@ do
 
 done < "$file"
 
-
+rm dbCounty
+rm cutWorldInfo
 rm worldometer.html
 rm countryData
 rm worldInfo

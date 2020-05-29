@@ -82,7 +82,7 @@ data(){
 },
 methods: {
 	fetchCountryData(){
-		fetch('http://18.223.121.212::5000/api/data')
+		fetch('http://18.223.121.212:5000/api/data')
 		.then(response => { 
 			if(response.ok){
 				return response.json()

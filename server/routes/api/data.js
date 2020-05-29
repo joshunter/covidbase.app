@@ -23,7 +23,8 @@ async function loadPostsCollection() {
   const client = await mongodb.MongoClient.connect(
     'mongodb://localhost:27017',
     {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     }
   );
 

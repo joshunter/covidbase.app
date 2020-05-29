@@ -35,7 +35,7 @@ export default {
 	},
 	methods: {
 		fetchWorldData: function(){
-			fetch('http://18.223.121.212::5000/api/wData')
+			fetch('http://18.223.121.212:5000/api/wData')
 			.then(response => { 
 				if(response.ok){
 					return response.json()    
