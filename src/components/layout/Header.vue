@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="header">
-			<button class="Title">Website!</button>
+			<button class="Title">{site name}</button>
 			<button class="headerItem">About</button>
 			<!-- <div class="darkmode">
 				Dark mode

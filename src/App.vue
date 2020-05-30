@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="app">
     <Header/>
-    <br>
     <transition name="fade">
       <Homepage/>
     </transition>
@@ -40,7 +39,7 @@ export default {
   display: block;
   min-height: 100vh;
   padding-bottom: 30px;
-  min-width: 350px;
+  min-width: 320px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color:  #1b2e4b;

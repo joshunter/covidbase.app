@@ -1,7 +1,7 @@
 <template>
 	<div class="worldTable">
 		<div class="title">Global Info</div>
-		<div class="top row">
+		<div class="worldRow" id="worldRow">
 			<div class="rowElement active">Active
 					<div>{{worldData.active}}</div>
 				<div class="subNumber">{{worldData.newActive}}</div>
@@ -28,7 +28,7 @@
 <script>
 export default {
 	name: "WorldTable",
-	data(){
+	data() {
 		return {
 			worldData: {}
 		}
@@ -58,34 +58,37 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .worldTable {
     width:90%;
-	margin-bottom: 3%;
+	display: inline-block;
+	margin-top: 2%;
+	margin-bottom: 2%;
     border-radius: 15px;
     background-color: #1b395d;
 	color: #d8dbe2;
 }
 
-.row {
-	display: flex;
-    font-size: 80%;
+.worldRow {
+	width: 100%;
+	display: inline-block;
+    font-size: 100%;
     text-align: center;
     padding-bottom: 5px;
-    padding-left: 3.5%;
-    padding-right: 4%;
-    padding-top: 5px;
 }
 .title {
     text-align: center;
-	font-size: 125%;
+	font-size: 140%;
     padding-top: 5px;
 }
 .rowElement {
-	display: block;
     text-align: center;
-	width: 20%;
+	width: 16%;
+	margin-left: 2%;
+	margin-right: 2%;
+	vertical-align: top;
+	display: inline-block;
 }
 .subNumber {
 	font-size: 81%;
@@ -102,5 +105,10 @@ export default {
 .deaths {
 	color: #ff6575;
 }
-
+@media only screen and (max-width: 500px) {
+  .worldRow {
+    font-size: 75%;
+  }
+  .title{font-size: 105%;}
+}
 </style>

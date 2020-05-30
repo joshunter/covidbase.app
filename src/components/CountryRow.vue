@@ -1,6 +1,6 @@
 <template>
-	<div class="row">
-		<div class="rowNumber">{{country.rank}}</div>
+	<div class="row" id="row">
+		<div class="rowNumber offMobile">{{country.rank}}</div>
 		<div class="rowElement">{{country.name}}
 			<div class="subNumber">{{country.population}}</div>
 		</div>
@@ -15,41 +15,50 @@
 			<div class="subNumber">{{country.newDeaths}}</div>
 		</div>
 		<div class="rowElement">{{country.total}}</div>
-		<div class="rowElement">{{country.tests}}</div>
+		<div class="rowElement offMobile">{{country.tests}}</div>
 	</div>
 </template>
 
 <script>
 export default {
 	name: "CountryRow",
-	props: ["country"]
+	props: [
+		"country"
+	]
 }
 </script>
 
 
-<style scoped>
+<style>
+.offMobile{
+	display: inline-block;
+}
 .row {
-	display:inline-block;
 	width: 100%;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    text-align: center;
+    padding-top: 5px;
+	padding-bottom: 5px;
+	display: block;
     vertical-align: top;
-    font-size: 80%
+    font-size: 100%
 }
-.rowElement {
+.row > .rowElement {
+	vertical-align: top;
 	display: inline-block;
-    vertical-align: top;
-	width: 14%;
-	padding-left: 1%;
-}
-.rowNumber {
-	display: inline-block;
-	width: 2%;
-	padding-right: 1%;
+	width: calc(96%/7);
+	padding-top: 4px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 .subNumber {
 	font-size: 81%;
+}
+.row > .rowNumber {
+	vertical-align: top;
+	display: inline-block;
+	width: 3%;
+	padding-top: 4px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 .active {
 	color: #58A4B0;
@@ -63,5 +72,31 @@ export default {
 .deaths {
 	color: #ff6575;
 }
+/*Mobile Devices*/
+@media only screen and (max-width: 811px){
+	.row > .offMobile{
+		display: none;
+	}
+	.row > .rowElement{
+		width: calc(100%/6);
+	}
+}
+@media only screen and (max-width: 500px){
+	.row {
+		font-size: 75%;
+	}
 
+	.row > .rowElement{
+		padding-top: 2px;
+	}
+
+	.rowElement > .subNumber {
+		font-size: 69%;
+	}
+}
+@media only screen and (max-width: 370px){
+  .row {
+    font-size: 65%;
+  }
+}
 </style>

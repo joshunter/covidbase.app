@@ -1,5 +1,5 @@
 <template>
-	<div class="row">
+	<div class="FilterRow">
 		<input class="searchBar" id="searchBar" v-model="searchRequest" placeholder="Search for Country">
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
@@ -39,18 +39,31 @@ export default {
 </script>
 
 <style>
+.FilterRow {
+	width: 100%;
+	display: inline-block;
+	padding-top: 1%;
+}
+
+
 input.searchBar {
+	font-size: 100%;
 	background-color:  #1b395d;
 	color: #d8dbe2;
 	border: 1px solid #152b47;
 	border-radius: 15px;
 	text-align: left;
+	height: 100%;
 	padding-left: 12px;
+	padding-top: 7px;
+	padding-bottom: 7px;
 	margin-left: 4%;
 	width: 40%;
+	margin-right: 2%;
 }
 
 .continentSel {
+	font-size: 100%;
 	width: 50%;
 	position: relative;
 	border: none;
@@ -66,8 +79,6 @@ input.searchBar {
 	padding: 0.5em 3.5em 0.5em 1em;
 
 	/* reset */
-
-	margin: 0;      
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -117,5 +128,16 @@ select:hover {
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #d8dbe2;
+}
+
+
+@media only screen and (max-width: 500px){
+	input.searchBar {
+		padding-left: 6px;
+		font-size: 75%;
+	}
+	.continentSel {
+		font-size: 75%;
+	}
 }
 </style>

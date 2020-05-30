@@ -5,14 +5,14 @@
 	</transition>
 	<transition name="fade">
 		<div class="row">
-			<div class="rowRank">
+			<div class="rowNumber offMobile">
 				<button id="rank" class="rowRankB" @click="sortBy('rank')">#
 				</button>
 			</div>
 			<div class="rowElement">
 				<button id="name" class="country" @click="sortBy('name')">Country
 				</button>
-				<button id="population" class="subElement" @click="sortBy('population')">Population
+				<button id="population" class="subNumber" @click="sortBy('population')">Population
 				</button>
 			</div>
 			<div class="rowElement">
@@ -35,7 +35,7 @@
 				<button id="total" @click="sortBy('total')">Total
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement offMobile">
 				<button id="tests" @click="sortBy('tests')">Tests
 				</button>
 			</div>
@@ -104,7 +104,8 @@ methods: {
 		this.show=continent;
 		var search = document.getElementById('searchBar'); 
 		search.value = '';
-		search.focus();
+		document.getElementById('continentSel').blur();
+		document.getElementById('name').focus();
 		sessionStorage.setItem('prevShow', this.show);
 	},
 	searchCountry(country) {
@@ -386,7 +387,6 @@ methods: {
 </script>
 
 <style scoped>
-
 .Datatable {
 	border-collapse: collapse;
 	text-align: center;
@@ -396,6 +396,7 @@ methods: {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
+
 .active {
 	color: #58A4B0;
 }
@@ -408,20 +409,9 @@ methods: {
 .deaths {
 	color: #ff6575;
 }
-.subElement {
-	font-size: 81%;
-}
-.rowRank {
-	padding-top: 1%;
-	width: 3%;
-    vertical-align: top;
-}
 
-.rowElement {
-	padding-top: 1%;
-	display: inline-block;
-    vertical-align: top;
-	width: 14%;
+button.subNumber{
+	font-size: 81%;
 }
 
 button:focus {
@@ -436,6 +426,7 @@ button:active {
 	border: none;
 }
 button {
+	font-size: 100%;
 	border: none;
 	border-collapse: collapse;
 	display: inline-block;
@@ -445,4 +436,5 @@ button {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
+
 </style>
