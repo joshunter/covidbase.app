@@ -1,6 +1,6 @@
 <template>
 	<div class="row" id="row">
-		<div class="rowNumber offMobile">{{country.rank}}</div>
+		<div class="rowNumber expend1">{{country.rank}}</div>
 		<div class="rowElement">{{country.name}}
 			<div class="subNumber">{{country.population}}</div>
 		</div>
@@ -14,8 +14,11 @@
 		<div class="rowElement deaths">{{country.deaths}}
 			<div class="subNumber">{{country.newDeaths}}</div>
 		</div>
+		<div class="rowElement deaths expend4">{{country.deathsPM}}</div>
 		<div class="rowElement">{{country.total}}</div>
-		<div class="rowElement offMobile">{{country.tests}}</div>
+		<div class="rowElement expend2">{{country.casesPM}}</div>
+		<div class="rowElement tests expend1">{{country.tests}}</div>
+		<div class="rowElement tests expend3">{{country.testsPM}}</div>
 	</div>
 </template>
 
@@ -30,8 +33,17 @@ export default {
 
 
 <style>
-.offMobile{
-	display: inline-block;
+.expend4{
+	display: visible;
+}
+.expend3{
+	display: visible;
+}
+.expend2{
+	display: visible;
+}
+.expend1{
+	display: visible;
 }
 .row {
 	width: 100%;
@@ -44,7 +56,7 @@ export default {
 .row > .rowElement {
 	vertical-align: top;
 	display: inline-block;
-	width: calc(96%/7);
+	width: calc(96%/10);
 	padding-top: 4px;
 	padding-left: 3px;
 	padding-right: 3px;
@@ -72,9 +84,40 @@ export default {
 .deaths {
 	color: #ff6575;
 }
-/*Mobile Devices*/
+.tests {
+	color: #2fc3da;
+}
+/*smaller screens*/
+@media only screen and (max-width: 1200px){
+	.row > .expend4{
+		display: none;
+	}
+	.row > .rowElement{
+		width: calc(97%/9);
+	}
+}
+
+@media only screen and (max-width: 1100px){
+	.row > .expend3{
+		display: none;
+	}
+	.row > .rowElement{
+		width: calc(97%/8);
+	}
+}
+
+
+@media only screen and (max-width: 1000px){
+	.row > .expend2{
+		display: none;
+	}
+	.row > .rowElement{
+		width: calc(97%/7);
+	}
+}
+
 @media only screen and (max-width: 811px){
-	.row > .offMobile{
+	.row > .expend1{
 		display: none;
 	}
 	.row > .rowElement{

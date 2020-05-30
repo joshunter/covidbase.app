@@ -5,7 +5,7 @@
 	</transition>
 	<transition name="fade">
 		<div class="row">
-			<div class="rowNumber offMobile">
+			<div class="rowNumber expend1">
 				<button id="rank" class="rowRankB" @click="sortBy('rank')">#
 				</button>
 			</div>
@@ -31,12 +31,24 @@
 				<button id="deaths" class="deaths" @click="sortBy('deaths')">Deaths
 				</button>
 			</div>
-			<div class="rowElement">
-				<button id="total" @click="sortBy('total')">Total
+			<div class="rowElement expend4">
+				<button id="deathsPM" class="deaths" @click="sortBy('deathsPM')">Deaths/1M
 				</button>
 			</div>
-			<div class="rowElement offMobile">
-				<button id="tests" @click="sortBy('tests')">Tests
+			<div class="rowElement">
+				<button id="total" @click="sortBy('total')">Total Cases
+				</button>
+			</div>
+			<div class="rowElement expend2">
+				<button id="casesPM" @click="sortBy('casesPM')">Cases/1M
+				</button>
+			</div>
+			<div class="rowElement tests expend1">
+				<button id="tests" class="tests" @click="sortBy('tests')">Tests
+				</button>
+			</div>
+			<div class="rowElement expend3">
+				<button id="testsPM" class="tests" @click="sortBy('testsPM')">Tests/1M
 				</button>
 			</div>
 		</div>
@@ -193,12 +205,12 @@ methods: {
 				}
 
 				this.countryData.sort(function (a, b) {
-					var num1 = parseInt(a.population.replace(/,/g,''));
-					var num2 = parseInt(b.population.replace(/,/g,''))
+					var num1 = parseInt(a.population.replace(/\D/g,''));
+					var num2 = parseInt(b.population.replace(/\D/g,''));
 
-					if(num1=='')
+					if(num1=='' || isNaN(num1))
 						num1=0;
-					if(num2=='')
+					if(num2=='' || isNaN(num2))
 						num2=0;
 
 					if(sortedBy=='populationD'){
@@ -278,7 +290,7 @@ methods: {
 
 				this.countryData.sort(function (a, b) {
 					var num1 = parseInt(a.critical.replace(/,/g,''));
-					var num2 = parseInt(b.critical.replace(/,/g,''))
+					var num2 = parseInt(b.critical.replace(/,/g,''));
 
 					if(num1=='' || isNaN(num1))
 						num1=0;
@@ -306,7 +318,7 @@ methods: {
 
 				this.countryData.sort(function (a, b) {
 					var num1 = parseInt(a.deaths.replace(/,/g,''));
-					var num2 = parseInt(b.deaths.replace(/,/g,''))
+					var num2 = parseInt(b.deaths.replace(/,/g,''));
 
 					if(num1=='' || isNaN(num1))
 						num1=0;
@@ -321,15 +333,43 @@ methods: {
 					return num2 - num1;
 				});
 				break;
+			case "deathsPM":
+				el = document.getElementById("deathsPM");
+
+				el.style.fontWeight = "bold";
+
+				if(sortedBy=='deathsPMD'){
+					el.innerHTML='Deaths/1M&#8593;'
+				} else {
+					el.innerHTML='Deaths/1M&#8595;'
+				}
+
+				this.countryData.sort(function (a, b) {
+					var num1 = parseFloat(a.deathsPM.replace(/[^\d.-]/g,''));
+					var num2 = parseFloat(b.deathsPM.replace(/[^\d.-]/g,''));
+
+					if(num1=='' || isNaN(num1))
+						num1=0;
+					if(num2=='' || isNaN(num2))
+						num2=0;
+
+					if(sortedBy=='deathsPMD'){
+						sessionStorage.setItem('sortedBy', 'deathsPMA');
+						return num1 - num2;
+					}
+					sessionStorage.setItem('sortedBy', 'deathsPMD');
+					return num2 - num1;
+				});
+				break;
 			case "total":
 				el = document.getElementById("total");
 
 				el.style.fontWeight = "bold";
 
 				if(sortedBy=='totalD'){
-					el.innerHTML='Total&#8593;'
+					el.innerHTML='Total Cases&#8593;'
 				} else {
-					el.innerHTML='Total&#8595;'
+					el.innerHTML='Total Cases&#8595;'
 				}
 
 				this.countryData.sort(function (a, b) {
@@ -346,6 +386,34 @@ methods: {
 						return num1 - num2;
 					}
 					sessionStorage.setItem('sortedBy', 'totalD');
+					return num2 - num1;
+				});
+				break;
+			case "casesPM":
+				el = document.getElementById("casesPM");
+
+				el.style.fontWeight = "bold";
+
+				if(sortedBy=='casesPMD'){
+					el.innerHTML='Cases/1M&#8593;'
+				} else {
+					el.innerHTML='Cases/1M&#8595;'
+				}
+
+				this.countryData.sort(function (a, b) {
+					var num1 = parseFloat(a.casesPM.replace(/,/g,''));
+					var num2 = parseFloat(b.casesPM.replace(/,/g,''))
+
+					if(num1=='' || isNaN(num1))
+						num1=0;
+					if(num2=='' || isNaN(num2))
+						num2=0;
+
+					if(sortedBy=='casesPMD'){
+						sessionStorage.setItem('sortedBy', 'casesPMA');
+						return num1 - num2;
+					}
+					sessionStorage.setItem('sortedBy', 'casesPMD');
 					return num2 - num1;
 				});
 				break;
@@ -374,6 +442,34 @@ methods: {
 						return num1 - num2;
 					}
 					sessionStorage.setItem('sortedBy', 'testsD');
+					return num2 - num1;
+				});
+				break;
+			case "testsPM":
+				el = document.getElementById("testsPM");
+
+				el.style.fontWeight = "bold";
+
+				if(sortedBy=='testsPMD'){
+					el.innerHTML='Tests/1M&#8593;'
+				} else {
+					el.innerHTML='Tests/1M&#8595;'
+				}
+
+				this.countryData.sort(function (a, b) {
+					var num1 = parseFloat(a.testsPM.replace(/,/g,''));
+					var num2 = parseFloat(b.testsPM.replace(/,/g,''))
+
+					if(num1=='' || isNaN(num1))
+						num1=0;
+					if(num2=='' || isNaN(num2))
+						num2=0;
+
+					if(sortedBy=='testsPMD'){
+						sessionStorage.setItem('sortedBy', 'testsPMA');
+						return num1 - num2;
+					}
+					sessionStorage.setItem('sortedBy', 'testsPMD');
 					return num2 - num1;
 				});
 				break;
@@ -409,7 +505,9 @@ methods: {
 .deaths {
 	color: #ff6575;
 }
-
+.tests {
+	color: #2fc3da;
+}
 button.subNumber{
 	font-size: 81%;
 }

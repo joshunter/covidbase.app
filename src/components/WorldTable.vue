@@ -17,8 +17,14 @@
 				<div>{{worldData.deaths}}</div>
 				<div class="subNumber">{{worldData.newDeaths}}</div>
 			</div>
-			<div class="rowElement">Total
+<!-- 			<div class="rowElement deaths expend2">Deaths/1M
+				<div>{{worldData.deathsPM}}</div>
+			</div> -->
+			<div class="rowElement">Total Cases
 				<div>{{worldData.total}}</div>
+			</div>
+			<div class="rowElement expend1">Cases/1M
+				<div>{{worldData.casesPM}}</div>
 			</div>
 		</div>
 	</div>
@@ -84,9 +90,9 @@ export default {
 }
 .rowElement {
     text-align: center;
-	width: 16%;
-	margin-left: 2%;
-	margin-right: 2%;
+	width: calc(100%/6);
+	padding-left: 2%;
+	padding-right: 2%;
 	vertical-align: top;
 	display: inline-block;
 }
@@ -105,6 +111,15 @@ export default {
 .deaths {
 	color: #ff6575;
 }
+@media only screen and (max-width: 811px){
+	.worldRow > .expend1{
+		display: none;
+	}
+	.worldRow > .rowElement{
+		width: calc(100%/5);
+	}
+}
+
 @media only screen and (max-width: 500px) {
   .worldRow {
     font-size: 75%;
