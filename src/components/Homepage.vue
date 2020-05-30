@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<WorldTable/>
-		<CountriesTable/>
+		<WorldTable v-bind:worldData = "worldData"/>
+		<CountriesTable v-bind:countryData = "countryData"/>
 	</div>
 </template>
 
@@ -10,12 +10,16 @@ import WorldTable from './WorldTable.vue';
 import CountriesTable from './CountriesTable.vue';
 
 export default {
-  name: 'Homepage',
-  components: {
-    WorldTable,
-    CountriesTable
-  }
-}
+	name: 'Homepage',
+	props : [
+		"countryData",
+		"worldData"
+	],
+	components: {
+		WorldTable,
+		CountriesTable
+	}
+	}
 </script>
 
 

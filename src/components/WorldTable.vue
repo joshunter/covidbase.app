@@ -34,32 +34,7 @@
 <script>
 export default {
 	name: "WorldTable",
-	data() {
-		return {
-			worldData: {}
-		}
-	},
-	methods: {
-		fetchWorldData: function(){
-			fetch('http://18.223.121.212:5000/api/wData')
-			.then(response => { 
-				if(response.ok){
-					return response.json()    
-				} else {
-					alert("Server returned " + response.status + " : " + response.statusText);
-				}
-			})
-			.then(response => {
-				this.worldData = response[0]; 
-			})
-			.catch(err => {
-				console.log(err);
-			});
-		}
-	},
-	created: function() {
-		this.worldData = this.fetchWorldData()
-	}
+	props: [ "worldData" ]
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <Header/>
     <transition name="fade">
-      <Homepage/>
+      <Homepage v-bind:countryData="countryData" v-bind:worldData="worldData"/>
     </transition>
 
   </div>
@@ -17,6 +17,50 @@ export default {
   components: {
     Header,
     Homepage
+  },
+  data(){
+    return {
+      countryData: this.fetchCountryData(),
+      worldData: this.fetchWorldData()
+    }
+  },
+  methods :  {
+    fetchCountryData(){
+      fetch('http://18.223.121.212:5000/api/data')
+      .then(response => { 
+        if(response.ok){
+          return response.json()
+        } else {
+          alert("Server returned " + response.status + " : " + response.statusText);
+        }                
+      })
+      .then(response => {
+        sessionStorage.setItem('sortedBy', 'rankD');
+        sessionStorage.setItem('prevShow', this.show);
+        this.countryData = response;
+        this.sortBy('rank');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
+    fetchWorldData: function(){
+      fetch('http://18.223.121.212:5000/api/wData')
+      .then(response => { 
+        if(response.ok){
+          return response.json()    
+        } else {
+          alert("Server returned " + response.status + " : " + response.statusText);
+        }
+      })
+      .then(response => {
+        this.worldData = response[0]; 
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+
   }
 }
 </script>

@@ -84,40 +84,28 @@ components: {
 	CountryRow,
 	RegionFilter
 },
+props : [ "countryData"],
 data(){
 	return {
-		countryData: this.fetchCountryData(),
 		show: 'Global Data',
 		searchReq: '',
 		currentCont: 'Global Data'
 	};
 },
 methods: {
-	fetchCountryData(){
-		fetch('http://18.223.121.212:5000/api/data')
-		.then(response => { 
-			if(response.ok){
-				return response.json()
-			} else {
-				alert("Server returned " + response.status + " : " + response.statusText);
-			}                
-		})
-		.then(response => {
-			sessionStorage.setItem('sortedBy', 'rankD');
-			sessionStorage.setItem('prevShow', this.show);
-			this.countryData = response;
-			this.sortBy('rank');
-		})
-		.catch(err => {
-			console.log(err);
-		});
-	},
 	changeCont(continent) {
 		this.show=continent;
+		// Remove content of searchBar
 		var search = document.getElementById('searchBar'); 
 		search.value = '';
+
 		document.getElementById('continentSel').blur();
-		document.getElementById('name').focus();
+
+		// Highlight current sorted by
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		sortedBy = sortedBy.substring(0,sortedBy.length-1);
+		document.getElementById(sortedBy).focus();
+
 		sessionStorage.setItem('prevShow', this.show);
 	},
 	searchCountry(country) {
