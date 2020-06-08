@@ -1,0 +1,1 @@
+*/10 * * * * bash ~/db-files/scripts/scrape-script.sh
