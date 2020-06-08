@@ -53,7 +53,7 @@
 			</div>
 		</div>
 	</transition>
-	<transition name="fade">
+	<transition name="fade" mode="out-in">
 		<div v-show="show=='Global Data'">
 			<div v-bind:key="country._id+'global'" v-for="country in countryData">
 					<CountryRow v-bind:country="country" />
@@ -62,12 +62,12 @@
 	</transition>
 
 		<div v-bind:key="country._id" v-for="country in countryData">
-		<transition name="fade">
+		<transition name="fade" mode="out-in">
 				<CountryRow v-show="show==country.continent" v-bind:country="country"/>
 		</transition>
 		</div>
 		<div v-bind:key="country._id+'search'" v-for="country in countryData">
-		<transition name="fade">
+		<transition name="fade" mode="out-in">
 			<CountryRow v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
 		</transition>
 		</div>

@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="header">
-			<button class="Title">{site name}</button>
+			<button class="Title">CovidBase</button>
 			<button class="headerItem">About</button>
 			<!-- <div class="darkmode">
 				Dark mode

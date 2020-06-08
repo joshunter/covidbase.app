@@ -2,8 +2,11 @@
   <div id="app" class="app">
     <Header/>
     <transition name="fade">
-      <Homepage v-bind:countryData="countryData" v-bind:worldData="worldData"/>
+      <router-link to="About">About</router-link>
+      <router-link to="Homepage">Homepage</router-link>
+      <router-view/>
     </transition>
+    <Homepage v-bind:countryData="countryData" v-bind:worldData="worldData"/>
 
   </div>
 </template>
@@ -96,10 +99,10 @@ body {
 }
 
 .fade-enter-active {
-  transition: opacity .6s;
+  transition: opacity 0.6s;
 }
 .fade-leave-active {
-  transition: opacity .1s
+  transition: opacity 0.1s;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
