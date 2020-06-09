@@ -1,31 +1,35 @@
 #!/bin/bash
 
+# Start clean
 rm worldometer.html
 rm countryData
 rm worldInfo
 rm cutData
 rm cutWorldInfo
 
-
-mongo --eval "db.dropDatabase();" world
-
+# Pull the site with new data
 curl https://www.worldometers.info/coronavirus/ >> worldometer.html
 
+# Files used to hold data temporarily
 input="worldometer.html"
 wFile="worldInfo"
 wFile2="cutWorldInfo"
 file="countryData"
 file2="cutData"
+
 data=""
 cData=""
 
 found=0
 done=0
-
 i=0
+
+# Keys that let me know when to start/stop saving data
 worldinfoStart='<td style="display:none;" data-continent=""></td>'
 table='<table id="main_table_countries_today"'
 tableEnd='<td><strong>Total:</strong></td'
+
+# Regular Expression to grab data
 regex='\+?(\w+\.?\s?/?\w*|\d*,?\d*,?\d*\s*)+</(a|td)>'
 
 while IFS= read -r line
@@ -54,7 +58,9 @@ do
 	echo "${line//'</a>'/''}" >> $file2
 done < "$file"
 
-# Global information
+# Data is now cut into a format to package.
+
+# Start parsing global information.
 tail -n +4 $wFile > $wFile2
 
 i=0
@@ -77,7 +83,7 @@ do
 done < "$wFile2"
 
 # Update database
-toEval='db.worldData.update({ name: "World" }, '$data');'
+toEval='db.worldData.update({ name: "World" }, '$data',{upsert: true});'
 
 # echo $toEval >> $wFile
 
@@ -106,8 +112,7 @@ do
 	if [[ i -eq 16 ]]; then
 		data+="${dataFields[$i]}$line\"}"
 
-		# toEval='db.countryData.insert('$data');'
-		toEval='db.countryData.update({ name: "'$name'" }, '$data');'
+		toEval='db.countryData.update({ name: "'$name'" }, '$data',{upsert: true});'
 		# echo $toEval >> $file2
 
 		mongo --eval "$toEval" world >> dbCounty
