@@ -126,10 +126,16 @@ do
 
 done < "$file"
 
+# Remove ships
+toEval='db.countryData.remove({ name: "" });'
+mongo --eval "$toEval" world >> dbCounty
+
+
 # Clean up
-rm dbCounty
 rm cutWorldInfo
 rm worldometer.html
 rm countryData
 rm worldInfo
 rm cutData
+rm dbCounty
+rm dbWorld
