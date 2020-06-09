@@ -4,6 +4,7 @@
 		<div class="rowElement">{{country.name}}
 			<div class="subNumber">{{country.population}}</div>
 		</div>
+		<div class="rowElement">{{country.total}}</div>
 		<div class="rowElement active">{{country.active}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
@@ -14,11 +15,10 @@
 		<div class="rowElement deaths">{{country.deaths}}
 			<div class="subNumber">{{country.newDeaths}}</div>
 		</div>
-		<div class="rowElement deaths expend4">{{country.deathsPM}}</div>
-		<div class="rowElement">{{country.total}}</div>
-		<div class="rowElement expend2">{{country.casesPM}}</div>
 		<div class="rowElement tests expend1">{{country.tests}}</div>
-		<div class="rowElement tests expend3">{{country.testsPM}}</div>
+		<div class="rowElement expend2">{{country.casesPM}}</div>
+		<div class="rowElement deaths expend3">{{country.deathsPM}}</div>
+		<div class="rowElement tests expend4">{{country.testsPM}}</div>
 	</div>
 </template>
 
@@ -30,7 +30,6 @@ export default {
 	]
 }
 </script>
-
 
 <style>
 .expend4{

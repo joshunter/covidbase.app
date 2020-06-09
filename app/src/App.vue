@@ -1,13 +1,10 @@
 <template>
   <div id="app" class="app">
     <Header/>
-    <transition name="fade">
-      <router-link to="About">About</router-link>
-      <router-link to="Homepage">Homepage</router-link>
-      <router-view/>
-    </transition>
-    <Homepage v-bind:countryData="countryData" v-bind:worldData="worldData"/>
-
+<!--     <transition name="fade">
+      <router-view></router-view>
+    </transition> -->
+    <Homepage/>
   </div>
 </template>
 
@@ -20,50 +17,6 @@ export default {
   components: {
     Header,
     Homepage
-  },
-  data(){
-    return {
-      countryData: this.fetchCountryData(),
-      worldData: this.fetchWorldData()
-    }
-  },
-  methods :  {
-    fetchCountryData(){
-      fetch('http://18.223.121.212:5000/api/data')
-      .then(response => { 
-        if(response.ok){
-          return response.json()
-        } else {
-          alert("Server returned " + response.status + " : " + response.statusText);
-        }                
-      })
-      .then(response => {
-        sessionStorage.setItem('sortedBy', 'rankD');
-        sessionStorage.setItem('prevShow', this.show);
-        this.countryData = response;
-        this.sortBy('rank');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    },
-    fetchWorldData: function(){
-      fetch('http://18.223.121.212:5000/api/wData')
-      .then(response => { 
-        if(response.ok){
-          return response.json()    
-        } else {
-          alert("Server returned " + response.status + " : " + response.statusText);
-        }
-      })
-      .then(response => {
-        this.worldData = response[0]; 
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-
   }
 }
 </script>
@@ -99,10 +52,10 @@ body {
 }
 
 .fade-enter-active {
-  transition: opacity 0.6s;
+  transition: opacity .75s;
 }
 .fade-leave-active {
-  transition: opacity 0.1s;
+  transition: opacity 0.25s;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;

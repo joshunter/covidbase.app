@@ -16,6 +16,10 @@
 				</button>
 			</div>
 			<div class="rowElement">
+				<button id="total" @click="sortBy('total')">Total Cases
+				</button>
+			</div>
+			<div class="rowElement">
 				<button id="active" class="active" @click="sortBy('active')">Active
 				</button>
 			</div>
@@ -31,45 +35,40 @@
 				<button id="deaths" class="deaths" @click="sortBy('deaths')">Deaths
 				</button>
 			</div>
-			<div class="rowElement expend4">
-				<button id="deathsPM" class="deaths" @click="sortBy('deathsPM')">Deaths/1M
-				</button>
-			</div>
-			<div class="rowElement">
-				<button id="total" @click="sortBy('total')">Total Cases
+			<div class="rowElement tests expend1">
+				<button id="tests" class="tests" @click="sortBy('tests')">Tests
 				</button>
 			</div>
 			<div class="rowElement expend2">
 				<button id="casesPM" @click="sortBy('casesPM')">Cases/1M
 				</button>
 			</div>
-			<div class="rowElement tests expend1">
-				<button id="tests" class="tests" @click="sortBy('tests')">Tests
+			<div class="rowElement expend3">
+				<button id="deathsPM" class="deaths" @click="sortBy('deathsPM')">Deaths/1M
 				</button>
 			</div>
-			<div class="rowElement expend3">
+			<div class="rowElement expend4">
 				<button id="testsPM" class="tests" @click="sortBy('testsPM')">Tests/1M
 				</button>
 			</div>
 		</div>
 	</transition>
-	<transition name="fade" mode="out-in">
+	<transition name="fade">
 		<div v-show="show=='Global Data'">
 			<div v-bind:key="country._id+'global'" v-for="country in countryData">
 					<CountryRow v-bind:country="country" />
 			</div>
 		</div>
 	</transition>
-
-		<div v-bind:key="country._id" v-for="country in countryData">
-		<transition name="fade" mode="out-in">
-				<CountryRow v-show="show==country.continent" v-bind:country="country"/>
-		</transition>
-		</div>
-		<div v-bind:key="country._id+'search'" v-for="country in countryData">
-		<transition name="fade" mode="out-in">
-			<CountryRow v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
-		</transition>
+	<div v-bind:key="country._id" v-for="country in countryData">
+	<transition name="fade">
+			<CountryRow v-show="show==country.continent" v-bind:country="country"/>
+	</transition>
+	</div>
+	<div v-bind:key="country._id+'search'" v-for="country in countryData">
+	<transition name="fade">
+		<CountryRow v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
+	</transition>
 		</div>
 	</div>
 </template>
@@ -84,7 +83,7 @@ components: {
 	CountryRow,
 	RegionFilter
 },
-props : [ "countryData"],
+props : ["countryData"],
 data(){
 	return {
 		show: 'Global Data',
@@ -122,7 +121,7 @@ methods: {
 		this.searchReq = country.toLowerCase();
 
 	},
-	sortBy: function(type){
+	sortBy(type){
 		let sortedBy = sessionStorage.getItem('sortedBy');
 		let id = sortedBy.substring(0, sortedBy.length - 1);
 
@@ -464,13 +463,24 @@ methods: {
 		}
 	},
 	created: function(){
-		this.sortBy("rank");
+        sessionStorage.setItem('prevShow', this.show);
+		this.sortBy("total");
 	}
 }
 }
 </script>
 
 <style scoped>
+.fade-enter-active {
+  transition: opacity 0.6s;
+}
+.fade-leave-active {
+  transition: opacity 0.1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .Datatable {
 	border-collapse: collapse;
 	text-align: center;

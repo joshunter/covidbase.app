@@ -2,6 +2,9 @@
 	<div class="worldTable">
 		<div class="title">Global Info</div>
 		<div class="worldRow" id="worldRow">
+			<div class="rowElement">Total Cases
+				<div>{{worldData.total}}</div>
+			</div>
 			<div class="rowElement active">Active
 					<div>{{worldData.active}}</div>
 				<div class="subNumber">{{worldData.newActive}}</div>
@@ -17,14 +20,11 @@
 				<div>{{worldData.deaths}}</div>
 				<div class="subNumber">{{worldData.newDeaths}}</div>
 			</div>
-<!-- 			<div class="rowElement deaths expend2">Deaths/1M
-				<div>{{worldData.deathsPM}}</div>
-			</div> -->
-			<div class="rowElement">Total Cases
-				<div>{{worldData.total}}</div>
-			</div>
 			<div class="rowElement expend1">Cases/1M
 				<div>{{worldData.casesPM}}</div>
+			</div>
+			<div class="rowElement deaths expend2">Deaths/1M
+				<div>{{worldData.deathsPM}}</div>
 			</div>
 		</div>
 	</div>
@@ -34,7 +34,29 @@
 <script>
 export default {
 	name: "WorldTable",
-	props: [ "worldData" ]
+	data(){
+		return{
+			worldData: this.fetchWorldData()
+		}
+	},
+	methods:{
+		fetchWorldData: function(){
+				fetch('https://db.covidbase.app/api/wData')
+					.then(response => { 
+						if(response.ok){
+							return response.json()    
+						} else {
+							alert("Server returned " + response.status + " : " + response.statusText);
+						}
+					})
+					.then(response => {
+						this.worldData = response[0]; 
+					})
+					.catch(err => {
+						console.log(err);
+					});
+		}
+	}
 }
 </script>
 
@@ -65,7 +87,7 @@ export default {
 }
 .rowElement {
     text-align: center;
-	width: calc(100%/6);
+	width: calc(100%/7);
 	padding-left: 2%;
 	padding-right: 2%;
 	vertical-align: top;
@@ -86,6 +108,15 @@ export default {
 .deaths {
 	color: #ff6575;
 }
+@media only screen and (max-width: 1100px){
+	.worldRow > .expend2{
+		display: none;
+	}
+	.worldRow > .rowElement{
+		width: calc(100%/6);
+	}
+}
+
 @media only screen and (max-width: 811px){
 	.worldRow > .expend1{
 		display: none;

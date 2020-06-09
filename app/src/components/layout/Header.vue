@@ -1,9 +1,9 @@
 <template>
 	<header>
 		<div class="header">
-			<button class="Title">CovidBase</button>
-			<button class="headerItem">About</button>
-			<!-- <div class="darkmode">
+			<router-link class="Title button" to="/">CovidBase</router-link>
+			<router-link class="headerItem button" to="/About">About</router-link>
+<!-- 			<div class="darkmode">
 				Dark mode
 				<label class="switch">
 					<input type="checkbox">
@@ -43,7 +43,11 @@ export default {
 	border: none;
 
 }
-button:hover {
+.button {
+	text-decoration: none;
+	outline: 0;
+}
+.button:hover {
 	text-decoration: underline;
 	cursor: pointer;
 }
