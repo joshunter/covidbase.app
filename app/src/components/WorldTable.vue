@@ -4,10 +4,10 @@
 		<div class="worldRow" id="worldRow">
 			<div class="rowElement">Total Cases
 				<div>{{worldData.total}}</div>
+				<div class="subNumber">{{worldData.newActive}}</div>
 			</div>
 			<div class="rowElement active">Active
 					<div>{{worldData.active}}</div>
-				<div class="subNumber">{{worldData.newActive}}</div>
 			</div>
 			<div class="rowElement recovered">Recovered
 				<div>{{worldData.recovered}}</div>
@@ -72,7 +72,10 @@ export default {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
-
+.lightMode {
+	background-color: #f5f5f5;
+	color: #3C3C3C;
+}
 .worldRow {
 	width: 100%;
 	display: inline-block;
@@ -97,10 +100,13 @@ export default {
 	font-size: 81%;
 }
 .active {
-	color: #58A4B0;
+	color: #00a1e0;
 }
 .recovered {
 	color:  #a0ed8c;
+}
+input#dm:checked + .recovered {
+	color:  #2ad100;
 }
 .critical {
 	color:  #ffaf3f;

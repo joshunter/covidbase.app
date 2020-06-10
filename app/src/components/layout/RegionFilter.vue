@@ -42,7 +42,8 @@ export default {
 .FilterRow {
 	width: 100%;
 	display: inline-block;
-	padding-top: 1%;
+	padding-top: 7px;
+	padding-bottom: 2px;
 }
 
 
@@ -53,16 +54,16 @@ input.searchBar {
 	border: 1px solid #152b47;
 	border-radius: 15px;
 	text-align: left;
+	width: 40%;
 	height: 100%;
 	padding-left: 12px;
 	padding-top: 7px;
 	padding-bottom: 7px;
 	margin-left: 4%;
-	width: 40%;
 	margin-right: 2%;
 }
 
-.continentSel {
+select.continentSel {
 	font-size: 100%;
 	width: 50%;
 	position: relative;
@@ -72,6 +73,7 @@ input.searchBar {
     border-radius: 15px;
 	padding-top: 7px;
 	padding-bottom: 7px;
+	border: 1px solid #152b47;
 
 	/* styling */
 	display: inline-block;
@@ -84,9 +86,7 @@ input.searchBar {
 	box-sizing: border-box;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-}
 
-select.continentSel {
 	background-image:
 		linear-gradient(45deg, transparent 50%, #d8dbe2 50%),
 		linear-gradient(135deg, #d8dbe2 50%, transparent 50%),
@@ -101,6 +101,7 @@ select.continentSel {
 		1px 1.5em;
 	background-repeat: no-repeat;
 }
+
 
 select.continentSel:focus {
 	background-image:
@@ -125,11 +126,27 @@ select:hover {
 	cursor: pointer;
 }
 
+
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #d8dbe2;
 }
 
+select.lightMode:hover {
+	background-color: #d8dbe2;
+	color: #3C3C3C;
+}
+select.lightMode {
+	background-color: #f5f5f5;
+	color: #3C3C3C;
+	border: 1px solid #c1c1c1;
+}
+
+input.lightMode {
+	background-color: #f5f5f5;
+	color: #3C3C3C;
+	border: 1px solid #c1c1c1;
+}
 
 @media only screen and (max-width: 500px){
 	input.searchBar {

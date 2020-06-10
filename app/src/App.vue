@@ -46,9 +46,9 @@ export default {
   color: #d8dbe2;
 }
 
-body {
-  background-color:  #1b2e4b;
-  color: #d8dbe2;
+.lightMode {
+  background-color: #fafafa;
+  color: #3C3C3C;
 }
 
 .fade-enter-active {

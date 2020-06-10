@@ -1,13 +1,13 @@
 <template>
-	<div class="row" id="row">
-		<div class="rowNumber expend1">{{country.rank}}</div>
+	<div class="dataRow row" id="row">
+		<div class="rowNumber expend1">{{index}}</div>
 		<div class="rowElement">{{country.name}}
 			<div class="subNumber">{{country.population}}</div>
 		</div>
-		<div class="rowElement">{{country.total}}</div>
-		<div class="rowElement active">{{country.active}}
+		<div class="rowElement">{{country.total}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
+		<div class="rowElement active">{{country.active}}</div>
 		<div class="rowElement recovered">{{country.recovered}}
 			<div class="subNumber">{{country.newRecovered}}</div>
 		</div>
@@ -26,7 +26,8 @@
 export default {
 	name: "CountryRow",
 	props: [
-		"country"
+		"country",
+		"index"
 	]
 }
 </script>
@@ -45,6 +46,7 @@ export default {
 	display: visible;
 }
 .row {
+    border-radius: 15px;
 	width: 100%;
     padding-top: 5px;
 	padding-bottom: 5px;
@@ -52,11 +54,18 @@ export default {
     vertical-align: top;
     font-size: 100%
 }
+.dataRow:hover {
+	background-color: #264c7e;
+}
+.dataLightMode:hover {
+	background-color: #ffff;
+}
 .row > .rowElement {
-	vertical-align: top;
+	vertical-align: center;
 	display: inline-block;
 	width: calc(96%/10);
-	padding-top: 4px;
+	padding-top: 1.5px;
+	padding-bottom: 1.5px;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -64,19 +73,26 @@ export default {
 	font-size: 81%;
 }
 .row > .rowNumber {
-	vertical-align: top;
+	vertical-align: center;
 	display: inline-block;
 	width: 3%;
-	padding-top: 4px;
+	padding-top: 1.5px;
+	padding-bottom: 1.5px;
 	padding-left: 3px;
 	padding-right: 3px;
 }
 .active {
 	color: #58A4B0;
 }
+
+
 .recovered {
 	color:  #a0ed8c;
 }
+input#dm:checked + .recovered {
+	color: #000;
+}
+
 .critical {
 	color:  #ffaf3f;
 }

@@ -6,8 +6,8 @@
 	<transition name="fade">
 		<div class="row">
 			<div class="rowNumber expend1">
-				<button id="rank" class="rowRankB" @click="sortBy('rank')">#
-				</button>
+				<div id="rank" class="rowRankB">#
+				</div>
 			</div>
 			<div class="rowElement">
 				<button id="name" class="country" @click="sortBy('name')">Country
@@ -55,21 +55,22 @@
 	</transition>
 	<transition name="fade">
 		<div v-show="show=='Global Data'">
-			<div v-bind:key="country._id+'global'" v-for="country in countryData">
-					<CountryRow v-bind:country="country" />
+			<div v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
+					<CountryRow v-bind:index="index+1" v-bind:country="country" />
 			</div>
 		</div>
 	</transition>
-	<div v-bind:key="country._id" v-for="country in countryData">
+	<div v-bind:key="country._id" v-for="(country, index) in countryData">
 	<transition name="fade">
-			<CountryRow v-show="show==country.continent" v-bind:country="country"/>
+			<CountryRow v-bind:index="index+1" v-show="show==country.continent" v-bind:country="country"/>
 	</transition>
 	</div>
-	<div v-bind:key="country._id+'search'" v-for="country in countryData">
+	<div v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
 	<transition name="fade">
-		<CountryRow v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
+		<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
 	</transition>
 		</div>
+	<a href="#top">Back to Top</a>
 	</div>
 </template>
 
@@ -131,26 +132,6 @@ methods: {
 		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
 
 		switch(type){
-			case "rank":
-				el = document.getElementById("rank");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='rankA'){
-					el.innerHTML='#&#8593;'
-				} else {
-					el.innerHTML='#&#8595;'
-				}
-
-				this.countryData.sort(function (a, b) {
-					if(sortedBy=='rankA'){
-						sessionStorage.setItem('sortedBy', 'rankD');
-						return b.rank -a.rank;
-					}
-					sessionStorage.setItem('sortedBy', 'rankA');
-					return (a.rank) - (b.rank);
-				});
-				break;
 			case "name":
 				el = document.getElementById("name");
 
@@ -490,7 +471,15 @@ methods: {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
-
+.lightMode {
+	border-collapse: collapse;
+	text-align: center;
+	width:90%;
+	margin-top: 2px;
+	border-radius: 15px;
+	background-color: #f5f5f5;
+	color: #3C3C3C;
+}
 .active {
 	color: #58A4B0;
 }
@@ -532,5 +521,6 @@ button {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
+
 
 </style>

@@ -1,48 +1,69 @@
 <template>
 	<header>
 		<div class="header">
-			<router-link class="Title button" to="/">CovidBase</router-link>
-			<router-link class="headerItem button" to="/About">About</router-link>
-<!-- 			<div class="darkmode">
+			<router-link class="title button" to="/">covidbase</router-link>
+			<router-link class="about button" to="/About">About</router-link>
+			<div class="darkmode">
 				Dark mode
-				<label class="switch">
-					<input type="checkbox">
+				<label id="dmButton" class="switch">
+					<input id="dmCheck" type="checkbox" @change="lightmode()" checked>
 					<span class="slider round"></span>
 				</label>
-			</div> -->
+			</div>
 		</div>
 	</header>
 </template>
 
 <script type="text/javascript">
 export default {
-	name: "Header"
+	name: "Header",
+	methods: {
+		lightmode() {
+			const classNames = ["header","title","about","worldTable","Datatable","searchBar","continentSel"];
+
+			const Ids = ["app","dmButton","name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data"];
+
+			for(const className of classNames) {
+				document.getElementsByClassName(className)[0].classList.toggle("lightMode");
+			}
+
+			for(var id of Ids) {
+				document.getElementById(id).classList.toggle("lightMode");
+			}
+
+		}
+	}
 }
 </script>
 
 <style scoped>
 .header {
-	display: inline-block;
+	/*display: inline-block;*/
 	width: 100%;
 	background-color:  #1b1b1e;
 	padding: 10px;
 }
-
-.header > .headerItem {
+.about {
 	background-color:  #1b1b1e;
 	color: #d8dbe2;
 	border: none;
-	padding-left: 25%;
+	margin-left: 25%;
 }
 
-.header > .Title {
+.title {
 	font-size: 135%;
 	background-color:  #1b1b1e;
 	color: #d8dbe2;
-	padding-right: 25%;
+	margin-right: 25%;
 	border: none;
 
 }
+
+.lightMode {
+	background-color: #758BFD;
+	color: #FFFFFF;
+}
+
 .button {
 	text-decoration: none;
 	outline: 0;
