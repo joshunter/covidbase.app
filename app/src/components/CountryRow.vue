@@ -46,19 +46,23 @@ export default {
 	display: visible;
 }
 .row {
-    border-radius: 15px;
 	width: 100%;
     padding-top: 5px;
 	padding-bottom: 5px;
 	display: block;
     vertical-align: top;
-    font-size: 100%
+    font-size: 100%;
 }
 .dataRow:hover {
 	background-color: #264c7e;
+	color: #ffffff;
 }
-.dataLightMode:hover {
-	background-color: #ffff;
+.lightMode {
+	color: #3C3C3C;
+}
+.lightMode .dataRow:hover {
+	background-color: #f8f8f8;
+	color: #3C3C3C;
 }
 .row > .rowElement {
 	vertical-align: center;
@@ -84,23 +88,32 @@ export default {
 .active {
 	color: #58A4B0;
 }
-
-
+.lightMode .active {
+	color: #00a1e0;
+}
 .recovered {
 	color:  #a0ed8c;
 }
-input#dm:checked + .recovered {
-	color: #000;
+.lightMode .recovered {
+	color: #2ad100;
 }
-
 .critical {
 	color:  #ffaf3f;
+}
+.lightMode .critical {
+	color:  #ff9f1a;
 }
 .deaths {
 	color: #ff6575;
 }
+.lightMode .deaths {
+	color: #ff4d5e;
+}
 .tests {
 	color: #2fc3da;
+}
+.lightMode .tests {
+	color: #22aabf;
 }
 /*smaller screens*/
 @media only screen and (max-width: 1200px){

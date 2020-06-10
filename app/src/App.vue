@@ -47,8 +47,7 @@ export default {
 }
 
 .lightMode {
-  background-color: #fafafa;
-  color: #3C3C3C;
+  background-color: #FFFFFF;
 }
 
 .fade-enter-active {

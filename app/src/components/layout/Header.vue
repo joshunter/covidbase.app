@@ -1,10 +1,12 @@
 <template>
 	<header>
-		<div class="header">
+		<div class="header"><!-- 
 			<router-link class="title button" to="/">covidbase</router-link>
-			<router-link class="about button" to="/About">About</router-link>
+			<router-link class="about button" to="/About">About</router-link> -->
+			<button class="title button">covidbase</button>
+			<button class="about button">about</button>
 			<div class="darkmode">
-				Dark mode
+				dark mode
 				<label id="dmButton" class="switch">
 					<input id="dmCheck" type="checkbox" @change="lightmode()" checked>
 					<span class="slider round"></span>
@@ -60,7 +62,7 @@ export default {
 }
 
 .lightMode {
-	background-color: #758BFD;
+	background-color: #1f40ff;
 	color: #FFFFFF;
 }
 
@@ -74,7 +76,7 @@ export default {
 }
 
 .darkmode {
-	font-size: 75%;
+	font-size: 85%;
 }
 
 input:checked + .slider {

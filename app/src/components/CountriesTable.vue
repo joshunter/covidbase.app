@@ -1,5 +1,5 @@
 <template>
-	<div class="Datatable">
+	<div class="Datatable" id="Datatable">
 	<transition name="fade">
 		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="searchCountry($event)"/>
 	</transition>
@@ -70,7 +70,6 @@
 		<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
 	</transition>
 		</div>
-	<a href="#top">Back to Top</a>
 	</div>
 </template>
 
@@ -467,33 +466,47 @@ methods: {
 	text-align: center;
     width:90%;
     margin-top: 2px;
-    border-radius: 15px;
+    border-radius: 7px;
     background-color: #1b395d;
 	color: #d8dbe2;
+    box-shadow: 0px 0px 10px 1px #182a43;
 }
 .lightMode {
-	border-collapse: collapse;
-	text-align: center;
-	width:90%;
-	margin-top: 2px;
-	border-radius: 15px;
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 	color: #3C3C3C;
+    box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
+
+/*buttons != div*/
 .active {
 	color: #58A4B0;
+}
+.lightMode .active {
+	color: #00a1e0;
 }
 .recovered {
 	color:  #a0ed8c;
 }
+.lightMode .recovered {
+	color: #2ad100;
+}
 .critical {
 	color:  #ffaf3f;
+}
+.lightMode .critical {
+	color:  #ff9f1a;
 }
 .deaths {
 	color: #ff6575;
 }
+.lightMode .deaths {
+	color: #ff4d5e;
+}
 .tests {
 	color: #2fc3da;
+}
+.lightMode .tests {
+	color: #22aabf;
 }
 button.subNumber{
 	font-size: 81%;
@@ -522,5 +535,9 @@ button {
 	color: #d8dbe2;
 }
 
-
+button.lightMode {
+	background-color: #ffffff;
+	border: none;
+	box-shadow: none;
+}
 </style>

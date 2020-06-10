@@ -51,11 +51,11 @@ input.searchBar {
 	font-size: 100%;
 	background-color:  #1b395d;
 	color: #d8dbe2;
-	border: 1px solid #152b47;
+    box-shadow: 0px 0px 4px 0px #152b47;
+	border: none;
 	border-radius: 15px;
 	text-align: left;
 	width: 40%;
-	height: 100%;
 	padding-left: 12px;
 	padding-top: 7px;
 	padding-bottom: 7px;
@@ -73,7 +73,8 @@ select.continentSel {
     border-radius: 15px;
 	padding-top: 7px;
 	padding-bottom: 7px;
-	border: 1px solid #152b47;
+    box-shadow: 0px 0px 4px 0px #152b47;
+	border: none;
 
 	/* styling */
 	display: inline-block;
@@ -133,19 +134,23 @@ select:-moz-focusring {
 }
 
 select.lightMode:hover {
-	background-color: #d8dbe2;
-	color: #3C3C3C;
+	background-color: #f2f2f2;
 }
 select.lightMode {
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 	color: #3C3C3C;
-	border: 1px solid #c1c1c1;
+	border: 0px;
+    box-shadow: 0px 0px 4px 0px #e1e1e1;
 }
 
+input.lightMode:hover {
+	background-color: #ffffff;
+}
 input.lightMode {
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 	color: #3C3C3C;
-	border: 1px solid #c1c1c1;
+	border: 0px;
+    box-shadow: 0px 0px 4px 0px #e1e1e1;
 }
 
 @media only screen and (max-width: 500px){

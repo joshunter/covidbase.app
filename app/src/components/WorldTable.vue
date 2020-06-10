@@ -68,13 +68,15 @@ export default {
 	display: inline-block;
 	margin-top: 2%;
 	margin-bottom: 2%;
-    border-radius: 15px;
+    border-radius: 7px;
     background-color: #1b395d;
 	color: #d8dbe2;
+    box-shadow: 0px 0px 10px 1px #182a43;
 }
 .lightMode {
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 	color: #3C3C3C;
+    box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
 .worldRow {
 	width: 100%;
@@ -98,21 +100,6 @@ export default {
 }
 .subNumber {
 	font-size: 81%;
-}
-.active {
-	color: #00a1e0;
-}
-.recovered {
-	color:  #a0ed8c;
-}
-input#dm:checked + .recovered {
-	color:  #2ad100;
-}
-.critical {
-	color:  #ffaf3f;
-}
-.deaths {
-	color: #ff6575;
 }
 @media only screen and (max-width: 1100px){
 	.worldRow > .expend2{
