@@ -1,14 +1,12 @@
 <template>
 	<header>
-		<div class="header"><!-- 
+		<div class="header">
 			<router-link class="title button" to="/">covidbase</router-link>
-			<router-link class="about button" to="/About">About</router-link> -->
-			<button class="title button">covidbase</button>
-			<button class="about button">about</button>
-			<div class="darkmode">
+			<router-link class="about button" to="/About">About</router-link>
+			<div @click="toggleDM()" class="darkmode">
 				dark mode
 				<label id="dmButton" class="switch">
-					<input id="dmCheck" type="checkbox" @change="lightmode()" checked>
+					<input id="dmCheck" type="checkbox" @change="toggleDM()" checked>
 					<span class="slider round"></span>
 				</label>
 			</div>
@@ -20,19 +18,44 @@
 export default {
 	name: "Header",
 	methods: {
-		lightmode() {
-			const classNames = ["header","title","about","worldTable","Datatable","searchBar","continentSel"];
+		setTheme(currTheme){
+			const classNames = ["header","worldTable","Datatable","searchBar","continentSel","darkmode", "ArrowBox"];
+			const Ids = ["app","dmButton","name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data","title","about"];
 
-			const Ids = ["app","dmButton","name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data"];
+			if(currTheme == "dark") {
+				document.getElementById("dmCheck").checked = true;
 
-			for(const className of classNames) {
-				document.getElementsByClassName(className)[0].classList.toggle("lightMode");
+				for(const className of classNames) {
+					document.getElementsByClassName(className)[0].classList.remove("lightMode");
+				}
+
+				for(var i of Ids) {
+					document.getElementById(i).classList.remove("lightMode");
+				}
+			} else {
+				document.getElementById("dmCheck").checked = false;
+				
+				for(const className of classNames) {
+					document.getElementsByClassName(className)[0].classList.add("lightMode");
+				}
+
+				for(var id of Ids) {
+					document.getElementById(id).classList.add("lightMode");
+				}
+			}
+		},
+		toggleDM(){
+			var currTheme = localStorage.getItem("theme");
+
+			if(currTheme == "dark") {
+				localStorage.setItem("theme","light");
+				currTheme = "light"
+			} else {
+				localStorage.setItem("theme","dark");
+				currTheme = "dark"
 			}
 
-			for(var id of Ids) {
-				document.getElementById(id).classList.toggle("lightMode");
-			}
-
+			this.setTheme(currTheme);
 		}
 	}
 }
@@ -40,33 +63,23 @@ export default {
 
 <style scoped>
 .header {
-	/*display: inline-block;*/
+	display: inline-block;
 	width: 100%;
+	vertical-align: center;
 	background-color:  #1b1b1e;
 	padding: 10px;
 }
 .about {
-	background-color:  #1b1b1e;
-	color: #d8dbe2;
-	border: none;
 	margin-left: 25%;
 }
 
 .title {
 	font-size: 135%;
-	background-color:  #1b1b1e;
-	color: #d8dbe2;
 	margin-right: 25%;
-	border: none;
-
-}
-
-.lightMode {
-	background-color: #1f40ff;
-	color: #FFFFFF;
 }
 
 .button {
+	color: #d8dbe2;
 	text-decoration: none;
 	outline: 0;
 }
@@ -74,9 +87,23 @@ export default {
 	text-decoration: underline;
 	cursor: pointer;
 }
+.lightMode .button{
+	color: #ffffff;
+}
 
 .darkmode {
+	width: 90px;
+	background-color:  #1b1b1e;
+	color: #d8dbe2;
 	font-size: 85%;
+}
+.darkmode:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.lightMode{
+	background-color: #1f40ff;
+	color: #ffffff;
 }
 
 input:checked + .slider {
