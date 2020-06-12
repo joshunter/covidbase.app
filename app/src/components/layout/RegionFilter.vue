@@ -125,13 +125,12 @@ select.continentSel:focus {
 		5px 5px,
 		1px 1.5em;
 	background-repeat: no-repeat;
-	border-color: #1b395d;
 	outline: 0;
 }
 select.continentSel:hover {
 	cursor: pointer;
     box-shadow: 0px 0px 4px 0px #152b47;
-    border:none;
+	border: 1px solid #1b395d;
 }
 select:-moz-focusring {
   color: transparent;
@@ -144,7 +143,7 @@ select.lightMode {
 }
 select.lightMode:hover {
     box-shadow: 0px 0px 4px 0px #e1e1e1;
-    border:none;
+	border: 1px solid #ffffff;
 }
 
 @media only screen and (max-width: 500px){
