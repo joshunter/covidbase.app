@@ -19,7 +19,8 @@ export default {
   data(){
     return {
       countryData: {},
-      worldData: {}
+      worldData: {},
+      sticky: 0
     }
   },
   updated() {
@@ -27,6 +28,7 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.sticky = document.getElementById("headerRow").offsetTop;
     this.getTheme();
     },
   created(){
@@ -82,7 +84,7 @@ export default {
     },
     setTheme(Theme){
       const classNames = ["app","header","darkmode","ArrowBox","Datatable","searchBar","continentSel", "ArrowBox","worldTable"];
-      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data","title","about"];
+      const Ids = ["headerRow","name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data","title","about"];
 
       if(Theme == "dark") {
         document.getElementById("dmCheck").checked = true;
@@ -116,7 +118,17 @@ export default {
       }
     },
     onScroll () { //Display arrowbox after down scroll past 138 px.
+
+      var header = document.getElementById("headerRow")
+      
+      if (window.pageYOffset > this.sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+
 
       if (currentScrollPosition < 0) {
         return
