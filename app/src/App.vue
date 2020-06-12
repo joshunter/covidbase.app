@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="app">
-    <Header/>
+    <Header @changeTheme="setTheme($event)"/>
     <transition name="fade">
-      <router-view></router-view>
+      <router-view :worldData="worldData" :countryData="countryData"></router-view>
     </transition>
     <div @click="toTop()" id="ArrowBox" class="ArrowBox ArrowBox--hidden"><i class="arrow"></i></div>
   </div>
@@ -16,14 +16,106 @@ export default {
   components: {
     Header,
   },
+  data(){
+    return {
+      countryData: {},
+      worldData: {}
+    }
+  },
+  updated() {
+    this.getTheme();
+  },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.getTheme();
+    },
+  created(){
+    this.fetchCountryData();
+    this.fetchWorldData();
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
-    onScroll () {
+    fetchCountryData(){
+      fetch('https://db.covidbase.app/api/data')
+        .then(response => { 
+          if(response.ok){
+            return response.json()
+          } else {
+          alert("Server returned " + response.status + " : " + response.statusText);
+          }                
+        })
+        .then(response => {
+          sessionStorage.setItem('sortedBy', 'totalD');
+          this.countryData = response;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    fetchWorldData: function(){
+      fetch('https://db.covidbase.app/api/wData')
+        .then(response => { 
+          if(response.ok){
+            return response.json()    
+          } else {
+            alert("Server returned " + response.status + " : " + response.statusText);
+          }
+        })
+        .then(response => {
+          this.worldData = response[0]; 
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getTheme(){
+      const currTheme = localStorage.getItem("theme");
+
+      if(currTheme==null) {
+        localStorage.setItem("theme","dark");
+      }
+      else {
+        this.setTheme(currTheme);
+      }
+    },
+    setTheme(Theme){
+      const classNames = ["app","header","darkmode","ArrowBox","Datatable","searchBar","continentSel", "ArrowBox","worldTable"];
+      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data","title","about"];
+
+      if(Theme == "dark") {
+        document.getElementById("dmCheck").checked = true;
+
+        try{
+          for(const className of classNames) {
+            document.getElementsByClassName(className)[0].classList.remove("lightMode");
+          }
+        } catch (err){
+          console.log(err.message);
+        } finally {
+          for(var i of Ids) {
+            document.getElementById(i).classList.remove("lightMode");
+        }
+
+        }
+      } else {
+        document.getElementById("dmCheck").checked = false;
+        try {
+          for(const className of classNames) {
+            document.getElementsByClassName(className)[0].classList.add("lightMode");
+          }
+        } catch (err){
+          console.log(err.message);
+        } finally {
+          for(var id of Ids) {
+            document.getElementById(id).classList.add("lightMode");
+          }
+        }
+
+      }
+    },
+    onScroll () { //Display arrowbox after down scroll past 138 px.
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
 
       if (currentScrollPosition < 0) {
@@ -36,7 +128,7 @@ export default {
         document.getElementById("ArrowBox").classList.add("ArrowBox--hidden");
       }
     },
-    toTop() {
+    toTop() { //On click of arrow box, go to top smoothly.
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
@@ -67,6 +159,11 @@ export default {
   background-color:  #1b2e4b;
   color: #d8dbe2;
 }
+
+.router-view {
+  padding-top: 25px;
+}
+
 .arrow {
   border: solid #d8dbe2;
   border-width: 0 5px 5px 0;
@@ -88,13 +185,13 @@ export default {
   bottom: 90px;
   right: 15px;
 }
+.ArrowBox.ArrowBox--hidden {
+  display: none;
+}
 .ArrowBox:hover {
   background-color:  #24497a;
   color: #bcc1cd;
   box-shadow: 0px 0px 10px 3px #182a43;
-}
-.ArrowBox.ArrowBox--hidden {
-  display: none;
 }
 .ArrowBox.lightMode {
   box-shadow: 0px 0px 10px 0px #e1e1e1;
@@ -105,16 +202,15 @@ export default {
 }
 .lightMode {
   background-color: #FFFFFF;
+  color: #3C3C3C;
 }
 .fade-enter-active {
   transition: opacity 1.25s;
 }
 .fade-leave-active {
-  transition: opacity 0.25s;
+  transition: opacity 0.1s;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
-
-
 </style>

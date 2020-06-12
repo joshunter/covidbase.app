@@ -100,11 +100,6 @@ methods: {
 
 		document.getElementById('continentSel').blur();
 
-		// Highlight current sorted by
-		let sortedBy = sessionStorage.getItem('sortedBy');
-		sortedBy = sortedBy.substring(0,sortedBy.length-1);
-		document.getElementById(sortedBy).focus();
-
 		sessionStorage.setItem('prevShow', this.show);
 	},
 	searchCountry(country) {
@@ -442,9 +437,8 @@ methods: {
 				break;
 		}
 	},
-	created: function(){
-        sessionStorage.setItem('prevShow', this.show);
-		this.sortBy("total");
+	created(){
+        sessionStorage.setItem("prevShow", this.show);
 	}
 }
 }
@@ -465,7 +459,6 @@ methods: {
 	border-collapse: collapse;
 	text-align: center;
     width:90%;
-    margin-top: 2px;
     border-radius: 7px;
     background-color: #1b395d;
 	color: #d8dbe2;
@@ -488,7 +481,7 @@ methods: {
 	color:  #a0ed8c;
 }
 .lightMode .recovered {
-	color: #2ad100;
+	color: #2ab754;
 }
 .critical {
 	color:  #ffaf3f;

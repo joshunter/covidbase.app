@@ -34,29 +34,7 @@
 <script>
 export default {
 	name: "WorldTable",
-	data(){
-		return{
-			worldData: this.fetchWorldData()
-		}
-	},
-	methods:{
-		fetchWorldData: function(){
-				fetch('https://db.covidbase.app/api/wData')
-					.then(response => { 
-						if(response.ok){
-							return response.json()    
-						} else {
-							alert("Server returned " + response.status + " : " + response.statusText);
-						}
-					})
-					.then(response => {
-						this.worldData = response[0]; 
-					})
-					.catch(err => {
-						console.log(err);
-					});
-		}
-	}
+	props: ["worldData"]
 }
 </script>
 
@@ -101,6 +79,7 @@ export default {
 .subNumber {
 	font-size: 81%;
 }
+
 @media only screen and (max-width: 1100px){
 	.worldRow > .expend2{
 		display: none;
