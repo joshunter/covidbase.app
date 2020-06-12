@@ -27,7 +27,6 @@ export default {
 		sendContChange() {
 			const sel = document.getElementById("continentSel");
 			const option = sel.options[sel.selectedIndex].value;
-			document.getElementById("searchBar").focus(); 
 			this.$emit('changeContinent',option);
 		}
 	},
@@ -46,24 +45,37 @@ export default {
 	padding-bottom: 2px;
 }
 
-
 input.searchBar {
 	font-size: 100%;
 	background-color:  #1b395d;
 	color: #d8dbe2;
-    box-shadow: 0px 0px 4px 0px #152b47;
-	border: none;
+	border: 1px solid #152b47;
 	border-radius: 15px;
 	text-align: left;
 	width: 40%;
 	padding-left: 12px;
 	padding-top: 7px;
 	padding-bottom: 7px;
-	margin-left: 4%;
+	margin-left: 3%;
 	margin-right: 2%;
+}
+input:hover{
+    box-shadow: 0px 0px 4px 0px #152b47;
+    border:none;
+}
+input.lightMode {
+	background-color: #ffffff;
+	color: #3C3C3C;
+	border: 1px solid #e1e1e1;
+}
+input.lightMode:hover {
+    box-shadow: 0px 0px 4px 0px #e1e1e1;
+    border:none;
 }
 
 select.continentSel {
+	margin-top: 3px;
+	padding-bottom: 3px;
 	font-size: 100%;
 	width: 50%;
 	position: relative;
@@ -73,12 +85,9 @@ select.continentSel {
     border-radius: 15px;
 	padding-top: 7px;
 	padding-bottom: 7px;
-    box-shadow: 0px 0px 4px 0px #152b47;
-	border: none;
+	border: 1px solid #152b47;
 
 	/* styling */
-	display: inline-block;
-	line-height: 1.5em;
 	padding: 0.5em 3.5em 0.5em 1em;
 
 	/* reset */
@@ -102,8 +111,6 @@ select.continentSel {
 		1px 1.5em;
 	background-repeat: no-repeat;
 }
-
-
 select.continentSel:focus {
 	background-image:
 		linear-gradient(45deg, #d8dbe2 50%, transparent 50%),
@@ -121,36 +128,23 @@ select.continentSel:focus {
 	border-color: #1b395d;
 	outline: 0;
 }
-
-select:hover {
-	background-color:  #152b47;
+select.continentSel:hover {
 	cursor: pointer;
+    box-shadow: 0px 0px 4px 0px #152b47;
+    border:none;
 }
-
-
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #d8dbe2;
 }
-
-select.lightMode:hover {
-	background-color: #f2f2f2;
-}
 select.lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
-	border: 0px;
-    box-shadow: 0px 0px 4px 0px #e1e1e1;
+	border: 1px solid #e1e1e1;
 }
-
-input.lightMode:hover {
-	background-color: #ffffff;
-}
-input.lightMode {
-	background-color: #ffffff;
-	color: #3C3C3C;
-	border: 0px;
+select.lightMode:hover {
     box-shadow: 0px 0px 4px 0px #e1e1e1;
+    border:none;
 }
 
 @media only screen and (max-width: 500px){
