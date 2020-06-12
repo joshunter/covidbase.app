@@ -2,7 +2,7 @@
 	<header>
 		<div class="header">
 			<router-link class="title button" :to="{ name: 'Homepage' }">covidbase</router-link>
-			<router-link class="about button" :to="{ name: 'About' }">About</router-link>
+			<router-link class="about button" :to="{ name: 'about' }">about</router-link>
 			<div @click="toggleDM()" class="darkmode" id="darkmode">
 				dark mode
 				<label id="dmButton" class="switch">
