@@ -4,7 +4,7 @@
 		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="searchCountry($event)"/>
 	</transition>
 	<transition name="fade">
-		<div class="row">
+		<div class="row headerRow" id="headerRow">
 			<div class="rowNumber expend1">
 				<div id="rank" class="rowRankB">#
 				</div>
@@ -453,6 +453,24 @@ methods: {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+.headerRow {
+    background-color: #1b395d;
+}
+.lightMode .headerRow{
+	background-color: #ffffff;
+	color: #3C3C3C;
+    box-shadow: none;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width:90%;
+  border-bottom: 1px solid #182a43;
+}
+
+.lightMode .sticky {
+	border-bottom: 1px solid #e1e1e1;
 }
 
 .Datatable {
