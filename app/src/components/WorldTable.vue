@@ -44,8 +44,8 @@ export default {
 .worldTable {
     width:90%;
 	display: inline-block;
-	margin-top: 2%;
-	margin-bottom: 2%;
+	margin-top: 1.25%;
+	margin-bottom: 1.25%;
     border-radius: 7px;
     background-color: #1b395d;
 	color: #d8dbe2;
@@ -98,10 +98,27 @@ export default {
 	}
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 550px){
   .worldRow {
-    font-size: 75%;
+    font-size: 85%;
   }
   .title{font-size: 105%;}
 }
+
+@media only screen and (max-width: 450px){
+  .worldRow {
+    font-size: 70%;
+  }
+}
+@media only screen and (max-width: 390px){
+  .worldRow {
+    font-size: 65%;
+  }
+}
+@media only screen and (max-width: 320px){
+  .worldRow {
+    font-size: 62%;
+  }
+}
+
 </style>
