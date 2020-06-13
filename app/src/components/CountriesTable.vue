@@ -1,11 +1,8 @@
 <template>
 	<div class="Datatable" id="Datatable">
-	<transition name="fade">
 		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="searchCountry($event)"/>
-	</transition>
-	<transition name="fade">
 		<div class="row headerRow" id="headerRow">
-			<div class="rowNumber expend1">
+			<div class="rowNumber headerElement expend1">
 				<div id="rank" class="rowRankB">#
 				</div>
 			</div>
@@ -15,60 +12,59 @@
 				<button id="population" class="subNumber" @click="sortBy('population')">Population
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement headerElement">
 				<button id="total" @click="sortBy('total')">Total Cases
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement headerElement">
 				<button id="active" class="active" @click="sortBy('active')">Active
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement headerElement">
 				<button id="recovered" class="recovered" @click="sortBy('recovered')">Recovered
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement headerElement">
 				<button id="critical" class="critical" @click="sortBy('critical')">Critical
 				</button>
 			</div>
-			<div class="rowElement">
+			<div class="rowElement headerElement">
 				<button id="deaths" class="deaths" @click="sortBy('deaths')">Deaths
 				</button>
 			</div>
-			<div class="rowElement tests expend1">
+			<div class="rowElement headerElement tests expend1">
 				<button id="tests" class="tests" @click="sortBy('tests')">Tests
 				</button>
 			</div>
-			<div class="rowElement expend2">
+			<div class="rowElement headerElement expend2">
 				<button id="casesPM" @click="sortBy('casesPM')">Cases/1M
 				</button>
 			</div>
-			<div class="rowElement expend3">
+			<div class="rowElement headerElement expend3">
 				<button id="deathsPM" class="deaths" @click="sortBy('deathsPM')">Deaths/1M
 				</button>
 			</div>
-			<div class="rowElement expend4">
+			<div class="rowElement headerElement expend4">
 				<button id="testsPM" class="tests" @click="sortBy('testsPM')">Tests/1M
 				</button>
 			</div>
 		</div>
-	</transition>
-	<transition name="fade">
-		<div v-show="show=='Global Data'">
-			<div v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
+		<transition name="fade">
+			<div v-show="show=='Global Data'">
+				<div v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
 					<CountryRow v-bind:index="index+1" v-bind:country="country" />
+				</div>
 			</div>
+		</transition>
+		<div v-bind:key="country._id" v-for="(country, index) in countryData">
+			<transition name="fade">
+				<CountryRow v-bind:index="index+1" v-show="show==country.continent" v-bind:country="country"/>
+			</transition>
 		</div>
-	</transition>
-	<div v-bind:key="country._id" v-for="(country, index) in countryData">
-	<transition name="fade">
-			<CountryRow v-bind:index="index+1" v-show="show==country.continent" v-bind:country="country"/>
-	</transition>
-	</div>
-	<div v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
-	<transition name="fade">
-		<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
-	</transition>
+		<div v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
+			<transition name="fade">
+				<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
+			</transition>
 		</div>
 	</div>
 </template>
@@ -455,24 +451,18 @@ methods: {
   opacity: 0;
 }
 .headerRow {
-    background-color: #1b395d;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background-color: #1b395d;
+	border-bottom: 1px solid #21426e;
 }
+
 .lightMode .headerRow{
 	background-color: #ffffff;
 	color: #3C3C3C;
-    box-shadow: none;
-}
-.sticky {
-  position: fixed;
-  top: 0;
-  width:90%;
-  border-bottom: 1px solid #182a43;
-}
-
-.lightMode .sticky {
 	border-bottom: 1px solid #e1e1e1;
 }
-
 .Datatable {
 	border-collapse: collapse;
 	text-align: center;
@@ -488,6 +478,9 @@ methods: {
     box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
 
+.headerElement {
+    padding-top: 9px;
+}
 /*buttons != div*/
 .active {
 	color: #58A4B0;
@@ -539,9 +532,8 @@ button {
 	border: none;
 	border-collapse: collapse;
 	display: inline-block;
-    vertical-align: top;
+    vertical-align: center;
 	width: 100%;
-	text-align: center;
     background-color: #1b395d;
 	color: #d8dbe2;
 }
@@ -551,4 +543,5 @@ button.lightMode {
 	border: none;
 	box-shadow: none;
 }
+
 </style>

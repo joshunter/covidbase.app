@@ -33,39 +33,28 @@ export default {
 </script>
 
 <style>
-.expend4{
-	display: visible;
+.dataRow{
+	border-top: 1px solid #21426e; 
 }
-.expend3{
-	display: visible;
+.dataRow:hover {
+	background-color: #264c7e;
+	color: #ffffff;
 }
-.expend2{
-	display: visible;
+.lightMode .dataRow {
+	border-top: 1px solid #efefef;
 }
-.expend1{
-	display: visible;
+.lightMode .dataRow:hover {
+	background-color: #f8f8f8;
+	color: #3C3C3C;
 }
 .row {
 	width: 100%;
     padding-top: 5px;
 	padding-bottom: 5px;
 	display: block;
-    vertical-align: top;
-    font-size: 100%;
 }
-.dataRow:hover {
-	background-color: #264c7e;
-	color: #ffffff;
-}
-.lightMode {
-	color: #3C3C3C;
-}
-.lightMode .dataRow:hover {
-	background-color: #f8f8f8;
-	color: #3C3C3C;
-}
-.row > .rowElement {
-	vertical-align: center;
+.rowElement {
+	vertical-align: top;
 	display: inline-block;
 	width: calc(96%/10);
 	padding-top: 1.5px;
@@ -73,17 +62,16 @@ export default {
 	padding-left: 3px;
 	padding-right: 3px;
 }
-.subNumber {
-	font-size: 81%;
-}
-.row > .rowNumber {
-	vertical-align: center;
+.rowNumber {
 	display: inline-block;
 	width: 3%;
 	padding-top: 1.5px;
 	padding-bottom: 1.5px;
 	padding-left: 3px;
 	padding-right: 3px;
+}
+.subNumber {
+	font-size: 81%;
 }
 .active {
 	color: #58A4B0;
@@ -95,7 +83,7 @@ export default {
 	color:  #a0ed8c;
 }
 .lightMode .recovered {
-	color: #2ad100;
+	color: #2ab754;
 }
 .critical {
 	color:  #ffaf3f;
@@ -134,7 +122,6 @@ export default {
 	}
 }
 
-
 @media only screen and (max-width: 1000px){
 	.row > .expend2{
 		display: none;
@@ -152,9 +139,10 @@ export default {
 		width: calc(100%/6);
 	}
 }
-@media only screen and (max-width: 500px){
+
+@media only screen and (max-width: 550px){
 	.row {
-		font-size: 75%;
+		font-size: 85%;
 	}
 
 	.row > .rowElement{
@@ -165,9 +153,20 @@ export default {
 		font-size: 69%;
 	}
 }
-@media only screen and (max-width: 370px){
+
+@media only screen and (max-width: 450px){
+  .row {
+    font-size: 70%;
+  }
+}
+@media only screen and (max-width: 390px){
   .row {
     font-size: 65%;
+  }
+}
+@media only screen and (max-width: 320px){
+  .row {
+    font-size: 62%;
   }
 }
 </style>

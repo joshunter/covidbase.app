@@ -20,7 +20,6 @@ export default {
     return {
       countryData: {},
       worldData: {},
-      sticky: 0
     }
   },
   updated() {
@@ -28,7 +27,6 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
-    this.sticky = document.getElementById("headerRow").offsetTop;
     this.getTheme();
     },
   created(){
@@ -83,8 +81,8 @@ export default {
       }
     },
     setTheme(Theme){
-      const classNames = ["app","header","darkmode","ArrowBox","Datatable","searchBar","continentSel", "ArrowBox","worldTable"];
-      const Ids = ["headerRow","name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM","data","title","about"];
+      const classNames = ["app","header","ArrowBox","Datatable","searchBar","continentSel", "ArrowBox","worldTable"];
+      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM"];
 
       if(Theme == "dark") {
         document.getElementById("dmCheck").checked = true;
@@ -96,13 +94,19 @@ export default {
         } catch (err){
           console.log(err.message);
         } finally {
-          for(var i of Ids) {
-            document.getElementById(i).classList.remove("lightMode");
-        }
+          try{
+            for(var i of Ids) {
+              document.getElementById(i).classList.remove("lightMode");
+            }
+          } catch (err) {
+            console.log(err.message);
+          }
 
         }
-      } else {
+      }
+      else {
         document.getElementById("dmCheck").checked = false;
+
         try {
           for(const className of classNames) {
             document.getElementsByClassName(className)[0].classList.add("lightMode");
@@ -110,26 +114,21 @@ export default {
         } catch (err){
           console.log(err.message);
         } finally {
-          for(var id of Ids) {
-            document.getElementById(id).classList.add("lightMode");
+          try{
+            for(var id of Ids) {
+              document.getElementById(id).classList.add("lightMode");
+            }
+          } catch (err) {
+            console.log(err.message);
           }
         }
-
       }
+
     },
-    onScroll () { //Display arrowbox after down scroll past 138 px.
+    onScroll () { 
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-      var header = document.getElementById("headerRow")
-      
-      if (window.pageYOffset > this.sticky) {
-        header.classList.add("sticky");
-      } else {
-        header.classList.remove("sticky");
-      }
-
-      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-
-
+      //Display arrowbox after down scroll past 138 px.
       if (currentScrollPosition < 0) {
         return
       }
@@ -203,6 +202,7 @@ export default {
 .ArrowBox:hover {
   background-color:  #24497a;
   color: #bcc1cd;
+  cursor: pointer;
   box-shadow: 0px 0px 10px 3px #182a43;
 }
 .ArrowBox.lightMode {
