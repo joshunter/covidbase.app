@@ -33,19 +33,13 @@ export default {
 </script>
 
 <style>
-.dataRow{
-	border-top: 1px solid #21426e; 
-}
 .dataRow:hover {
-	background-color: #264c7e;
+	background-color: #234776;
 	color: #ffffff;
 }
-.lightMode .dataRow {
-	border-top: 1px solid #efefef;
-}
 .lightMode .dataRow:hover {
-	background-color: #f8f8f8;
-	color: #3C3C3C;
+	background-color: #eaeaea;
+	color: #000000;
 }
 .row {
 	width: 100%;

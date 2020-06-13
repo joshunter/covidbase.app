@@ -167,7 +167,7 @@ export default {
   min-width: 320px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:  #1b2e4b;
+  background-color:  #1a2c47;
   color: #d8dbe2;
 }
 

@@ -11,8 +11,7 @@
 					<span class="slider round"></span>
 				</label>
 			</span>
-			<a class="covfefeIcon" href="https://ko-fi.com/joshunter"><img class="covfefePicture" src="./kofi(small).png" alt="Covfefe"></a>
-		</div>
+<!-- 			<a class="covfefeIcon" href="https://ko-fi.com/joshunter"><img class="covfefePicture" src="./kofi(small).png" alt="Covfefe"></a>-->				</div>
 	</header>
 </template>
 
@@ -69,7 +68,7 @@ export default {
 }
 .darkmode {
 	position: relative;
-	right: 32%;
+	right: 33%;
 	width: 90px;
 	font-size: 85%;
 }
@@ -81,14 +80,14 @@ export default {
 	background-color: #1f40ff;
 	color: #ffffff;
 }
-.covfefeIcon{
+/*.covfefeIcon{
 	position: relative;
 	right: 37px;
 }
 .covfefePicture {
 	width:27.6px;
 	height:18px;
-}
+}*/
 input:checked + .slider {
   background-color: #1b2e4b;
 }

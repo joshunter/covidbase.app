@@ -51,7 +51,7 @@
 		</div>
 		<transition name="fade">
 			<div v-show="show=='Global Data'">
-				<div v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
+				<div class="countryRowPar" v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
 					<CountryRow v-bind:index="index+1" v-bind:country="country" />
 				</div>
 			</div>
@@ -450,19 +450,6 @@ methods: {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
-.headerRow {
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	background-color: #1b395d;
-	border-bottom: 1px solid #21426e;
-}
-
-.lightMode .headerRow{
-	background-color: #ffffff;
-	color: #3C3C3C;
-	border-bottom: 1px solid #e1e1e1;
-}
 .Datatable {
 	border-collapse: collapse;
 	text-align: center;
@@ -472,12 +459,29 @@ methods: {
 	color: #d8dbe2;
     box-shadow: 0px 0px 10px 1px #182a43;
 }
+.headerRow {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background-color: #1b395d;
+	border-bottom: 1px solid #183353;
+}
+.lightMode .headerRow{
+	background-color: #ffffff;
+	color: #3C3C3C;
+	border-bottom: 1px solid #e1e1e1;
+}
+.countryRowPar:nth-child(odd) {
+	background-color: #183353;
+}
+.lightMode .countryRowPar:nth-child(odd) {
+	background-color: #f8f8f8;
+}
 .lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
     box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
-
 .headerElement {
     padding-top: 9px;
 }
