@@ -3,13 +3,15 @@
 		<div class="header">
 			<router-link class="title button" :to="{ name: 'Homepage' }">covidbase</router-link>
 			<router-link class="about button" :to="{ name: 'about' }">about</router-link>
-			<div @click="toggleDM()" class="darkmode" id="darkmode">
+			<br>
+			<span @click="toggleDM()" class="darkmode" id="darkmode">
 				dark mode
 				<label id="dmButton" class="switch">
 					<input id="dmCheck" type="checkbox" @change="toggleDM()" checked>
 					<span class="slider round"></span>
 				</label>
-			</div>
+			</span>
+			<a class="covfefeIcon" href="https://ko-fi.com/joshunter"><img class="covfefePicture" src="./kofi(small).png" alt="Covfefe"></a>
 		</div>
 	</header>
 </template>
@@ -39,9 +41,9 @@ export default {
 .header {
 	display: inline-block;
 	width: 100%;
+	padding: 3px;
 	vertical-align: center;
 	background-color:  #1b1b1e;
-	padding: 10px;
 }
 .button {
 	color: #d8dbe2;
@@ -52,21 +54,23 @@ export default {
 	text-decoration: underline;
 	cursor: pointer;
 }
-.about {
-	margin-left: 25%;
-}
-.title {
-	font-size: 135%;
-	margin-right: 25%;
-}
 .lightMode .button{
 	color: #ffffff;
 }
 
+.about {
+	position: relative;
+	left: 25%;
+}
+.title {
+	font-size: 135%;
+	position: relative;
+	right: 32%;
+}
 .darkmode {
+	position: relative;
+	right: 32%;
 	width: 90px;
-	background-color:  #1b1b1e;
-	color: #d8dbe2;
 	font-size: 85%;
 }
 .darkmode:hover {
@@ -77,7 +81,14 @@ export default {
 	background-color: #1f40ff;
 	color: #ffffff;
 }
-
+.covfefeIcon{
+	position: relative;
+	right: 37px;
+}
+.covfefePicture {
+	width:27.6px;
+	height:18px;
+}
 input:checked + .slider {
   background-color: #1b2e4b;
 }
