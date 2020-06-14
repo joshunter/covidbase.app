@@ -85,7 +85,7 @@ export default {
 	position: absolute;
 	left: 7%;
 }
-button.darkmode {
+.darkmode {
 	position: absolute;
 	left: 7%;
 	top: 31px;
@@ -96,19 +96,19 @@ button.darkmode {
 	border:0;
 	color: #d8dbe2;
 }
-button.darkmode:hover {
+.darkmode:hover {
 	color: #ffffff;
 	cursor: pointer;
 }
-button.darkmode:focus {
+.darkmode:focus {
 	outline: 1px solid #fff;
 }
-button.darkmode:active {
+.darkmode:active {
 	outline: 0;
 	color: transparent;
 	text-shadow: 0 0 0 #d8dbe2;
 }
-button.darkmode:-moz-focusring {
+.darkmode:-moz-focusring {
 	color: transparent;
 	text-shadow: 0 0 0 #d8dbe2;
 }
