@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router' 
 import About from './About.vue'
 import Homepage from './components/Homepage.vue'
+import USA from './components/USA.vue'
 
 Vue.config.productionTip = false
 
@@ -18,6 +19,11 @@ const routes = [
 		path: '/about',
 		name: 'about',
 		component: About
+	},
+	{
+		path: '/USA',
+		name: 'USA',
+		component: USA
 	}
 ];
 
