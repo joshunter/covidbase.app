@@ -56,12 +56,12 @@
 				</div>
 			</div>
 		</transition>
-		<div v-bind:key="country._id" v-for="(country, index) in countryData">
+		<div class="countryRowPar" v-bind:key="country._id" v-for="(country, index) in countryData">
 			<transition name="fade">
 				<CountryRow v-bind:index="index+1" v-show="show==country.continent" v-bind:country="country"/>
 			</transition>
 		</div>
-		<div v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
+		<div class="countryRowPar" v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
 			<transition name="fade">
 				<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
 			</transition>
@@ -82,6 +82,7 @@ components: {
 props : ["countryData"],
 data(){
 	return {
+		ContFiltered: [],
 		show: 'Global Data',
 		searchReq: '',
 		currentCont: 'Global Data'
@@ -126,7 +127,6 @@ methods: {
 				el = document.getElementById("name");
 
 				el.style.fontWeight = "bold";
-
 				if(sortedBy=='nameA'){
 					el.innerHTML='Country&#8593;'
 				} else {
@@ -432,9 +432,20 @@ methods: {
 				});
 				break;
 		}
+		el.blur();
 	},
 	created(){
-        sessionStorage.setItem("prevShow", this.show);
+		sessionStorage.setItem("prevShow", this.show);
+		// const Africa, Asia, Australia, Europe, NorthAmerica, SouthAmerica
+
+		// for(const country of this.countryData){
+		// 	if
+		// }
+		// create continent filter
+		// for(var country of this.countryData){
+		// 	this.ContFiltered.push({"Asia":Asia})
+		// }
+		// console.log(this.ContFiltered)
 	}
 }
 }
@@ -471,12 +482,12 @@ methods: {
 	color: #3C3C3C;
 	border-bottom: 1px solid #e1e1e1;
 }
-.countryRowPar:nth-child(odd) {
+/*.countryRowPar:nth-child(odd) {
 	background-color: #183353;
 }
 .lightMode .countryRowPar:nth-child(odd) {
 	background-color: #f8f8f8;
-}
+}*/
 .lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
@@ -489,49 +500,72 @@ methods: {
 .active {
 	color: #58A4B0;
 }
+button.active:-moz-focusring {
+	text-shadow: 0 0 0 #58A4B0;
+}
 .lightMode .active {
 	color: #00a1e0;
+}
+.lightMode button.active:-moz-focusring {
+	text-shadow: 0 0 0 #00a1e0;
 }
 .recovered {
 	color:  #a0ed8c;
 }
+button.recovered:-moz-focusring {
+	text-shadow: 0 0 0 #a0ed8c;
+}
 .lightMode .recovered {
 	color: #2ab754;
+}
+.lightMode button.recovered:-moz-focusring {
+	text-shadow: 0 0 0 #2ab754;
 }
 .critical {
 	color:  #ffaf3f;
 }
+button.critical:-moz-focusring {
+	text-shadow: 0 0 0 #ffaf3f;
+}
 .lightMode .critical {
 	color:  #ff9f1a;
+}
+.lightMode button.critical:-moz-focusring {
+	text-shadow: 0 0 0 #ff9f1a;
 }
 .deaths {
 	color: #ff6575;
 }
+button.deaths:-moz-focusring {
+	text-shadow: 0 0 0 #ff6575;
+}
 .lightMode .deaths {
 	color: #ff4d5e;
+}
+.lightMode button.deaths:-moz-focusring {
+	text-shadow: 0 0 0 #ff4d5e;
 }
 .tests {
 	color: #2fc3da;
 }
+button.tests:-moz-focusring {
+	text-shadow: 0 0 0 #2fc3da;
+}
 .lightMode .tests {
 	color: #22aabf;
+}
+.lightMode button.tests:-moz-focusring {
+	text-shadow: 0 0 0 #22aabf;
 }
 button.subNumber{
 	font-size: 81%;
 }
 
-button:focus {
-	outline:0;
-}
-button:hover {
-	text-decoration: underline;
-	cursor: pointer;
-}
-button:active {
-	outline: none;
-	border: none;
-}
+	/*button:focus {
+		outline: 1px solid #FFFFFF;
+	}*/
 button {
+	outline: 0;
 	font-size: 100%;
 	border: none;
 	border-collapse: collapse;
@@ -541,11 +575,30 @@ button {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
-
+button:focus {
+	outline: 1px solid #FFF;
+}
+.lightMode button:focus {
+	outline: 1px solid #000;
+}
+button:active {
+	outline: 0;
+}
+button:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+button:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #d8dbe2;
+}
 button.lightMode {
 	background-color: #ffffff;
 	border: none;
 	box-shadow: none;
 }
-
+.lightMode button:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #3C3C3C;
+}
 </style>

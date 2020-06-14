@@ -26,7 +26,7 @@ export default {
     this.getTheme();
   },
   mounted () {
-    window.addEventListener('scroll', this.onScroll)
+    window.addEventListener('scroll', this.onScroll);
     this.getTheme();
     },
   created(){
@@ -34,7 +34,7 @@ export default {
     this.fetchWorldData();
   },
   beforeDestroy () {
-    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('scroll', this.onScroll);
   },
   methods: {
     fetchCountryData(){
@@ -159,7 +159,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 .app {
   display: block;
   min-height: 100vh;

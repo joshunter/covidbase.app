@@ -4,7 +4,6 @@
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
 			<option value="Africa">Africa</option>
-			<option value="Antarctica">Antarctica</option>
 			<option value="Asia">Asia</option>
 			<option value="Australia/Oceania">Australia/Oceania</option>
 			<option value="Europe">Europe</option>
@@ -45,7 +44,7 @@ export default {
 	padding-bottom: 2px;
 }
 
-input.searchBar {
+input {
 	font-size: 100%;
 	background-color:  #1b395d;
 	color: #d8dbe2;
@@ -53,11 +52,14 @@ input.searchBar {
 	border-radius: 15px;
 	text-align: left;
 	width: 40%;
+	height: 33px;
 	padding-left: 12px;
-	padding-top: 7px;
-	padding-bottom: 7px;
-	margin-left: 3%;
-	margin-right: 2%;
+	position: relative;
+	right: 3.3%;
+}
+input:focus {
+    box-shadow: 0px 0px 4px 0px #152b47;
+    border:none;
 }
 input:hover{
     box-shadow: 0px 0px 4px 0px #152b47;
@@ -68,24 +70,25 @@ input.lightMode {
 	color: #3C3C3C;
 	border: 1px solid #e1e1e1;
 }
+input.lightMode:focus {
+    box-shadow: 0px 0px 4px 0px #e1e1e1;
+    border:none;
+}
 input.lightMode:hover {
     box-shadow: 0px 0px 4px 0px #e1e1e1;
     border:none;
 }
 
 select.continentSel {
-	margin-top: 3px;
-	padding-bottom: 3px;
-	font-size: 100%;
-	width: 50%;
+	height: 33px;
+	width: 40%;
 	position: relative;
-	border: none;
 	background-color:  #1b395d;
 	color: #d8dbe2;
     border-radius: 15px;
-	padding-top: 7px;
-	padding-bottom: 7px;
 	border: 1px solid #152b47;
+	left: 3.3%;
+	text-align: center;
 
 	/* styling */
 	padding: 0.5em 3.5em 0.5em 1em;
@@ -112,6 +115,8 @@ select.continentSel {
 	background-repeat: no-repeat;
 }
 select.continentSel:focus {
+	border: 1px solid #ffffff;
+	
 	background-image:
 		linear-gradient(45deg, #d8dbe2 50%, transparent 50%),
 		linear-gradient(135deg, transparent 50%, #d8dbe2 50%),

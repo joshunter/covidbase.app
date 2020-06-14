@@ -1,16 +1,16 @@
 <template>
 	<header>
 		<div class="header">
-			<router-link class="title button" :to="{ name: 'Homepage' }">covidbase</router-link>
-			<router-link class="about button" :to="{ name: 'about' }">about</router-link>
+			<router-link class="title button" onclick="this.blur()" :to="{ name: 'Homepage' }">covidbase</router-link>
+			<router-link class="about button" onclick="this.blur()" :to="{ name: 'about' }">about</router-link>
 			<br>
-			<span @click="toggleDM()" class="darkmode" id="darkmode">
+			<button @click="toggleDM()" class="darkmode" id="darkmode">
 				dark mode
 				<label id="dmButton" class="switch">
 					<input id="dmCheck" type="checkbox" @change="toggleDM()" checked>
 					<span class="slider round"></span>
 				</label>
-			</span>
+			</button>
 <!-- 			<a class="covfefeIcon" href="https://ko-fi.com/joshunter"><img class="covfefePicture" src="./kofi(small).png" alt="Covfefe"></a>-->				</div>
 	</header>
 </template>
@@ -29,8 +29,8 @@ export default {
 				localStorage.setItem("theme","dark");
 				currTheme = "dark";
 			}
-
 			this.$emit('changeTheme',currTheme);
+			document.getElementById("darkmode").blur();
 		}
 	}
 }
@@ -40,7 +40,10 @@ export default {
 .header {
 	display: inline-block;
 	width: 100%;
-	padding: 3px;
+	top: 0px;
+	left: 0px;
+	height: 48px;
+	padding: 4px;
 	vertical-align: center;
 	background-color:  #1b1b1e;
 }
@@ -49,32 +52,78 @@ export default {
 	text-decoration: none;
 	outline: 0;
 }
+.button:focus {
+	outline: 1px solid #FFFFFF;
+}
+.lightMode .button:focus {
+	outline: 2px solid #fff;
+}
+.button:active {
+	outline: 0;
+}
+.lightMode .button:active {
+	outline: 0;
+}
 .button:hover {
-	text-decoration: underline;
+	color: #ffffff;
 	cursor: pointer;
+}
+.lightMode .button:hover {
+	color: #e0e0e0;
 }
 .lightMode .button{
 	color: #ffffff;
 }
 
 .about {
-	position: relative;
-	left: 25%;
+	position: absolute;
+	right: 8%;
+	top: 8px;
 }
 .title {
 	font-size: 135%;
-	position: relative;
-	right: 32%;
+	position: absolute;
+	left: 7%;
 }
-.darkmode {
-	position: relative;
-	right: 33%;
+button.darkmode {
+	position: absolute;
+	left: 7%;
+	top: 31px;
 	width: 90px;
 	font-size: 85%;
+	background-color: #1b1b1e;
+	outline: 0;
+	border:0;
+	color: #d8dbe2;
 }
-.darkmode:hover {
-	text-decoration: underline;
+button.darkmode:hover {
+	color: #ffffff;
 	cursor: pointer;
+}
+button.darkmode:focus {
+	outline: 1px solid #fff;
+}
+button.darkmode:active {
+	outline: 0;
+	color: transparent;
+	text-shadow: 0 0 0 #d8dbe2;
+}
+button.darkmode:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #d8dbe2;
+}
+
+.lightMode button.darkmode {
+	background-color: #1f40ff;
+	color: #ffffff;
+}
+
+.lightMode button.darkmode:hover {
+	color: #e0e0e0;
+}
+.lightMode button.darkmode:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #ffffff;
 }
 .lightMode{
 	background-color: #1f40ff;
@@ -88,16 +137,19 @@ export default {
 	width:27.6px;
 	height:18px;
 }*/
+input:focus {
+	outline: 1px solid #FFF;
+}
 input:checked + .slider {
-  background-color: #1b2e4b;
+	background-color: #1b2e4b;
 }
 input:focus + .slider {
-  box-shadow: 0 0 1px #1b2e4b;
+	box-shadow: 0 0 1px #1b2e4b;
 }
 input:checked + .slider:before {
-  -webkit-transform: translateX(6.5px);
-  -ms-transform: translateX(6.5px);
-  transform: translateX(6.5px);
+	-webkit-transform: translateX(6.5px);
+	-ms-transform: translateX(6.5px);
+	transform: translateX(6.5px);
 }
 
 .switch {
@@ -112,31 +164,31 @@ input:checked + .slider:before {
   height: 0;
 }
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 6.5px;
-  width: 6.5px;
-  left: 1px;
-  bottom: 1px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 6.5px;
+	width: 6.5px;
+	left: 1px;
+	bottom: 1px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 </style>
