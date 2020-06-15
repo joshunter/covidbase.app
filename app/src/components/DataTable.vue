@@ -1,30 +1,30 @@
 <template>
-	<div class="worldTable">
-		<div class="title">Global Info</div>
+	<div class="dataTable">
+		<div class="title">{{title}}</div>
 		<div class="worldRow" id="worldRow">
 			<div class="rowElement">Total Cases
-				<div>{{worldData.total}}</div>
-				<div class="subNumber">{{worldData.newActive}}</div>
+				<div>{{data.total}}</div>
+				<div class="subNumber">{{data.newActive}}</div>
 			</div>
 			<div class="rowElement active">Active
-					<div>{{worldData.active}}</div>
+					<div>{{data.active}}</div>
 			</div>
 			<div class="rowElement recovered">Recovered
-				<div>{{worldData.recovered}}</div>
-				<div class="subNumber">{{worldData.newRecovered}}</div>
+				<div>{{data.recovered}}</div>
+				<div class="subNumber">{{data.newRecovered}}</div>
 			</div>
 			<div class="rowElement critical">Critical
-				<div>{{worldData.critical}}</div>
+				<div>{{data.critical}}</div>
 			</div>
 			<div class="rowElement deaths">Deaths
-				<div>{{worldData.deaths}}</div>
-				<div class="subNumber">{{worldData.newDeaths}}</div>
+				<div>{{data.deaths}}</div>
+				<div class="subNumber">{{data.newDeaths}}</div>
 			</div>
 			<div class="rowElement expend1">Cases/1M
-				<div>{{worldData.casesPM}}</div>
+				<div>{{data.casesPM}}</div>
 			</div>
 			<div class="rowElement deaths expend2">Deaths/1M
-				<div>{{worldData.deathsPM}}</div>
+				<div>{{data.deathsPM}}</div>
 			</div>
 		</div>
 	</div>
@@ -33,15 +33,15 @@
 
 <script>
 export default {
-	name: "WorldTable",
-	props: ["worldData"]
+	name: "DataTable",
+	props: ["data", "title"]
 }
 </script>
 
 
 <style scoped>
 
-.worldTable {
+.dataTable {
     width:90%;
 	display: inline-block;
 	margin-top: 1.25%;

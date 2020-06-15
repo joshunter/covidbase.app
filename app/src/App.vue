@@ -10,7 +10,6 @@
 
 <script>
 import Header from './components/layout/Header.vue';
-
 export default {
   name: 'App',
   components: {
@@ -20,6 +19,7 @@ export default {
     return {
       countryData: {},
       worldData: {},
+      USData: {}
     }
   },
   updated() {
@@ -28,7 +28,7 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.onScroll);
     this.getTheme();
-    },
+  },
   created(){
     this.fetchCountryData();
     this.fetchWorldData();
@@ -65,6 +65,7 @@ export default {
         })
         .then(response => {
           this.worldData = response[0]; 
+          this.USData = response[0]; 
         })
         .catch(err => {
           console.log(err);
@@ -81,49 +82,50 @@ export default {
       }
     },
     setTheme(Theme){
-      const classNames = ["app","header","ArrowBox","Datatable","searchBar","continentSel", "ArrowBox","worldTable"];
-      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM"];
+      const classNames = ["app","header","ArrowBox","Datatable","searchBar","continentSel"];
+      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM", "WorldTable", "USDataTable"];
+      var errorMessages = "";
 
       if(Theme == "dark") {
         document.getElementById("dmCheck").checked = true;
 
-        try{
-          for(const className of classNames) {
-            document.getElementsByClassName(className)[0].classList.remove("lightMode");
-          }
-        } catch (err){
-          console.log(err.message);
-        } finally {
+        for(const className of classNames) {
           try{
-            for(var i of Ids) {
-              document.getElementById(i).classList.remove("lightMode");
-            }
-          } catch (err) {
-            console.log(err.message);
+            document.getElementsByClassName(className)[0].classList.remove("lightMode");
+          } catch (err){
+            errorMessages += err.message + ": " + className +"; ";
           }
+        }
 
+        for(const id of Ids) {
+          try{
+              document.getElementById(id).classList.remove("lightMode");
+            } catch (err) {
+            errorMessages += err.message + ": " + id +"; ";
+          }
         }
       }
       else {
         document.getElementById("dmCheck").checked = false;
 
-        try {
-          for(const className of classNames) {
+        for(const className of classNames) {
+          try {
             document.getElementsByClassName(className)[0].classList.add("lightMode");
+          } catch (err){
+            errorMessages += err.message + ": " + className +"; ";
           }
-        } catch (err){
-          console.log(err.message);
-        } finally {
+        } 
+
+        for(const id of Ids) {
           try{
-            for(var id of Ids) {
               document.getElementById(id).classList.add("lightMode");
-            }
           } catch (err) {
-            console.log(err.message);
+            errorMessages += err.message + ": " + id +"; ";
           }
         }
       }
 
+      console.log(errorMessages);
     },
     onScroll () { 
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;

@@ -1,9 +1,12 @@
 <template>
 	<div class="dataRow row" id="row">
 		<div class="rowNumber expend1">{{index}}</div>
-		<router-link :to={name:country.name} class="rowElement link">{{country.name}}
+		<!--<router-link :to={path:country.name} class="rowElement link">{{country.name}}
 			<div class="subNumber">{{country.population}}</div>
-		</router-link>
+		</router-link>-->
+		<div class="rowElement">{{country.name}}
+			<div class="subNumber">{{country.population}}</div>
+		</div>
 		<div class="rowElement">{{country.total}}
 			<div class="subNumber">{{country.newActive}}</div>
 		</div>
@@ -33,7 +36,7 @@ export default {
 </script>
 
 <style>
-.link {
+/*.link {
 	color: #d8dbe2;
 	text-decoration: none;
 	outline: 0;
@@ -45,7 +48,7 @@ export default {
 .link:hover {
 	font-weight: bold;
 	color: #ffffff;
-}
+}*/
 .lightMode .link {
 	color: #3C3C3C;
 }

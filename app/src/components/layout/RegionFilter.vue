@@ -85,7 +85,7 @@ select.continentSel {
 	position: relative;
 	background-color:  #1b395d;
 	color: #d8dbe2;
-    border-radius: 15px;
+	border-radius: 15px;
 	border: 1px solid #152b47;
 	left: 3.3%;
 	text-align: center;
@@ -115,8 +115,9 @@ select.continentSel {
 	background-repeat: no-repeat;
 }
 select.continentSel:focus {
-	border: 1px solid #ffffff;
-	
+	box-shadow: 0px 0px 4px 0px #152b47;
+	border: 1px solid #1b395d;
+
 	background-image:
 		linear-gradient(45deg, #d8dbe2 50%, transparent 50%),
 		linear-gradient(135deg, transparent 50%, #d8dbe2 50%),
@@ -134,23 +135,31 @@ select.continentSel:focus {
 }
 select.continentSel:hover {
 	cursor: pointer;
-    box-shadow: 0px 0px 4px 0px #152b47;
+	box-shadow: 0px 0px 4px 0px #152b47;
 	border: 1px solid #1b395d;
 }
 select:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #d8dbe2;
+	color: transparent;
+	text-shadow: 0 0 0 #d8dbe2;
 }
 select.lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
 	border: 1px solid #e1e1e1;
 }
+select.lightMode:focus {
+	box-shadow: 0px 0px 4px 0px #e1e1e1;
+	border: 1px solid #ffffff;
+	outline: 0;
+}
 select.lightMode:hover {
-    box-shadow: 0px 0px 4px 0px #e1e1e1;
+	box-shadow: 0px 0px 4px 0px #e1e1e1;
 	border: 1px solid #ffffff;
 }
-
+select.lightMode:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #3C3C3C;
+}
 @media only screen and (max-width: 500px){
 	input.searchBar {
 		padding-left: 6px;

@@ -1,18 +1,18 @@
 <template>
 	<div>
-		<WorldTable v-bind:worldData="worldData"/>
+		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:title="'Global Data'"/>
 		<CountriesTable v-bind:countryData="countryData"/>
 	</div>
 </template>
 
 <script>
-import WorldTable from './WorldTable.vue';
+import DataTable from './DataTable.vue';
 import CountriesTable from './CountriesTable.vue';
 
 export default {
 	name: 'Homepage',
 	components: {
-		WorldTable,
+		DataTable,
 		CountriesTable
 	},
 	props: ["worldData", "countryData"]

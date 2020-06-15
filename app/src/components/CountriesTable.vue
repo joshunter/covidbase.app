@@ -584,6 +584,9 @@ button:focus {
 button:active {
 	outline: 0;
 }
+.lightMode button:active {
+	outline: 0;
+}
 button:hover {
 	text-decoration: underline;
 	cursor: pointer;
