@@ -49,8 +49,12 @@ export default {
 	font-weight: bold;
 	color: #ffffff;
 }*/
+
 .lightMode .link {
 	color: #3C3C3C;
+}
+.dataRow {
+	background-color: transparent;
 }
 .dataRow:hover {
 	background-color: #234776;

@@ -49,23 +49,16 @@
 				</button>
 			</div>
 		</div>
-		<transition name="fade">
-			<div v-show="show=='Global Data'">
-				<div class="countryRowPar" v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
-					<CountryRow v-bind:index="index+1" v-bind:country="country" />
-				</div>
-			</div>
-		</transition>
-		<div class="countryRowPar" v-bind:key="country._id" v-for="(country, index) in countryData">
-			<transition name="fade">
-				<CountryRow v-bind:index="index+1" v-show="show==country.continent" v-bind:country="country"/>
-			</transition>
+		<div class="countryRowPar" v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
+				<CountryRow v-bind:index="index+1" v-bind:country="country" v-show="show=='Global Data'"/>
 		</div>
-		<div class="countryRowPar" v-bind:key="country._id+'search'" v-for="(country, index) in countryData">
-			<transition name="fade">
-				<CountryRow v-bind:index="index+1" v-show="show=='search' && (currentCont == country.continent || currentCont == 'Global Data') && country.name.toLowerCase().includes(searchReq)" v-bind:country="country"/>
-			</transition>
+		<div class="countryRowPar2" v-bind:key="country._id+'filtered'" v-for="(country, index) in filteredData">
+				<CountryRow v-bind:index="index+1" v-bind:country="country" v-show="show==country.continent"/>
+		</div>		
+		<div class="countryRowPar2" v-bind:key="country._id+'search'" v-for="(country, index) in searchedData">
+				<CountryRow v-bind:index="index+1" v-bind:country="country" v-show="show=='search'"/>
 		</div>
+		<div class="bottomRow"></div>
 	</div>
 </template>
 
@@ -79,18 +72,31 @@ components: {
 	CountryRow,
 	RegionFilter
 },
-props : ["countryData"],
 data(){
 	return {
-		ContFiltered: [],
 		show: 'Global Data',
-		searchReq: '',
-		currentCont: 'Global Data'
 	};
+},
+computed: {
+	countryData() {
+		return this.$store.state.countryData
+	},
+	filteredData() {
+		return this.$store.state.filteredData
+	},
+	searchedData() {
+		return this.$store.state.searchedData
+	}
+},
+mounted() {
+		sessionStorage.setItem('prevShow', this.show);
+		sessionStorage.setItem('sortedBy', 'totalD');
 },
 methods: {
 	changeCont(continent) {
 		this.show=continent;
+		this.$store.dispatch('filterData');
+
 		// Remove content of searchBar
 		var search = document.getElementById('searchBar'); 
 		search.value = '';
@@ -99,19 +105,17 @@ methods: {
 
 		sessionStorage.setItem('prevShow', this.show);
 	},
-	searchCountry(country) {
+	searchCountry() {
 		if(this.show!='search'){
-			this.currentCont = this.show;
 			sessionStorage.setItem('prevShow', this.show);
 			this.show = 'search'; 
 		}
 
-		if(country=='') {
+		if(this.$store.query=='') {
 			this.show=sessionStorage.getItem('prevShow');
 		}
 
-		this.searchReq = country.toLowerCase();
-
+		this.$store.dispatch('searchData');
 	},
 	sortBy(type){
 		let sortedBy = sessionStorage.getItem('sortedBy');
@@ -432,35 +436,17 @@ methods: {
 				});
 				break;
 		}
-		el.blur();
-	},
-	created(){
-		sessionStorage.setItem("prevShow", this.show);
-		// const Africa, Asia, Australia, Europe, NorthAmerica, SouthAmerica
 
-		// for(const country of this.countryData){
-		// 	if
-		// }
-		// create continent filter
-		// for(var country of this.countryData){
-		// 	this.ContFiltered.push({"Asia":Asia})
-		// }
-		// console.log(this.ContFiltered)
+		this.$store.dispatch('filterData');
+		this.$store.dispatch('searchData');
+
+		el.blur();
 	}
 }
 }
 </script>
 
 <style scoped>
-.fade-enter-active {
-  transition: opacity 0.6s;
-}
-.fade-leave-active {
-  transition: opacity 0.1s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 .Datatable {
 	border-collapse: collapse;
 	text-align: center;
@@ -482,12 +468,23 @@ methods: {
 	color: #3C3C3C;
 	border-bottom: 1px solid #e1e1e1;
 }
-/*.countryRowPar:nth-child(odd) {
+.countryRowPar:nth-child(odd) {
+	background-color: #183353;
+}
+.countryRowPar2:nth-child(even) {
 	background-color: #183353;
 }
 .lightMode .countryRowPar:nth-child(odd) {
 	background-color: #f8f8f8;
-}*/
+}
+.lightMode .countryRowPar2:nth-child(even) {
+	background-color: #f8f8f8;
+}
+.bottomRow{
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	height: 7px;
+}
 .lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
@@ -560,10 +557,6 @@ button.tests:-moz-focusring {
 button.subNumber{
 	font-size: 81%;
 }
-
-	/*button:focus {
-		outline: 1px solid #FFFFFF;
-	}*/
 button {
 	outline: 0;
 	font-size: 100%;

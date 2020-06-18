@@ -1,6 +1,6 @@
 <template>
 	<div class="FilterRow">
-		<input class="searchBar" id="searchBar" v-model="searchRequest" placeholder="Search for Country">
+		<input class="searchBar" id="searchBar" v-model="searchQuery" placeholder="Search for Country">
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
 			<option value="Africa">Africa</option>
@@ -19,20 +19,25 @@ export default {
 	name: "RegionFilter",
 	data(){
 		return {
-			searchRequest: ''
+			searchQuery: ''
 		};
+	},
+	watch: {
+		searchQuery: function (){
+			this.$store.dispatch('setQuery', this.searchQuery);
+			this.$emit('searchCountry');
+		}
 	},
 	methods: {
 		sendContChange() {
 			const sel = document.getElementById("continentSel");
-			const option = sel.options[sel.selectedIndex].value;
-			this.$emit('changeContinent',option);
-		}
-	},
-	updated: function(){
-		this.$emit('searchCountry', this.searchRequest);
-	}
+			const continent = sel.options[sel.selectedIndex].value;
 
+			this.$store.dispatch('setContinent',continent);
+
+			this.$emit('changeContinent',continent);
+		}
+	}
 }
 </script>
 
@@ -160,7 +165,7 @@ select.lightMode:-moz-focusring {
 	color: transparent;
 	text-shadow: 0 0 0 #3C3C3C;
 }
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 515px){
 	input.searchBar {
 		padding-left: 6px;
 		font-size: 75%;

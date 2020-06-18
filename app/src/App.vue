@@ -2,9 +2,12 @@
   <div id="app" class="app">
     <Header @changeTheme="setTheme($event)"/>
     <transition name="fade">
-      <router-view :worldData="worldData" :countryData="countryData"></router-view>
+      <router-view></router-view>
     </transition>
-    <div @click="toTop()" id="ArrowBox" class="ArrowBox ArrowBox--hidden"><i class="arrow"></i></div>
+    <transition name="fade">
+        <span @click="toTop()" v-if="showArrow" id="ArrowBox" class="ArrowBox"><i v-if="showArrow" class="arrow"></i>
+        </span>
+    </transition>
   </div>
 </template>
 
@@ -17,10 +20,12 @@ export default {
   },
   data(){
     return {
-      countryData: {},
-      worldData: {},
-      USData: {}
+      USData: {},
+      showArrow: false
     }
+  },
+  beforeCreate(){
+    this.$store.dispatch('fetchData');
   },
   updated() {
     this.getTheme();
@@ -29,48 +34,10 @@ export default {
     window.addEventListener('scroll', this.onScroll);
     this.getTheme();
   },
-  created(){
-    this.fetchCountryData();
-    this.fetchWorldData();
-  },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll);
   },
   methods: {
-    fetchCountryData(){
-      fetch('https://db.covidbase.app/api/data')
-        .then(response => { 
-          if(response.ok){
-            return response.json()
-          } else {
-          alert("Server returned " + response.status + " : " + response.statusText);
-          }                
-        })
-        .then(response => {
-          sessionStorage.setItem('sortedBy', 'totalD');
-          this.countryData = response;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    fetchWorldData: function(){
-      fetch('https://db.covidbase.app/api/wData')
-        .then(response => { 
-          if(response.ok){
-            return response.json()    
-          } else {
-            alert("Server returned " + response.status + " : " + response.statusText);
-          }
-        })
-        .then(response => {
-          this.worldData = response[0]; 
-          this.USData = response[0]; 
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     getTheme(){
       const currTheme = localStorage.getItem("theme");
 
@@ -135,10 +102,10 @@ export default {
         return
       }
       if (currentScrollPosition > 138){
-        document.getElementById("ArrowBox").classList.remove("ArrowBox--hidden");
+        this.showArrow = true;
       }
       if (currentScrollPosition < 138){
-        document.getElementById("ArrowBox").classList.add("ArrowBox--hidden");
+        this.showArrow = false;
       }
     },
     toTop() { //On click of arrow box, go to top smoothly.
@@ -196,27 +163,32 @@ export default {
   position: fixed;
   bottom: 90px;
   right: 15px;
-}
-.ArrowBox.ArrowBox--hidden {
-  display: none;
+  box-shadow: 0px 0px 10px 3px #182a43;
 }
 .ArrowBox:hover {
   background-color:  #24497a;
   color: #bcc1cd;
   cursor: pointer;
-  box-shadow: 0px 0px 10px 3px #182a43;
 }
 .ArrowBox.lightMode {
   box-shadow: 0px 0px 10px 0px #e1e1e1;
 }
 .ArrowBox.lightMode:hover {
   background-color:  #f8f8f8;
-  box-shadow: 0px 0px 5px 0px #e1e1e1;;
 }
 .lightMode {
   background-color: #FFFFFF;
   color: #3C3C3C;
 }
+
+/*Fade Transitions*/
+.ArrowBox.fade-enter-active {
+  transition: opacity 1.25s;
+}
+.ArrowBox.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
 .fade-enter-active {
   transition: opacity 1.25s;
 }

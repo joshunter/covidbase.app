@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:title="'Global Data'"/>
-		<CountriesTable v-bind:countryData="countryData"/>
+		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:title="'Global Info'"/>
+		<CountriesTable/>
 	</div>
 </template>
 
@@ -15,7 +15,11 @@ export default {
 		DataTable,
 		CountriesTable
 	},
-	props: ["worldData", "countryData"]
+	computed: {
+		worldData() {
+			return this.$store.state.worldData
+		}
+	}
 }
 </script>
 
