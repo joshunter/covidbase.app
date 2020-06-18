@@ -24,7 +24,7 @@ export default {
 	},
 	watch: {
 		searchQuery: function (){
-			this.$store.dispatch('setQuery', this.searchQuery);
+			this.$store.dispatch('setQuery', this.searchQuery.toLowerCase());
 			this.$emit('searchCountry');
 		}
 	},
