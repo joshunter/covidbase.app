@@ -1,31 +1,21 @@
 <template>
 	<div class="Datatable" id="Datatable">
-		<RegionFilter @changeContinent="changeCont($event)" @searchCountry="searchCountry($event)"/>
+		<CustomFilter @search="search($event)"/>
 		<div class="row headerRow" id="headerRow">
 			<div class="rowNumber headerElement expend1">
 				<div id="rank" class="rowRankB">#
 				</div>
 			</div>
-			<div class="rowElement">
-				<button id="name" class="country nameButton" @click="sortBy('name')">Country
-				</button>
-				<button id="population" class="subNumber populationButton" @click="sortBy('population')">Population
+			<div class="rowElement headerElement">
+				<button id="name" class="country nameButton" @click="sortBy('name')">State
 				</button>
 			</div>
 			<div class="rowElement headerElement">
-				<button id="total" class="totalButton totalButton" @click="sortBy('total')">Total Cases
+				<button id="total" class="totalButton" @click="sortBy('total')">Total Cases
 				</button>
 			</div>
 			<div class="rowElement headerElement">
 				<button id="active" class="active activeButton" @click="sortBy('active')">Active
-				</button>
-			</div>
-			<div class="rowElement headerElement">
-				<button id="recovered" class="recovered recoveredButton" @click="sortBy('recovered')">Recovered
-				</button>
-			</div>
-			<div class="rowElement headerElement">
-				<button id="critical" class="critical criticalButton" @click="sortBy('critical')">Critical
 				</button>
 			</div>
 			<div class="rowElement headerElement">
@@ -49,17 +39,14 @@
 				</button>
 			</div>
 		</div>
-		<div class="countryRowPar" v-bind:key="country._id+'global'" v-for="(country, index) in countryData">
-				<DataRow v-bind:index="index+1" v-bind:data="country" v-show="show=='Global Data' && index < showing"/>
+		<div class="countryRowPar" v-bind:key="datum._id+'global'" v-for="(datum, index) in data">
+				<DataRow v-bind:index="index+1" v-bind:data="datum" v-show="show=='all' && index < showing"/>
 		</div>
-		<div class="countryRowPar2" v-bind:key="country._id+'filtered'" v-for="(country, index) in filteredData">
-				<DataRow v-bind:index="index+1" v-bind:data="country" v-show="show==country.continent  && index < showing"/>
-		</div>		
-		<div class="countryRowPar2" v-bind:key="country._id+'search'" v-for="(country, index) in searchedData">
-				<DataRow v-bind:index="index+1" v-bind:data="country" v-show="show=='search'  && index < showing"/>
+		<div class="countryRowPar" v-bind:key="datum._id+'search'" v-for="(datum, index) in searchedData">
+				<DataRow v-bind:index="index+1" v-bind:data="datum" v-show="show=='search' && index < showing"/>
 		</div>
 		<div class="bottomRow">
-			<span><button class="showButton hidden" id="min" style="left: 7%;" @click="showMin()">Minimize</button></span>
+			<span><button class="showButton" id="min" style="left: 7%;" @click="showMin()">Minimize</button></span>
 			<span><button class="arrowButton" id="more" @click="showMore()"><i class="Arrow down"></i></button></span>
 			<span><button class="arrowButton" id="less" @click="showLess()"><i class="Arrow up"></i></button></span>
 			<span><button class="showButton" id="all" style="right: 7%;" @click="showAll()">All</button></span>
@@ -69,30 +56,20 @@
 
 <script>
 import DataRow from './DataRow.vue';
-import RegionFilter from './layout/RegionFilter.vue';
+import CustomFilter from './layout/CustomFilter.vue';
 
 export default{
-name:"CountryTable",
+name:"CustomTable",
 components: {
-	DataRow,
-	RegionFilter
+	DataRow
+,	CustomFilter
 },
+props: [ "data", "searchedData" ],
 data(){
 	return {
-		show: 'Global Data',
+		show: 'all',
 		showing: 20
 	};
-},
-computed: {
-	countryData() {
-		return this.$store.state.world.countryData
-	},
-	filteredData() {
-		return this.$store.state.world.filteredData
-	},
-	searchedData() {
-		return this.$store.state.world.searchedData
-	}
 },
 mounted() {
 		sessionStorage.setItem('prevShow', this.show);
@@ -100,58 +77,35 @@ mounted() {
 },
 methods: {
 	showMin(){
-		document.getElementById("min").classList.add("hidden");
-		document.getElementById("all").classList.remove("hidden");
-
+		document.getElementById("min").blur();
 		this.showing = 20;
 	},
 	showMore(){
 		document.getElementById("more").blur();
 		this.showing += 20;
-		document.getElementById("min").classList.remove("hidden");
 
-		if(this.showing > 214){
-			document.getElementById("all").classList.add("hidden");
+		if(this.showing > 214)
 			this.showing = 214;
-		}
 	},
 	showLess(){
 		document.getElementById("less").blur();
-		if(this.showing-20 > 20)
+		if(this.showing-20 >= 20)
 			this.showing -= 20;
-		else{
-			document.getElementById("min").classList.add("hidden");
+		else
 			this.showing = 20;
-		}
 	},
 	showAll(){
-		document.getElementById("min").classList.remove("hidden");
-		document.getElementById("all").classList.add("hidden");
+		document.getElementById("all").blur();
 		this.showing = 214;
 	},
-	changeCont(continent) {
-		this.show=continent;
-		this.$store.dispatch('filterData');
-
-		// Remove content of searchBar
-		var search = document.getElementById('searchBar'); 
-		search.value = '';
-
-		document.getElementById('continentSel').blur();
-
-		sessionStorage.setItem('prevShow', this.show);
-	},
-	searchCountry() {
-		if(this.show!='search'){
-			sessionStorage.setItem('prevShow', this.show);
-			this.show = 'search'; 
+	search(query) {
+		this.show='search';
+		if(query=='') {
+			this.show='all';
 		}
 
-		if(this.$store.query=='') {
-			this.show=sessionStorage.getItem('prevShow');
-		}
 
-		this.$store.dispatch('searchCountry');
+		this.$store.dispatch('searchStatesData');
 	},
 	sortBy(type){
 		let sortedBy = sessionStorage.getItem('sortedBy');
@@ -168,11 +122,11 @@ methods: {
 
 				el.style.fontWeight = "bold";
 				if(sortedBy=='nameA'){
-					el.innerHTML='Country&#8593;'
+					el.innerHTML='State&#8593;'
 				} else {
-					el.innerHTML='Country&#8595;'
+					el.innerHTML='State&#8595;'
 				}
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					if(sortedBy=='nameA'){
 						sessionStorage.setItem('sortedBy', 'nameD');
 						if (a.name < b.name) {
@@ -202,7 +156,7 @@ methods: {
 					el.innerHTML='Population&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.population.replace(/\D/g,''));
 					var num2 = parseInt(b.population.replace(/\D/g,''));
 
@@ -230,7 +184,7 @@ methods: {
 					el.innerHTML='Active&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.active.replace(/,/g,''));
 					var num2 = parseInt(b.active.replace(/,/g,''))
 
@@ -258,7 +212,7 @@ methods: {
 					el.innerHTML='Recovered&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.recovered.replace(/,/g,''));
 					var num2 = parseInt(b.recovered.replace(/,/g,''))
 
@@ -286,7 +240,7 @@ methods: {
 					el.innerHTML='Critical&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.critical.replace(/,/g,''));
 					var num2 = parseInt(b.critical.replace(/,/g,''));
 
@@ -314,7 +268,7 @@ methods: {
 					el.innerHTML='Deaths&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.deaths.replace(/,/g,''));
 					var num2 = parseInt(b.deaths.replace(/,/g,''));
 
@@ -342,7 +296,7 @@ methods: {
 					el.innerHTML='Deaths/1M&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseFloat(a.deathsPM.replace(/[^\d.-]/g,''));
 					var num2 = parseFloat(b.deathsPM.replace(/[^\d.-]/g,''));
 
@@ -370,7 +324,7 @@ methods: {
 					el.innerHTML='Total Cases&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.total.replace(/,/g,''));
 					var num2 = parseInt(b.total.replace(/,/g,''))
 
@@ -398,7 +352,7 @@ methods: {
 					el.innerHTML='Cases/1M&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseFloat(a.casesPM.replace(/,/g,''));
 					var num2 = parseFloat(b.casesPM.replace(/,/g,''))
 
@@ -426,7 +380,7 @@ methods: {
 					el.innerHTML='Tests&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseInt(a.tests.replace(/,/g,''));
 					var num2 = parseInt(b.tests.replace(/,/g,''))
 
@@ -454,7 +408,7 @@ methods: {
 					el.innerHTML='Tests/1M&#8595;'
 				}
 
-				this.countryData.sort(function (a, b) {
+				this.data.sort(function (a, b) {
 					var num1 = parseFloat(a.testsPM.replace(/,/g,''));
 					var num2 = parseFloat(b.testsPM.replace(/,/g,''))
 
@@ -473,8 +427,7 @@ methods: {
 				break;
 		}
 
-		this.$store.dispatch('filterData');
-		this.$store.dispatch('searchData');
+		this.$store.dispatch('searchStatesData');
 
 		el.blur();
 	}
@@ -515,11 +468,6 @@ methods: {
 }
 .lightMode .countryRowPar2:nth-child(even) {
 	background-color: #f8f8f8;
-}
-.bottomRow{
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
-	height: 25px;
 }
 .lightMode {
 	background-color: #ffffff;
@@ -590,11 +538,10 @@ button.tests:-moz-focusring {
 .lightMode button.tests:-moz-focusring {
 	text-shadow: 0 0 0 #22aabf;
 }
-button.subNumber{
-	font-size: 81%;
-}
-.hidden {
-	display: none;
+.bottomRow{
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	height: 25px;
 }
 .showButton {
 	background-color: transparent;
@@ -620,6 +567,10 @@ button.subNumber{
 	-webkit-transform: rotate(-135deg);
 }
 
+
+button.subNumber{
+	font-size: 81%;
+}
 button {
 	outline: 0;
 	font-size: 100%;
@@ -631,7 +582,6 @@ button {
     background-color: #1b395d;
 	color: #d8dbe2;
 }
-
 button:focus {
 	outline: 1px solid #FFF;
 }
@@ -653,7 +603,7 @@ button:-moz-focusring {
   text-shadow: 0 0 0 #d8dbe2;
 }
 button.lightMode {
-	background-color: #FFF;
+	background-color: #ffffff;
 	border: none;
 	box-shadow: none;
 }
