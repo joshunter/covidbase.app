@@ -17,8 +17,56 @@ Vue.config.productionTip = false
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
+const USModule = {
+	state: {
+		USData: {},
+		statesSearched: {},
+		statesQuery: ''
+	},
+	mutations: {
+		assignUSData(state, payload){
+			state.USData = payload;
+		},
+		assignStatesQuery(state, query) {
+			state.statesQuery = query;
+		},
+		assignStatesSearched(state, payload){
+			state.statesSearched = payload;
+		}
+	},
+	getters: {
+		getStatesBySearch: (state) => {
+			return state.USData.filter(country => country.name.toLowerCase().includes(state.statesQuery));
+		}
+	},
+	actions: {
+		fetchData ({ commit }) {
+			// Grab and assign USData
+			fetch('http://192.168.1.2:3000/api/usStateData')
+				.then(response => { 
+					if(response.ok){
+						return response.json()
+					} else {
+						alert("Server returned " + response.status + " : " + response.statusText);
+					}
+				})
+				.then(response => {
+					commit('assignUSData', response);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		},
+		searchStatesData ( {commit, getters} ) {
+			commit('assignStatesSearched', getters.getStatesBySearch);
+		},
+		setStatesQuery ( {commit}, query ) {
+			commit('assignStatesQuery', query);
+		}
+	}
+}
 
-const store = new Vuex.Store({
+const worldModule = {
 	state: {
 		countryData: {},
 		worldData: {},
@@ -56,26 +104,13 @@ const store = new Vuex.Store({
 				return state.countryData.filter(country => country.name.toLowerCase().includes(state.query));
 			else
 				return state.filteredData.filter(country => country.name.toLowerCase().includes(state.query));
+		},
+		getCountryByName: (state) => (name) => {
+			return state.countryData.filter(country => country.name==name);
 		}
 	},
 	actions: {
 		fetchData ({ commit }) {
-			// Grab and assign countryData
-			fetch('https://db.covidbase.app/api/data')
-				.then(response => { 
-					if(response.ok){
-						return response.json()
-					} else {
-						alert("Server returned " + response.status + " : " + response.statusText);
-					}
-				})
-				.then(response => {
-					commit('assignCountryData', response);
-				})
-				.catch(err => {
-					console.log(err);
-				});
-
 			// Grab and assign worldData
 			fetch('https://db.covidbase.app/api/wData')
 				.then(response => { 
@@ -91,19 +126,44 @@ const store = new Vuex.Store({
 				.catch(err => {
 					console.log(err);
 				});
+
+			// Grab and assign countryData
+			fetch('http://192.168.1.2:3000/api/data')
+				.then(response => { 
+					if(response.ok){
+						return response.json()
+					} else {
+						alert("Server returned " + response.status + " : " + response.statusText);
+					}
+				})
+				.then(response => {
+					commit('assignCountryData', response);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+
 		},
 		filterData ( {commit, getters} ) {
 			commit('assignFilteredData', getters.getCountriesByContinent);
 		},
-		searchData ( {commit, getters} ) {
+		searchCountry ( {commit, getters} ) {
 			commit('assignSearchedData', getters.getCountriesBySearch);
 		},
 		setContinent ( {commit}, continent ) {
 			commit('assignContinent', continent);
 		},
-		setQuery ( {commit}, query ) {
+		setCountryQuery ( {commit}, query ) {
 			commit('assignQuery', query);
 		}
+	}
+}
+
+
+const store = new Vuex.Store({
+	modules: {
+		us: USModule,
+		world: worldModule,
 	}
 });
 
@@ -127,6 +187,7 @@ const routes = [
 
 const router = new VueRouter({ 
 	routes,
+	// base: __dirname,
 	mode: 'history'
 });
 
