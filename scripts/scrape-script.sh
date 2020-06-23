@@ -21,7 +21,6 @@ data=""
 cData=""
 
 found=0
-done=0
 i=0
 
 # Keys that let me know when to start/stop saving data
@@ -34,10 +33,10 @@ regex='\+?(\w+\.?\s?/?\w*|\d*,?\d*,?\d*\s*)+</(a|td)>'
 
 while IFS= read -r line
 do
-	if [[ $line =~ $regex && $found -eq 1 && $done -eq 0 ]]; then
+	if [[ $line =~ $regex && $found -eq 1 ]]; then
 		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $wFile
 	fi
-	if [[ $line =~ $regex && $found -eq 2 && $done -eq 0 ]]; then
+	if [[ $line =~ $regex && $found -eq 2 ]]; then
 		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $file
 	fi
 	# find <table id="main_table_countries_today"
@@ -48,14 +47,17 @@ do
 		found=2
 	fi
 	if [[ $line =~ $tableEnd ]]; then
-		done=1
+		break
 	fi
 done < "$input"
 
-
+# Remove extranious information
 while IFS= read -r line
 do
-	echo "${line//'</a>'/''}" >> $file2
+	newLine="${line/'</a>'/}"
+	line=`echo $newLine | sed 's/ *$//g'`
+	echo "$line" >> $file2
+	# echo "${line//'</a>'/''}" >> $file2
 done < "$file"
 
 # Data is now cut into a format to package.
@@ -64,7 +66,7 @@ done < "$file"
 tail -n +4 $wFile > $wFile2
 
 i=0
-declare -a dataFields=( "{rank: \"0" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "newRecovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"")
+declare -a dataFields=( "rank" "name" "total" "newActive" "deaths" "newDeaths" "recovered" "newRecovered" "active" "critical" "casesPM" "deathsPM")
 
 while IFS= read -r line
 do
@@ -73,17 +75,17 @@ do
 	fi
 
 	if [[ i -eq 11 ]]; then
-		data+="${dataFields[$i]}$line\"}"
+		data+="${dataFields[$i]}: \"$line\""
 		break
 	else
-		data+="${dataFields[$i]}$line\","
+		data+="${dataFields[$i]}: \"$line\","
 		let "i=i+1"
 	fi
 
 done < "$wFile2"
 
 # Update database
-toEval='db.worldData.update({ name: "World" }, '$data',{upsert: true});'
+toEval='db.worldData.update({ name: "World" }, {'$data'},{upsert: true});'
 
 # echo $toEval >> $wFile
 
@@ -94,7 +96,7 @@ tail -n +4 $file2 > $file
 # Parse country info
 data=""
 i=0
-declare -a dataFields=( "{rank: \"" "name: \"" "total: \"" "newActive: \"" "deaths: \"" "newDeaths: \"" "recovered: \"" "newRecovered: \"" "active: \"" "critical: \"" "casesPM: \"" "deathsPM: \"" "tests: \"" "testsPM: \"" "population: \"" "continent: \"" "casePP: \"")
+declare -a dataFields=( "rank" "name" "total" "newActive" "deaths" "newDeaths" "recovered" "newRecovered" "active" "critical" "casesPM" "deathsPM" "tests" "testsPM" "population" "continent" "casePP")
 
 while IFS= read -r line
 do
@@ -109,10 +111,19 @@ do
 		name=$line
 	fi
 
-	if [[ i -eq 16 ]]; then
-		data+="${dataFields[$i]}$line\"}"
+	if [[ $line == "N/A" ]]; then
+		line=""
+	fi
+	if [[  $line == "" ]]; then
+		if [[ i -eq 4 || i -eq 6 || i -eq 8 || i -eq 9 || i -eq 11 || i -eq 12 || i -eq 13 ]]; then
+			line="N/A"
+		fi
+	fi
 
-		toEval='db.countryData.update({ name: "'$name'" }, '$data',{upsert: true});'
+	if [[ i -eq 16 ]]; then
+		data+="${dataFields[$i]}: \"$line\""
+
+		toEval='db.countryData.update({ name: "'$name'" }, {'$data'},{upsert: true});'
 		# echo $toEval >> $file2
 
 		mongo --eval "$toEval" world >> dbCounty
@@ -120,7 +131,7 @@ do
 		data=""
 		let "i=0"
 	else
-		data+="${dataFields[$i]}$line\","
+		data+="${dataFields[$i]}: \"$line\","
 		let "i=i+1"
 	fi
 
