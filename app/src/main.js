@@ -42,7 +42,7 @@ const USModule = {
 	actions: {
 		fetchData ({ commit }) {
 			// Grab and assign USData
-			fetch('http://192.168.1.2:3000/api/usStateData')
+			fetch('https://db.covidbase.app/api/usStateData')
 				.then(response => { 
 					if(response.ok){
 						return response.json()
@@ -128,7 +128,7 @@ const worldModule = {
 				});
 
 			// Grab and assign countryData
-			fetch('http://192.168.1.2:3000/api/data')
+			fetch('https://db.covidbase.app/api/data')
 				.then(response => { 
 					if(response.ok){
 						return response.json()
