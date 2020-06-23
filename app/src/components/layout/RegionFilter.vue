@@ -1,6 +1,6 @@
 <template>
 	<div class="FilterRow">
-		<input class="searchBar" id="searchBar" v-model="searchQuery" placeholder="Search for Country">
+		<input class="searchBar" v-model="searchQuery" placeholder="Search for Country">
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
 			<option value="Africa">Africa</option>
@@ -24,7 +24,7 @@ export default {
 	},
 	watch: {
 		searchQuery: function (){
-			this.$store.dispatch('setQuery', this.searchQuery.toLowerCase());
+			this.$store.dispatch('setCountryQuery', this.searchQuery.toLowerCase());
 			this.$emit('searchCountry');
 		}
 	},
