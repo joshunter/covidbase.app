@@ -1,46 +1,56 @@
 <template>
 	<div class="dataTable">
 		<div class="title">{{title}}</div>
-		<div class="worldRow" id="worldRow">
-			<div class="rowElement">Total Cases
-				<div>{{data.total}}</div>
-				<div class="subNumber">{{data.newActive}}</div>
+		<div class="population" v-show="data.population">Population: {{data.population}}</div>
+		<DataDisplay v-bind:data="data"/>
+		<div class="bottomRow" v-show="moreData">
+			<div class="countryRowPar2" v-bind:key="continent._id" v-for="continent in moreData">
+				<DataDisplay v-bind:data="continent" v-show="showMore"/>
 			</div>
-			<div class="rowElement active">Active
-					<div>{{data.active}}</div>
-			</div>
-			<div class="rowElement recovered">Recovered
-				<div>{{data.recovered}}</div>
-				<div class="subNumber">{{data.newRecovered}}</div>
-			</div>
-			<div class="rowElement critical">Critical
-				<div>{{data.critical}}</div>
-			</div>
-			<div class="rowElement deaths">Deaths
-				<div>{{data.deaths}}</div>
-				<div class="subNumber">{{data.newDeaths}}</div>
-			</div>
-			<div class="rowElement expend1">Cases/1M
-				<div>{{data.casesPM}}</div>
-			</div>
-			<div class="rowElement deaths expend2">Deaths/1M
-				<div>{{data.deathsPM}}</div>
-			</div>
+			<button class="arrowButton" id="arrowButton" @click="toggleExpand()"><i id="icon" class="Arrow down"></i></button>
 		</div>
 	</div>
 </template>
 
 
 <script>
+import DataDisplay from './DataDisplay.vue';
+
 export default {
 	name: "DataTable",
-	props: ["data", "title"]
+	components: {
+		DataDisplay
+	},
+	props: ["data", "moreData", "title"],
+	data(){
+		return {
+			showMore: false
+		}
+	},
+	methods: {
+		toggleExpand(){
+			document.getElementById("arrowButton").blur();
+
+			if(this.showMore == false){
+				document.getElementById("icon").classList.remove("down");
+				document.getElementById("icon").classList.add("up");
+
+				this.showMore=true;
+			}
+			else {
+				document.getElementById("icon").classList.remove("up");
+				document.getElementById("icon").classList.add("down");
+
+				this.showMore=false;
+			}
+
+		}
+	}
 }
 </script>
 
 
 <style scoped>
-
 .dataTable {
     width:90%;
 	display: inline-block;
@@ -56,69 +66,61 @@ export default {
 	color: #3C3C3C;
     box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
-.worldRow {
-	width: 100%;
-	display: inline-block;
-    font-size: 100%;
-    text-align: center;
-    padding-bottom: 5px;
-}
 .title {
-    text-align: center;
+	text-align: center;
 	font-size: 140%;
-    padding-top: 5px;
+	padding-top: 5px;
 }
-.rowElement {
-    text-align: center;
-	width: calc(100%/7);
-	padding-left: 2%;
-	padding-right: 2%;
-	vertical-align: top;
+.population {
+	font-size: 110%;
+}
+.bottomRow {
+	height: 24px;
+}
+button.arrowButton{
+    background-color: #1b395d;
+	color: #d8dbe2;
+	border: 0;
+	height: 17px;
+	width: 25px;
+}
+button.arrowButton:hover{
+	cursor: pointer;
+}
+button.arrowButton:focus {
+	outline: 1px solid #FFFFFF;
+}
+button.arrowButton:active {
+	outline: 0;
+}
+button.arrowButton:-moz-focusring {
+	color: transparent;
+}
+.lightMode button.arrowButton:focus {
+	outline: 2px solid #3C3C3C;
+}
+.lightMode button.arrowButton:active {
+	outline: 0;
+}
+.lightMode .arrowButton {
+	background-color: #ffffff;
+	border: none;
+	box-shadow: none;
+}
+.Arrow {
+	border: solid #d8dbe2;
+	border-width: 0 3px 3px 0;
 	display: inline-block;
-}
-.subNumber {
-	font-size: 81%;
+	padding: 4px;
 }
 
-@media only screen and (max-width: 1100px){
-	.worldRow > .expend2{
-		display: none;
-	}
-	.worldRow > .rowElement{
-		width: calc(100%/6);
-	}
+.down {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
 }
 
-@media only screen and (max-width: 811px){
-	.worldRow > .expend1{
-		display: none;
-	}
-	.worldRow > .rowElement{
-		width: calc(100%/5);
-	}
+.up {
+	transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
 }
-
-@media only screen and (max-width: 550px){
-  .worldRow {
-    font-size: 85%;
-  }
-  .title{font-size: 105%;}
-}
-
-@media only screen and (max-width: 450px){
-  .worldRow {
-    font-size: 70%;
-  }
-}
-@media only screen and (max-width: 390px){
-  .worldRow {
-    font-size: 65%;
-  }
-}
-@media only screen and (max-width: 320px){
-  .worldRow {
-    font-size: 62%;
-  }
-}
-
 </style>
