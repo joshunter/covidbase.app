@@ -9,11 +9,13 @@ app.use(cors());
 
 const data = require('./routes/api/data');
 const wData = require('./routes/api/wData');
-const usStateData = require('./routes/api/usStateData');
+const usData = require('./routes/api/usData');
+const statesData = require('./routes/api/statesData');
 
 app.use('/api/data', data);
 app.use('/api/wData', wData);
-app.use('/api/usStateData', usStateData);
+app.use('/api/usData', usData);
+app.use('/api/statesData', statesData);
 
 // Handle production
 if (process.env.NODE_ENV === 'production') {
@@ -24,6 +26,6 @@ if (process.env.NODE_ENV === 'production') {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 }
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

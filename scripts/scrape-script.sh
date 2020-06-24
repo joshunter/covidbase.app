@@ -138,8 +138,8 @@ do
 done < "$file"
 
 # Remove ships
-toEval='db.countryData.remove({ name: "" });'
-mongo --eval "$toEval" world >> dbCounty
+# toEval='db.countryData.remove({ name: "" });'
+# mongo --eval "$toEval" world >> dbCounty
 
 
 # Clean up
