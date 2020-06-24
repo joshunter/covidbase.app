@@ -179,7 +179,7 @@ do
 	done < "$usFile2"
 
 	data="${data%?}]"
-	toEval='db.statesDat.aupdate({ state: "'$state'" }, {'${data%?}']},{upsert: true});'
+	toEval='db.statesData.update({ state: "'$state'" }, {'${data}'},{upsert: true});'
 	echo $toEval >> $newFile
 	mongo --eval "$toEval" world >> statesData
 
