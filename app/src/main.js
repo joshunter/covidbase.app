@@ -19,7 +19,9 @@ Vue.use(VueRouter);
 
 const USModule = {
 	state: {
-		USData: {},
+		USData: [{name:"",total:"",active:"",recovered:"",critical:"",deaths:"",tests:"",casesPM:"",deathsPM:"",testsPM:""}],
+		USTotalData: {},
+		statesData: {},
 		statesSearched: {},
 		statesQuery: ''
 	},
@@ -27,8 +29,14 @@ const USModule = {
 		assignUSData(state, payload){
 			state.USData = payload;
 		},
+		assignUSTotalData(state, payload){
+			state.USTotalData = payload;
+		},
 		assignStatesQuery(state, query) {
 			state.statesQuery = query;
+		},
+		assignStatesData(state, payload) {
+			state.statesData = payload;
 		},
 		assignStatesSearched(state, payload){
 			state.statesSearched = payload;
@@ -40,9 +48,9 @@ const USModule = {
 		}
 	},
 	actions: {
-		fetchData ({ commit }) {
+		fetchUSData ({ commit }) {				
 			// Grab and assign USData
-			fetch('https://db.covidbase.app/api/usStateData')
+			fetch('https://db.covidbase.app/api/usData')
 				.then(response => { 
 					if(response.ok){
 						return response.json()
@@ -52,6 +60,23 @@ const USModule = {
 				})
 				.then(response => {
 					commit('assignUSData', response);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		},
+		fetchStatesData ({ commit }) {
+			// Grab and assign USData
+			fetch('https://db.covidbase.app/api/statesData')
+				.then(response => { 
+					if(response.ok){
+						return response.json()
+					} else {
+						alert("Server returned " + response.status + " : " + response.statusText);
+					}
+				})
+				.then(response => {
+					commit('assignStatesData', response);
 				})
 				.catch(err => {
 					console.log(err);
@@ -68,7 +93,7 @@ const USModule = {
 
 const worldModule = {
 	state: {
-		countryData: {},
+		countryData: [{name:"",population:"",total:"",active:"",recovered:"",critical:"",deaths:"",tests:"",casesPM:"",deathsPM:"",testsPM:"",continent:""}],
 		worldData: {},
 		filteredData: {},
 		searchedData: {},
@@ -110,7 +135,7 @@ const worldModule = {
 		}
 	},
 	actions: {
-		fetchData ({ commit }) {
+		fetchData ({ commit, getters }) {
 			// Grab and assign worldData
 			fetch('https://db.covidbase.app/api/wData')
 				.then(response => { 
@@ -138,11 +163,11 @@ const worldModule = {
 				})
 				.then(response => {
 					commit('assignCountryData', response);
+					commit('assignUSTotalData',getters.getCountryByName("USA")[0])
 				})
 				.catch(err => {
 					console.log(err);
 				});
-
 		},
 		filterData ( {commit, getters} ) {
 			commit('assignFilteredData', getters.getCountriesByContinent);
@@ -187,8 +212,8 @@ const routes = [
 
 const router = new VueRouter({ 
 	routes,
-	// base: __dirname,
-	mode: 'history'
+	base: __dirname,
+	// mode: 'history'
 });
 
 new Vue({
