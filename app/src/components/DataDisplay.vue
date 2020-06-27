@@ -52,6 +52,7 @@ export default {
 	color: #3C3C3C;
 	box-shadow: 0px 0px 10px 1px #e1e1e1;
 }
+
 .displayRow {
 	width: 100%;
 	display: inline-block;
@@ -59,25 +60,25 @@ export default {
 	text-align: center;
 	padding-bottom: 5px;
 }
+
 .title {
 	text-align: center;
 	font-size: 140%;
 	padding-top: 5px;
 }
-.population {
-	font-size: 110%;
-}
+
+.population {font-size: 110%;}
+
+.subNumber {font-size: 81%;}
+
 .rowElement {
+	display: inline-block;
 	text-align: center;
+	vertical-align: top;
 	width: calc(100%/7);
 	padding-left: 2%;
 	padding-right: 2%;
 	padding-top: 1.5%;
-	vertical-align: top;
-	display: inline-block;
-}
-.subNumber {
-	font-size: 81%;
 }
 
 </style>

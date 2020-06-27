@@ -1,6 +1,9 @@
 <template>
 	<div class="dataRow row" id="row">
 		<div class="rowNumber expend1">{{index}}</div>
+<!-- 		<router-link :to={path:data.name} class="rowElement link">{{data.name}}
+			<div class="subNumber" v-show="data.population">{{data.population}}</div>
+		</router-link> -->
 		<router-link v-show="data.name=='USA'" :to={path:data.name} class="rowElement link">{{data.name}}
 			<div class="subNumber" v-show="data.population">{{data.population}}</div>
 		</router-link>
@@ -45,13 +48,10 @@ export default {
 	color: #ffffff;
 	text-decoration: underline;
 }
+.lightMode .link {color: #3C3C3C;}
 
-.lightMode .link {
-	color: #3C3C3C;
-}
-.dataRow {
-	background-color: transparent;
-}
+.dataRow {background-color: transparent;}
+
 .dataRow:hover {
 	color: #ffffff;
 	background-color: #234776;
@@ -60,12 +60,15 @@ export default {
 	background-color: #eaeaea;
 	color: #000000;
 }
+
 .row {
 	width: 100%;
+	min-height: 47px; 
     padding-top: 5px;
 	padding-bottom: 5px;
 	display: block;
 }
+
 .rowElement {
 	vertical-align: top;
 	display: inline-block;
@@ -75,47 +78,29 @@ export default {
 	padding-left: 3px;
 	padding-right: 3px;
 }
+
 .rowNumber {
 	display: inline-block;
 	width: 3%;
-	padding-top: 1.5px;
+	padding-top: 3px;
 	padding-bottom: 1.5px;
 	padding-left: 3px;
 	padding-right: 3px;
 }
-.subNumber {
-	font-size: 81%;
-}
-.active {
-	color: #58A4B0;
-}
-.lightMode .active {
-	color: #00a1e0;
-}
-.recovered {
-	color:  #a0ed8c;
-}
-.lightMode .recovered {
-	color: #2ab754;
-}
-.critical {
-	color:  #ffaf3f;
-}
-.lightMode .critical {
-	color:  #ff9f1a;
-}
-.deaths {
-	color: #ff6575;
-}
-.lightMode .deaths {
-	color: #ff4d5e;
-}
-.tests {
-	color: #2fc3da;
-}
-.lightMode .tests {
-	color: #22aabf;
-}
+
+.subNumber {font-size: 81%;}
+
+.active {color: #58A4B0;}
+.lightMode .active {color: #00a1e0;}
+.recovered {color:  #a0ed8c;}
+.lightMode .recovered {color: #2ab754;}
+.critical {color:  #ffaf3f;}
+.lightMode .critical {color:  #ff9f1a;}
+.deaths {color: #ff6575;}
+.lightMode .deaths {color: #ff4d5e;}
+.tests {color: #2fc3da;}
+.lightMode .tests {color: #22aabf;}
+
 /*smaller screens*/
 @media only screen and (max-width: 1200px){
 	.row > .expend4{display: none;}
@@ -138,18 +123,9 @@ export default {
 	.row > .rowElement{padding-top: 2px;}
 	.rowElement > .subNumber {font-size: 69%;}
 }
-@media only screen and (max-width: 465px){
-	.row {font-size: 70%;}
-}
-@media only screen and (max-width: 400px){
-	.row {font-size: 65%;}
-}
-@media only screen and (max-width: 360px){
-	.row {font-size: 62%;}
-}
-@media only screen and (max-width: 340px){
-	.row {font-size: 58%;}
-}
-
+@media only screen and (max-width: 465px){.row {font-size: 70%;}}
+@media only screen and (max-width: 400px){.row {font-size: 65%;}}
+@media only screen and (max-width: 360px){.row {font-size: 62%;}}
+@media only screen and (max-width: 340px){.row {font-size: 58%;}}
 
 </style>

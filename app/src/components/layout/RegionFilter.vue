@@ -1,6 +1,6 @@
 <template>
 	<div class="FilterRow">
-		<input class="searchBar" v-model="searchQuery" placeholder="Search for Country">
+		<input class="searchBar" id="searchBar" v-model="searchQuery" placeholder="Search for Country">
 		<select @change="sendContChange()" id="continentSel" class="continentSel">
 			<option value="Global Data" selected="selected">Global Data</option>
 			<option value="Africa">Africa</option>

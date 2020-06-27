@@ -1,6 +1,6 @@
 <template>
 	<div class="FilterRow">
-		<input class="searchBar" v-model="searchQuery" placeholder="Search for State">
+		<input class="searchBar" id="stateSearchBar" v-model="searchQuery" placeholder="Search for State">
 	</div>
 </template>
 
@@ -28,6 +28,7 @@ export default {
 	display: inline-block;
 	padding-top: 7px;
 	padding-bottom: 2px;
+	background-color: transparent;
 }
 
 input {
