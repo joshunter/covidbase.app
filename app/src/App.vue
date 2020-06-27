@@ -20,12 +20,12 @@ export default {
   },
   data(){
     return {
-      USData: {},
-      showArrow: false
+      showArrow: false,
     }
   },
   beforeCreate(){
     this.$store.dispatch('fetchData');
+    this.$store.dispatch('fetchUSData');
   },
   updated() {
     this.getTheme();
@@ -49,18 +49,21 @@ export default {
       }
     },
     setTheme(Theme){
-      const classNames = ["app","header","ArrowBox","Datatable","searchBar","continentSel"];
-      const Ids = ["name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM", "WorldTable", "USDataTable"];
+      const classNames = ["header", "nameButton","populationButton","totalButton","activeButton","recoveredButton","criticalButton","deathsButton","testsButton","casesPMButton","deathsPMButton","testsPMButton", "searchBar", "arrowButton", "showButton", "customTable", "dataTable", "continentSel"];
+      const Ids = ["app", "name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM", "continentSel", "USDataTotal","ArrowBox"];
       var errorMessages = "";
 
       if(Theme == "dark") {
         document.getElementById("dmCheck").checked = true;
 
         for(const className of classNames) {
-          try{
-            document.getElementsByClassName(className)[0].classList.remove("lightMode");
-          } catch (err){
-            errorMessages += err.message + ": " + className +"; ";
+          const elements = document.getElementsByClassName(className);
+          for(var i=0, length=elements.length|0; i<length; i=i+1|0){
+            try{
+              elements[i].classList.remove("lightMode");
+            } catch (err){
+              errorMessages += err.message + ": " + className +"; ";
+            }
           }
         }
 
@@ -76,10 +79,13 @@ export default {
         document.getElementById("dmCheck").checked = false;
 
         for(const className of classNames) {
-          try {
-            document.getElementsByClassName(className)[0].classList.add("lightMode");
-          } catch (err){
-            errorMessages += err.message + ": " + className +"; ";
+          const els = document.getElementsByClassName(className);
+          for(var ii=0, len=els.length|0; ii<len; ii=ii+1|0){
+            try {
+              els[ii].classList.add("lightMode");
+            } catch (err){
+              errorMessages += err.message + ": " + className +"; ";
+            }            
           }
         } 
 
@@ -116,7 +122,24 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+/* latin-ext */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 * {
   margin: 0;
@@ -181,7 +204,7 @@ export default {
   color: #3C3C3C;
 }
 
-/*Fade Transitions*/
+/*Fade Transitions between pages*/
 .ArrowBox.fade-enter-active {
   transition: opacity 1.25s;
 }
