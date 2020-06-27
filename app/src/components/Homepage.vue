@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:moreData="continentData" v-bind:title="'Global Info'"/>
-		<CountriesTable id="countriesTable"/>
+		<CountriesTable v-bind:data="countryData" v-bind:filteredData="filteredData" v-bind:searchedData="searchedData"/>
 	</div>
 </template>
 
@@ -16,17 +16,14 @@ export default {
 		CountriesTable
 	},
 	computed: {
-		worldData() {
-			return this.$store.state.world.worldData
-		},
-		continentData() {
-			return this.$store.state.world.continentData
-		}
+		worldData() {return this.$store.state.world.worldData},
+		continentData() {return this.$store.state.world.continentData},
+		countryData() {return this.$store.state.world.countryData},
+		filteredData() {return this.$store.state.world.filteredData},
+		searchedData() {return this.$store.state.world.searchedData}
 	}
 }
 </script>
-
-
 
 <style>
 /*smaller screens*/
@@ -40,26 +37,24 @@ export default {
 	#WorldTable .rowElement{width: calc(100%/5);}
 }
 @media only screen and (max-width: 550px){
-	#WorldTable .worldRow {font-size: 85%;}
+	#WorldTable .displayRow {font-size: 85%;}
 	#WorldTable .title{font-size: 125%;}
 }
 @media only screen and (max-width: 465px){
-	#WorldTable .worldRow {font-size: 70%;}
+	#WorldTable .displayRow {font-size: 70%;}
 	#WorldTable .title{font-size: 110%;}
 }
 @media only screen and (max-width: 400px){
-	#WorldTable .worldRow {font-size: 65%;}
+	#WorldTable .displayRow {font-size: 65%;}
 	#WorldTable .title{font-size: 105%;}
 }
 @media only screen and (max-width: 360px){
-	#WorldTable .worldRow {font-size: 62%;}
+	#WorldTable .displayRow {font-size: 62%;}
 	#WorldTable .title{font-size: 102%;}
 }
 @media only screen and (max-width: 340px){
-	#WorldTable .worldRow {font-size: 58%;}
+	#WorldTable .displayRow {font-size: 58%;}
 	#WorldTable .title{font-size: 98%;}
 }
-
-
 
 </style>

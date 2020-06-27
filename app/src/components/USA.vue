@@ -1,34 +1,29 @@
 <template>
 	<div>
 		<DataTable id="USDataTotal" v-bind:data="USTotalData" v-bind:title="'United States & Territories'"/>
-		<CustomTable id="USDataTable" v-bind:data="USData" v-bind:searchedData="statesSearched"/>
+		<CountriesTable id="USDataTable" v-bind:data="USData" v-bind:searchedData="statesSearched"/>
 	</div>
 </template>
 
 <script>
 import DataTable from './DataTable.vue';
-import CustomTable from './CustomTable.vue';
+import CountriesTable from './CountriesTable.vue';
 
 export default {
 	name: "USA",
 	components: {
 		DataTable,
-		CustomTable
+		CountriesTable
 	},
 	computed: {
-		USTotalData() {
-			return this.$store.getters.getCountryByName("USA")[0]
-		},
-		USData() {
-			return this.$store.state.us.USData
-		},
-		statesSearched() {
-			return this.$store.state.us.statesSearched
-		}
+		USTotalData() {return this.$store.state.us.USTotalData},
+		USData() {return this.$store.state.us.USData},
+		statesSearched() {return this.$store.state.us.statesSearched},
+		statesData() {return this.$store.state.us.statesData}
 	},
-	created() {
-		if (!this.USTotalData)
-			this.$store.dispatch('fetchData');
+	mounted() {
+		if(!this.statesData[0])
+			this.$store.dispatch('fetchStatesData');
 	}
 }
 </script>
@@ -63,7 +58,7 @@ export default {
 	#USDataTable .rowElement{width: calc(100%/5);}
 }
 @media only screen and (max-width: 550px){
-	#USDataTotal .worldRow{font-size: 85%;}
+	#USDataTotal .displayRow{font-size: 85%;}
 	#USDataTotal .population{font-size: 95%;}
 	#USDataTotal .title{font-size: 125%;}
 
@@ -71,16 +66,9 @@ export default {
 	#USDataTable .rowElement{padding-top: 2px;}
 	#USDataTable .subNumber {font-size: 69%;}
 }
-@media only screen and (max-width: 465px){
-	#USDataTable .row {font-size: 80%;}
-}
-@media only screen and (max-width: 410px){
-	#USDataTable .row {font-size: 70%;}
-}
-@media only screen and (max-width: 360px){
-	#USDataTable .row {font-size: 62%;}
-}
-@media only screen and (max-width: 340px){
-	#USDataTable .row {font-size: 58%;}
-}
+@media only screen and (max-width: 465px){#USDataTable .row {font-size: 80%;}}
+@media only screen and (max-width: 410px){#USDataTable .row {font-size: 70%;}}
+@media only screen and (max-width: 360px){#USDataTable .row {font-size: 62%;}}
+@media only screen and (max-width: 340px){#USDataTable .row {font-size: 58%;}}
+
 </style>
