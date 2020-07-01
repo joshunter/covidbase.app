@@ -4,31 +4,31 @@
 			Population
 			<div>{{data.population}}</div>
 		</div>
-		<div class="rowElement">Total Cases
+		<div class="rowElement" v-show="data.total">Total Cases
 			<div>{{data.total}}</div>
 			<div class="subNumber">{{data.newActive}}</div>
 		</div>
-		<div class="rowElement active">Active
+		<div class="rowElement active" v-show="data.active">Active
 				<div>{{data.active}}</div>
 		</div>
-		<div class="rowElement recovered">Recovered
+		<div class="rowElement recovered" v-show="data.recovered">Recovered
 			<div>{{data.recovered}}</div>
 			<div class="subNumber">{{data.newRecovered}}</div>
 		</div>
-		<div class="rowElement critical">Critical
+		<div class="rowElement critical" v-show="data.critical">Critical
 			<div>{{data.critical}}</div>
 		</div>
-		<div class="rowElement deaths">Deaths
+		<div class="rowElement deaths" v-show="data.deaths">Deaths
 			<div>{{data.deaths}}</div>
 			<div class="subNumber">{{data.newDeaths}}</div>
 		</div>
 		<div class="rowElement tests" v-show="data.tests"> Tests
 			<div>{{data.tests}}</div>
 		</div>
-		<div class="rowElement expend1">Cases/1M
+		<div class="rowElement expend1" v-show="data.casesPM">Cases/1M
 			<div>{{data.casesPM}}</div>
 		</div>
-		<div class="rowElement deaths expend2">Deaths/1M
+		<div class="rowElement deaths expend2" v-show="data.deathsPM">Deaths/1M
 			<div>{{data.deathsPM}}</div>
 		</div>
 		<div class="rowElement tests" v-show="data.testsPM">Tests/1M
