@@ -27,12 +27,15 @@ export default {
 			return stateName;
 		},
 		totalData() {
-			var totalData={name:"",total:"",newActive:"",deaths:"",newDeaths:"",active:"",casesPM:"",deathsPM:"",tests:"",testsPM:""}
+			var totalData
 			try {
 				totalData=this.$store.getters.getStateBySearch(this.currentState)[0]
 			} catch {
 				console.log("wow!");
 			}
+			if(!totalData)
+				totalData = {}
+
 			return totalData;
 		},
 		data() {
