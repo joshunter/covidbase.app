@@ -8,9 +8,10 @@ import VueRouter from 'vue-router'
 import About from './About.vue'
 import Homepage from './components/Homepage.vue'
 import USA from './components/USA.vue'
+import StatePage from './components/StatePage.vue'
 
-var myHeaders = new Headers();
-myHeaders.set('Content-Security-Policy', 'default-src \'self\' *.covidbase.app;');
+// var myHeaders = new Headers();
+// myHeaders.set('Content-Security-Policy', 'default-src \'self\' *.covidbase.app;');
 
 Vue.config.productionTip = false
 
@@ -23,6 +24,9 @@ const USModule = {
 		USTotalData: {},
 		statesData: {},
 		statesSearched: {},
+		currentState: '',
+		citiesSearched: {},
+		cityQuery: '',
 		statesQuery: ''
 	},
 	mutations: {
@@ -38,14 +42,36 @@ const USModule = {
 		assignStatesData(state, payload) {
 			state.statesData = payload;
 		},
+		assignCurrentState(state, payload){
+			state.currentState = payload;
+		},
 		assignStatesSearched(state, payload){
 			state.statesSearched = payload;
+		},
+		assignCitiesSearched(state, payload){
+			state.citiesSearched = payload;
+		},
+		assignCityQuery(state, query) {
+			state.cityQuery = query;
 		}
 	},
 	getters: {
 		getStatesBySearch: (state) => {
-			return state.USData.filter(country => country.name.toLowerCase().includes(state.statesQuery));
-		}
+			return state.USData.filter(curr => curr.name.toLowerCase().includes(state.statesQuery));
+		},
+		getStateBySearch: (state) => (name) => {
+			return state.USData.filter(curr => curr.name.toLowerCase().includes(name));
+		},
+		getStateDataBySearch: (state) => (name) => {
+			return state.statesData.filter(curr => curr.state.toLowerCase().includes(name));
+		},
+		getCitiesBySearch: (state, getters) => {
+			var data = getters.getStateDataBySearch(state.currentState)[0].data;
+
+			console.log(state.cityQuery)
+			console.log(data.filter(curr => curr.name.toLowerCase().includes(state.cityQuery)))
+			return data.filter(curr => curr.name.toLowerCase().includes(state.cityQuery));
+		},
 	},
 	actions: {
 		fetchUSData ({ commit }) {				
@@ -85,8 +111,17 @@ const USModule = {
 		searchStatesData ( {commit, getters} ) {
 			commit('assignStatesSearched', getters.getStatesBySearch);
 		},
+		searchCitiesData ( {commit, getters} ) {
+			commit('assignCitiesSearched', getters.getCitiesBySearch);
+		},
+		setCurrentState ( {commit}, query ) {
+			commit('assignCurrentState', query);
+		},
 		setStatesQuery ( {commit}, query ) {
 			commit('assignStatesQuery', query);
+		},
+		setCityQuery ( {commit}, query ) {
+			commit('assignCityQuery', query);
 		}
 	}
 }
@@ -201,10 +236,17 @@ const routes = [
 		name: 'about',
 		component: About
 	},
-	{	path: '/USA',
+	{	path: '*/USA',
 		name: 'USA',
 		component: USA
 	},
+	{	path: "/usa/california", component: StatePage},
+	{	path: "/usa/new-york", component: StatePage},
+	{	path: "/usa/texas", component: StatePage},
+	{	path: "/usa/florida", component: StatePage},
+	{	path: "/usa/pennsylvania", component: StatePage},
+	{	path: "/usa/ohio", component: StatePage},
+	{	path: "/usa/washington", component: StatePage},
 	{	path: "*",
 		component: Homepage
 	}
