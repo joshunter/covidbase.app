@@ -1,6 +1,6 @@
 <template>
 	<div class="FilterRow">
-		<input class="searchBar" id="stateSearchBar" v-model="searchQuery" placeholder="Search for State">
+		<input class="searchBar" id="stateSearchBar" v-model="searchQuery" placeholder="Search">
 	</div>
 </template>
 
@@ -16,6 +16,8 @@ export default {
 	watch: {
 		searchQuery: function (){
 			this.$store.dispatch('setStatesQuery', this.searchQuery.toLowerCase());
+			this.$store.dispatch('setCityQuery', this.searchQuery.toLowerCase());
+
 			this.$emit('search',this.searchQuery);
 		}
 	}
