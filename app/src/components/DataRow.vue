@@ -1,13 +1,14 @@
 <template>
 	<div class="dataRow row" id="row">
 		<div class="rowNumber expend1">{{index}}</div>
-<!-- 		<router-link :to={path:data.name} class="rowElement link">{{data.name}}
-			<div class="subNumber" v-show="data.population">{{data.population}}</div>
-		</router-link> -->
-		<router-link v-show="data.name=='USA'" :to={path:data.name} class="rowElement link">{{data.name}}
+<!--		<router-link :to={path:this.path} class="rowElement link">{{data.name}}
 			<div class="subNumber" v-show="data.population">{{data.population}}</div>
 		</router-link>
-		<div v-show="data.name!='USA'" class="rowElement">{{data.name}}
+-->	
+		<router-link v-show="paths.includes(data.name)" :to={path:this.path} class="rowElement link">{{data.name}}
+			<div class="subNumber" v-show="data.population">{{data.population}}</div>
+		</router-link>
+		<div v-show="!paths.includes(data.name)" class="rowElement">{{data.name}}
 			<div class="subNumber" v-show="data.population">{{data.population}}</div>
 		</div>
 		<div class="rowElement" v-show="data.total">{{data.total}}
@@ -34,18 +35,29 @@ export default {
 	props: [
 		"data",
 		"index"
-	]
+	],
+	data() {
+		return {
+			paths: ["USA", "California", "New York", "Texas", "Florida", "Pennsylvania", "Ohio", "Washington"]
+		}
+	},
+	computed: {
+		path() {return this.$route.fullPath + this.data.name.toLowerCase().replace(/\s/g,'-') + "/" }
+	}
 }
 </script>
 
 <style>
 .link {
-	color: #fff;
-	text-decoration: none;
+	color: #d8dbe2;
+	font-style: italic;
+	text-underline-position: under;
+	text-decoration-thickness: 1px;
 	outline: 0;
 }
 .link:hover {
 	color: #ffffff;
+	text-decoration-thickness: 1px;
 	text-decoration: underline;
 }
 .lightMode .link {color: #3C3C3C;}
