@@ -49,8 +49,12 @@ export default {
       }
     },
     setTheme(Theme){
-      const classNames = ["header", "nameButton","populationButton","totalButton","activeButton","recoveredButton","criticalButton","deathsButton","testsButton","casesPMButton","deathsPMButton","testsPMButton", "searchBar", "arrowButton", "showButton", "customTable", "dataTable", "continentSel"];
-      const Ids = ["app", "name","population","total","active","recovered","critical","deaths","tests","casesPM","deathsPM","testsPM", "continentSel", "USDataTotal","ArrowBox"];
+      const classNames = ["header","nameButton","populationButton","totalButton",
+      "activeButton","recoveredButton","criticalButton","deathsButton","testsButton",
+      "casesPMButton","deathsPMButton","testsPMButton","searchBar","arrowButton",
+      "showButton","customTable","dataTable","continentSel"];
+      const Ids = ["app","name","population","total","active","recovered","critical",
+                    "deaths","tests","casesPM","deathsPM","testsPM","ArrowBox"];
       var errorMessages = "";
 
       if(Theme == "dark") {
@@ -128,8 +132,10 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: local('Lato Regular'),local('Lato-Regular'),
+  url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+  unicode-range: U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,
+  U+2C60-2C7F,U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -137,8 +143,10 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: local('Lato Regular'),local('Lato-Regular'),
+  url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+  U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
 * {
@@ -178,7 +186,7 @@ export default {
   right: 32px
 }
 .ArrowBox {
-  border-radius: 7px;
+  border-radius: 25px;
   height: 50px;
   width: 50px;
   background-color:  #3061a1;
@@ -193,18 +201,23 @@ export default {
   color: #bcc1cd;
   cursor: pointer;
 }
+.ArrowBox:active {
+  background-color:  #183353;
+}
 .ArrowBox.lightMode {
   box-shadow: 0px 0px 10px 0px #e1e1e1;
 }
 .ArrowBox.lightMode:hover {
   background-color:  #f8f8f8;
 }
+.ArrowBox.lightMode:active {
+  background-color:  #f3f3f3;
+}
 .lightMode {
   background-color: #FFFFFF;
   color: #3C3C3C;
 }
 
-/*Fade Transitions between pages*/
 .ArrowBox.fade-enter-active {
   transition: opacity 1.25s;
 }
@@ -212,6 +225,7 @@ export default {
   transition: opacity 0.5s;
 }
 
+/*Fade Transitions between pages*/
 .fade-enter-active {
   transition: opacity 1.25s;
 }
