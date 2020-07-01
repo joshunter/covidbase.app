@@ -38,7 +38,7 @@ export default {
 	],
 	data() {
 		return {
-			paths: ["USA", "California", "New York", "Texas", "Florida", "Pennsylvania", "Ohio", "Washington"]
+			paths: ["USA", "California", "Texas", "Florida", "Pennsylvania", "Ohio", "Washington"]
 		}
 	},
 	computed: {
@@ -50,19 +50,21 @@ export default {
 <style>
 .link {
 	color: #d8dbe2;
-	font-style: italic;
 	text-underline-position: under;
 	text-decoration-thickness: 1px;
 	outline: 0;
 }
 .link:hover {
+	font-style: italic;
 	color: #ffffff;
 	text-decoration-thickness: 1px;
-	text-decoration: underline;
 }
 .lightMode .link {color: #3C3C3C;}
 
-.dataRow {background-color: transparent;}
+.dataRow {
+	background-color: transparent;
+	transition: background-color 0.3s;
+}
 
 .dataRow:hover {
 	color: #ffffff;
