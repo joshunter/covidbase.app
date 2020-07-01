@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:moreData="continentData" v-bind:title="'Global Info'"/>
-		<CustomTable v-bind:data="countryData" v-bind:filteredData="filteredData" v-bind:searchedData="searchedData"/>
+		<CustomTable v-bind:data="countryData" v-bind:filteredData="filteredData" v-bind:searchedData="searchedData" v-bind:type="'Country'"/>
 	</div>
 </template>
 

@@ -7,14 +7,10 @@
 				<div id="rank" class="rowRankB">#
 				</div>
 			</div>
-			<div class="rowElement" v-show="data[0].population" >
-				<button id="name" class="country nameButton" @click="sortBy('name')">Country
+			<div class="rowElement" v-show="data[0].name">
+				<button id="name" class="country nameButton" @click="sortBy('name')">{{type}}
 				</button>
 				<button id="population" class="subNumber populationButton" v-show="data[0].population" @click="sortBy('population')">Population
-				</button>
-			</div>
-			<div class="rowElement" v-show="!data[0].population && data[0].name">
-				<button id="stateName" class="country nameButton" @click="sortBy('stateName')">State
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].total">
@@ -93,7 +89,8 @@ components: {
 props:[
 	"data",
 	"filteredData",
-	"searchedData"
+	"searchedData",
+	"type"
 ],
 data(){
 	return {
@@ -217,31 +214,12 @@ methods: {
 		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
 
 		switch(type){
-			case "stateName":
-				el = document.getElementById("stateName");
-
-				el.style.fontWeight = "bold";
-				if(sortedBy=='nameA') {el.innerHTML='State&#8593;'}
-				else {el.innerHTML='State&#8595;'}
-
-				this.data.sort(function (a, b) {
-					if(sortedBy=='nameA'){
-						sessionStorage.setItem('sortedBy', 'nameD');
-						if (a.name < b.name) {return 1;}
-						if (a.name > b.name) {return -1;}
-					}
-
-					sessionStorage.setItem('sortedBy', 'nameA');
-					if (a.name < b.name) {return -1;}
-					if (a.name > b.name) {return 1;}
-				});
-				break;
 			case "name":
 				el = document.getElementById("name");
 
 				el.style.fontWeight = "bold";
-				if(sortedBy=='nameA') {el.innerHTML='Country&#8593;'}
-				else {el.innerHTML='Country&#8595;'}
+				if(sortedBy=='nameA') {el.innerHTML=this.type+'&#8593;'}
+				else {el.innerHTML=this.type+'&#8595;'}
 				
 				this.data.sort(function (a, b) {
 					if(sortedBy=='nameA'){
