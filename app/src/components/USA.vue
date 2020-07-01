@@ -1,19 +1,19 @@
 <template>
 	<div>
 		<DataTable id="USDataTotal" v-bind:data="USTotalData" v-bind:title="'United States & Territories'"/>
-		<CountriesTable id="USDataTable" v-bind:data="USData" v-bind:searchedData="statesSearched"/>
+		<CustomTable id="USDataTable" v-bind:data="USData" v-bind:searchedData="statesSearched"/>
 	</div>
 </template>
 
 <script>
 import DataTable from './DataTable.vue';
-import CountriesTable from './CountriesTable.vue';
+import CustomTable from './CustomTable.vue';
 
 export default {
 	name: "USA",
 	components: {
 		DataTable,
-		CountriesTable
+		CustomTable
 	},
 	computed: {
 		USTotalData() {return this.$store.state.us.USTotalData},

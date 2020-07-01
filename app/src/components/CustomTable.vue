@@ -60,20 +60,20 @@
 				</button>
 			</div>
 		</div>
-		<div class="countryRowPar2" v-bind:key="datum._id+'global'" v-for="(datum, index) in data">
+		<div class="countryRowPar2" v-bind:key="index+'global'" v-for="(datum, index) in data">
 				<DataRow v-bind:index="index+1" v-bind:data="datum" v-show="show=='Global Data' && index < showing"/>
 		</div>
-		<div class="countryRowPar" v-bind:key="datum._id+'filtered'" v-for="(datum, index) in filteredData">
+		<div class="countryRowPar" v-bind:key="index+'filtered'" v-for="(datum, index) in filteredData">
 				<DataRow v-bind:index="index+1" v-bind:data="datum" v-show="show==datum.continent  && index < showing"/>
 		</div>		
-		<div class="countryRowPar" v-bind:key="datum._id+'search'" v-for="(datum, index) in searchedData">
+		<div class="countryRowPar" v-bind:key="index+'search'" v-for="(datum, index) in searchedData">
 				<DataRow v-bind:index="index+1" v-bind:data="datum" v-show="show=='search' && index < showing"/>
 		</div>
 		<div class="bottomRow">
-			<span><button class="showButton hidden" id="min" style="left: 20%;" @click="showMin()">Minimize</button></span>
-			<span><button class="arrowButton" id="more" @click="showMore()"><i class="Arrow down"></i></button></span>
-			<span><button class="arrowButton" id="less" @click="showLess()"><i class="Arrow up"></i></button></span>
-			<span><button class="showButton" id="all" style="right: 20%;" @click="showAll()">All</button></span>
+			<button class="showButton hidden" id="min" style="right: 90px;" @click="showMin()">min</button>
+			<button class="showButton arrowButton hidden" id="less"  style="right: 5px;" @click="showLess()">-</button>
+			<button class="showButton arrowButton" id="more" style="left: 5px;" @click="showMore()">+</button>
+			<button class="showButton" id="all" style="left: 90px;" @click="showAll()">all</button>
 		</div>
 	</div>
 </template>
@@ -84,7 +84,7 @@ import RegionFilter from './layout/RegionFilter.vue';
 import CustomFilter from './layout/CustomFilter.vue';
 
 export default{
-name:"CountryTable",
+name:"CustomTable",
 components: {
 	DataRow,
 	RegionFilter,
@@ -102,6 +102,9 @@ data(){
 		path: ''
 	};
 },
+computed: {
+	currentState() {return this.$store.state.us.currentState}
+},
 mounted() {
 	sessionStorage.setItem('prevShow', this.show);
 	sessionStorage.setItem('sortedBy', 'totalD');
@@ -109,34 +112,47 @@ mounted() {
 methods: {
 	showMin(){
 		document.getElementById("min").classList.add("hidden");
+		document.getElementById("less").classList.add("hidden");
+
 		document.getElementById("all").classList.remove("hidden");
+		document.getElementById("more").classList.remove("hidden");
 
 		this.showing = 20;
 	},
 	showMore(){
-		document.getElementById("more").blur();
 		this.showing += 20;
+		const moreButton = document.getElementById("more")
+		moreButton.blur();
+		document.getElementById("less").classList.remove("hidden");
 		document.getElementById("min").classList.remove("hidden");
 
 		if(this.showing >= this.data.length){
+			moreButton.classList.add("hidden");
 			document.getElementById("all").classList.add("hidden");
 			this.showing = this.data.length;
 		}
+		moreButton.scrollIntoView();
 	},
 	showLess(){
-		document.getElementById("less").blur();
 		if(this.showing-20 > 20){
-			document.getElementById("all").classList.remove("hidden");
 			this.showing -= 20;
+			document.getElementById("all").classList.remove("hidden");
+			document.getElementById("more").classList.remove("hidden");
 		}
 		else{
-			document.getElementById("min").classList.add("hidden");
 			this.showing = 20;
+			document.getElementById("less").classList.add("hidden");
+			document.getElementById("min").classList.add("hidden");
 		}
+		document.getElementById("less").blur();
 	},
 	showAll(){
 		document.getElementById("min").classList.remove("hidden");
+		document.getElementById("less").classList.remove("hidden");
+
 		document.getElementById("all").classList.add("hidden");
+		document.getElementById("more").classList.add("hidden");
+
 		this.showing = this.data.length;
 	},
 	changeCont(continent) {
@@ -178,7 +194,10 @@ methods: {
 			this.show='Global Data';
 		}
 
-		this.$store.dispatch('searchStatesData');
+		if(this.currentState === '')
+			this.$store.dispatch('searchStatesData');
+		else
+			this.$store.dispatch('searchCitiesData');
 
 		const node = document.getElementById("stateSearchBar");
 		node.addEventListener("keyup", function(event) {
@@ -561,14 +580,15 @@ methods: {
 </script>
 
 <style scoped>
+
 .customTable {
 	border-collapse: collapse;
 	text-align: center;
-    width:90%;
-    border-radius: 7px;
-    background-color: #1b395d;
+	width:90%;
+	border-radius: 7px;
+	background-color: #1b395d;
 	color: #d8dbe2;
-    box-shadow: 0px 0px 10px 1px #182a43;
+	box-shadow: 0px 0px 10px 1px #182a43;
 }
 
 .headerRow {
@@ -591,10 +611,14 @@ methods: {
 .lightMode .countryRowPar2:nth-child(even) {background-color: #f8f8f8;}
 
 .bottomRow{
-	color:transparent;
-	height: 25px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	background: linear-gradient(90deg, #183353 0%, #1b395d 50%, #183353 100%); 
+	height: 38px;
 }
-
+.lightMode .bottomRow{
+	background: linear-gradient(90deg, #f8f8f8 0%, #ffffff 50%, #f8f8f8 100%); 
+}
 .lightMode {
 	background-color: #ffffff;
 	color: #3C3C3C;
@@ -630,32 +654,53 @@ button.tests:-moz-focusring {text-shadow: 0 0 0 #2fc3da;}
 button.subNumber{font-size: 81%;}
 
 .showButton {
-	background-color: transparent;
-	position: absolute;
-	padding-top: 2px;
-	width: 80px;
-}
-.arrowButton{
-	width: 20px;
-	margin-bottom: 2px;
-}
-.Arrow {
-	border: solid #d8dbe2;
-	border-width: 0 3px 3px 0;
-	display: inline-block;
-	padding: 4px;
-}
-.down {
-	transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);	
-}
-.up {
-	transform: rotate(-135deg);
-	-webkit-transform: rotate(-135deg);
-	margin-top: 12px;
+	position: static;
+	background-color: #24497a;
+	border-radius: 14px;
+	width: 60px;
+	height: 28px;
+	margin: 5px;
 }
 
-.hidden {display: none;}
+.showButton:hover {
+	background-color:  #20406a;
+	color: #bcc1cd;
+	text-decoration: none;
+}
+
+.showButton:active {
+	background-color:  #183353;
+}
+.showButton:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #bcc1cd;
+}
+
+.lightMode .showButton {
+	background-color:  #f4f4f4;
+}
+
+.lightMode .showButton:hover {
+	background-color:  #ededed;
+	color: #3C3C3C;
+	text-decoration: none;
+}
+
+.lightMode .showButton:active {
+	background-color:  #e1e1e1;
+	color: #3C3C3C;
+	text-decoration: none;
+}
+
+.lightMode .showButton:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #3C3C3C;
+}
+
+.arrowButton{
+	font-size: 130%;
+	width: 28px;
+}
 
 button {
 	outline: 0;
@@ -691,9 +736,40 @@ button.lightMode {
   text-shadow: 0 0 0 #3C3C3C;
 }
 
-@media only screen and (max-width: 550px){.showButton {padding-top: 4px;font-size: 85%;}}
-@media only screen and (max-width: 465px){.showButton {padding-top: 6px;font-size: 70%;}}
-@media only screen and (max-width: 400px){.showButton {padding-top: 8px;font-size: 65%;}}
-@media only screen and (max-width: 360px){.showButton {font-size: 62%;}}
-@media only screen and (max-width: 340px){.showButton {font-size: 58%;}}
+.hidden{
+	background-color: transparent;
+	color: transparent;
+}
+.hidden:hover{
+	background-color: transparent;
+	color: transparent;
+	pointer-events:none;
+}
+.hidden:focus {outline: none;}
+.hidden:active {pointer-events:none;}
+.hidden:-moz-focusring {text-shadow: none;}
+
+.lightMode .hidden{
+	background-color: transparent;
+	color: transparent;
+}
+.lightMode .hidden:hover{
+	background-color: transparent;
+	color: transparent;
+	pointer-events:none;
+}
+.lightMode .hidden:focus {outline: none;}
+.lightMode .hidden:active {
+	background-color: transparent;
+	color: transparent;
+	pointer-events:none;
+}
+.lightMode .hidden:-moz-focusring {text-shadow: none;}
+
+@media only screen and (max-width: 550px){.showButton {font-size: 85%;} .arrowButton{font-size: 105%;}}
+@media only screen and (max-width: 465px){.showButton {font-size: 70%;} .arrowButton{font-size: 100%;}}
+@media only screen and (max-width: 400px){.showButton {font-size: 67%;} .arrowButton{font-size: 97%;}}
+@media only screen and (max-width: 360px){.showButton {font-size: 66%;} .arrowButton{font-size: 96%;}}
+@media only screen and (max-width: 340px){.showButton {font-size: 58%;} .arrowButton{font-size: 88%;}}
+
 </style>

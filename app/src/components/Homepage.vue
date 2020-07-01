@@ -1,19 +1,19 @@
 <template>
 	<div>
 		<DataTable id="WorldTable" v-bind:data="worldData" v-bind:moreData="continentData" v-bind:title="'Global Info'"/>
-		<CountriesTable v-bind:data="countryData" v-bind:filteredData="filteredData" v-bind:searchedData="searchedData"/>
+		<CustomTable v-bind:data="countryData" v-bind:filteredData="filteredData" v-bind:searchedData="searchedData"/>
 	</div>
 </template>
 
 <script>
 import DataTable from './DataTable.vue';
-import CountriesTable from './CountriesTable.vue';
+import CustomTable from './CustomTable.vue';
 
 export default {
 	name: 'Homepage',
 	components: {
 		DataTable,
-		CountriesTable
+		CustomTable
 	},
 	computed: {
 		worldData() {return this.$store.state.world.worldData},
