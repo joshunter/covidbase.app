@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<DataTable id="StateTotal" v-bind:data="totalData" v-bind:title="data.state"/>
-		<CustomTable id="StateTable" v-bind:data="data" v-bind:searchedData="citiesSearched" v-bind:type="'City'"/>
+		<CustomTable id="StateTable" v-bind:data="data.data" v-bind:searchedData="citiesSearched" v-bind:type="'City'"/>
 	</div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
 		data() {
 			var data
 			try {
-				data=this.$store.getters.getStateDataBySearch(this.currentState)[0].data
+				data=this.$store.getters.getStateDataBySearch(this.currentState)[0]
 			} catch {
 				data=[{name:"",total:"",active:"",deaths:"",tests:""}]
 			}				
