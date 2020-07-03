@@ -43,7 +43,7 @@ export default {
 			try {
 				data=this.$store.getters.getStateDataBySearch(this.currentState)[0]
 			} catch {
-				data=[{name:"",total:"",active:"",deaths:"",tests:""}]
+				data={state:"", data:[{name:"",total:"",active:"",deaths:"",tests:""}]}
 			}				
 
 			return data;
