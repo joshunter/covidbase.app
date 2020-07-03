@@ -77,12 +77,12 @@ do
 		fi
 	fi
 
-	if [[ i -lt 9 ]]; then
+	if [[ i -lt 10 ]]; then
 		data+="${dataFields[$i]} : \"$line\", "
 	fi
 
-	if [[ i -eq 9 ]]; then
-		data+="${dataFields[$i]} : \"$line\""
+	if [[ i -eq 10 ]]; then
+		data+="${dataFields[$i]} : \"state\""
 
 
 		toEval='db.usData.update({ name: "'$name'" }, {'$data'},{upsert: true});'
@@ -179,7 +179,7 @@ do
 	done < "$usFile2"
 
 	data="${data%?}]"
-	toEval='db.statesData.update({ state: "'$state'" }, {'${data}'},{upsert: true});'
+	toEval='db.statesData.update({ state: "'$state'" }, {'$data'},{upsert: true});'
 	echo $toEval >> $newFile
 	mongo --eval "$toEval" world >> statesData
 
