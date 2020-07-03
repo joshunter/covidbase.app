@@ -77,12 +77,12 @@ do
 		fi
 	fi
 
-	if [[ i -lt 10 ]]; then
+	if [[ i -lt 9 ]]; then
 		data+="${dataFields[$i]} : \"$line\", "
 	fi
 
-	if [[ i -eq 10 ]]; then
-		data+="${dataFields[$i]} : \"state\""
+	if [[ i -eq 9 ]]; then
+		data+="${dataFields[$i]} : \"$line\""
 
 
 		toEval='db.usData.update({ name: "'$name'" }, {'$data'},{upsert: true});'
@@ -184,11 +184,6 @@ do
 	mongo --eval "$toEval" world >> statesData
 
 done
-
-
-# Remove empty
-# toEval='db.countryData.remove({ state: "" });'
-# mongo --eval "$toEval" world >> dbCounty
 
 
 # Clean up
