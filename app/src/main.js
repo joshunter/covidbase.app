@@ -236,17 +236,14 @@ const routes = [
 		name: 'about',
 		component: About
 	},
-	{	path: '*/USA',
+	{	path: '/USA',
 		name: 'USA',
 		component: USA
 	},
-	{	path: "/usa/california", component: StatePage},
-	{	path: "/usa/new-york", component: StatePage},
-	{	path: "/usa/texas", component: StatePage},
-	{	path: "/usa/florida", component: StatePage},
-	{	path: "/usa/pennsylvania", component: StatePage},
-	{	path: "/usa/ohio", component: StatePage},
-	{	path: "/usa/washington", component: StatePage},
+	{	
+		path: "/usa/*",
+		component: StatePage
+	},
 	{	path: "*",
 		component: Homepage
 	}

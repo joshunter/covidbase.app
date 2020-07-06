@@ -1,14 +1,11 @@
 <template>
 	<div class="dataRow row" id="row">
 		<div class="rowNumber expend1">{{index}}</div>
-<!--		<router-link :to={path:this.path} class="rowElement link">{{data.name}}
-			<div class="subNumber" v-show="data.population">{{data.population}}</div>
-		</router-link>
--->	
-		<router-link v-show="paths.includes(data.name)" :to={path:this.path} class="rowElement link">{{data.name}}
-			<div class="subNumber" v-show="data.population">{{data.population}}</div>
-		</router-link>
-		<div v-show="!paths.includes(data.name)" class="rowElement">{{data.name}}
+		<div class="rowElement">
+			<!-- if this data has a link, use router-link, otherwise, display name as usual. -->
+			<router-link v-show="paths.includes(data.name)" :to={path:this.path} class="link">{{data.name}}
+			</router-link>
+			<div v-show="!paths.includes(data.name)">{{data.name}}</div>
 			<div class="subNumber" v-show="data.population">{{data.population}}</div>
 		</div>
 		<div class="rowElement" v-show="data.total">{{data.total}}
@@ -42,7 +39,7 @@ export default {
 		}
 	},
 	computed: {
-		path() {return this.$route.fullPath + this.data.name.toLowerCase().replace(/\s/g,'-') + "/" }
+		path() {return this.$route.fullPath + this.data.name.toLowerCase().replace(/\s/g,'-') + "/" },
 	}
 }
 </script>
@@ -55,7 +52,7 @@ export default {
 	outline: 0;
 }
 .link:hover {
-	font-style: italic;
+	font-weight: bold;
 	color: #ffffff;
 	text-decoration-thickness: 1px;
 }
