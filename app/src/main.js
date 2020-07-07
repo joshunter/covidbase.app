@@ -6,9 +6,9 @@ import VueRouter from 'vue-router'
 
 // pages
 import About from './About.vue'
-import Homepage from './components/Homepage.vue'
-import USA from './components/USA.vue'
-import StatePage from './components/StatePage.vue'
+import Homepage from './Homepage.vue'
+import USA from './USA.vue'
+import StatePage from './StatePage.vue'
 
 // var myHeaders = new Headers();
 // myHeaders.set('Content-Security-Policy', 'default-src \'self\' *.covidbase.app;');
@@ -130,6 +130,7 @@ const worldModule = {
 	state: {
 		countryData: [{name:"",population:"",total:"",active:"",recovered:"",critical:"",deaths:"",tests:"",casesPM:"",deathsPM:"",testsPM:"",continent:""}],
 		worldData: {},
+		continentData: {},
 		filteredData: {},
 		searchedData: {},
 		currentContinent: 'Global Data',
