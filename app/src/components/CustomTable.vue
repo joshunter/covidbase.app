@@ -76,8 +76,8 @@
 
 <script>
 import DataRow from './DataRow.vue';
-import RegionFilter from './layout/RegionFilter.vue';
-import CustomFilter from './layout/CustomFilter.vue';
+import RegionFilter from './RegionFilter.vue';
+import CustomFilter from './CustomFilter.vue';
 
 export default{
 name:"CustomTable",

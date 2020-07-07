@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import DataTable from './DataTable.vue';
-import CustomTable from './CustomTable.vue';
+import DataTable from './components/DataTable.vue';
+import CustomTable from './components/CustomTable.vue';
 
 export default {
 	name: 'Homepage',
