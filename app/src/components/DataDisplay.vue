@@ -1,5 +1,6 @@
 <template>
 	<div class="displayRow" id="displayRow">
+		<div class="title" v-show="title">{{title}}</div>
 		<div class="rowElement population2" v-show="data.population">
 			Population
 			<div>{{data.population}}</div>
@@ -41,7 +42,7 @@
 <script>
 export default {
 	name: "DataDisplay",
-	props: ["data"]
+	props: ["data", "title"]
 }
 </script>
 

@@ -3,11 +3,19 @@
 		<div class="title">{{title}}</div>
 		<div class="population" v-show="data.population">Population: {{data.population}}</div>
 		<DataDisplay v-bind:data="data"/>
+<!-- 		<div class="countryRowPar2" v-bind:key="index" v-for="(continent, index) in moreData">
+			<DataDisplay v-bind:data="moreData.data" v-bind:title="moreData.name" v-show="showMore"/>
+		</div>  -->
+<!-- 		<div class="countryRowPar2" v-show="showMore">
+			<DataDisplay v-bind:data="data" v-bind:title="data.name" />
+			<DataDisplay v-bind:data="data" v-bind:title="'Asia'"/>
+			<DataDisplay v-bind:data="data" v-bind:title="'Australia'"/>
+			<DataDisplay v-bind:data="data" v-bind:title="'Europe'"/>
+			<DataDisplay v-bind:data="data" v-bind:title="'North America'"/>
+			<DataDisplay v-bind:data="data" v-bind:title="'South America'"/>
+		</div>  -->
 		<div class="bottomRow" v-show="moreData">
-			<div class="countryRowPar2" v-bind:key="continent._id" v-for="continent in moreData">
-				<DataDisplay v-bind:data="continent" v-show="showMore"/>
-			</div>
-			<button class="arrowButton" id="arrowButton" @click="toggleExpand()"><i id="icon" class="Arrow down"></i></button>
+			<button class="showButton" id="showMoreButton" @click="toggleExpand()">+</button>
 		</div>
 	</div>
 </template>
@@ -29,19 +37,15 @@ export default {
 	},
 	methods: {
 		toggleExpand(){
-			document.getElementById("arrowButton").blur();
+			document.getElementById("showMoreButton").blur();
 
 			if(this.showMore == false){
-				document.getElementById("icon").classList.remove("down");
-				document.getElementById("icon").classList.add("up");
-
 				this.showMore=true;
+				document.getElementById("showMoreButton").innerHTML = "-";
 			}
 			else {
-				document.getElementById("icon").classList.remove("up");
-				document.getElementById("icon").classList.add("down");
-
 				this.showMore=false;
+				document.getElementById("showMoreButton").innerHTML = "+";
 			}
 
 		}
@@ -75,52 +79,74 @@ export default {
 	font-size: 110%;
 }
 .bottomRow {
-	height: 24px;
+	height: 30px;
 }
-button.arrowButton{
-    background-color: #1b395d;
+
+button.showButton {
+	position: static;
+	background-color: #24497a;
 	color: #d8dbe2;
-	border: 0;
-	height: 17px;
-	width: 25px;
+	border-radius: 10px;
+	font-size: 110%;
+	width: 20px;
+	height: 20px;
+	margin: 5px;
+	outline: 0;
+	border: none;
+	vertical-align: center;
+	text-decoration: none;
 }
-button.arrowButton:hover{
+button.showButton:hover {
 	cursor: pointer;
 }
-button.arrowButton:focus {
-	outline: 1px solid #FFFFFF;
+
+.showButton:hover {
+	background-color:  #20406a;
+	color: #bcc1cd;
 }
-button.arrowButton:active {
-	outline: 0;
+
+.showButton:active {
+	background-color:  #183353;
 }
-button.arrowButton:-moz-focusring {
+.showButton:-moz-focusring {
 	color: transparent;
-}
-.lightMode button.arrowButton:focus {
-	outline: 2px solid #3C3C3C;
-}
-.lightMode button.arrowButton:active {
-	outline: 0;
-}
-.lightMode .arrowButton {
-	background-color: #ffffff;
-	border: none;
-	box-shadow: none;
-}
-.Arrow {
-	border: solid #d8dbe2;
-	border-width: 0 3px 3px 0;
-	display: inline-block;
-	padding: 4px;
+	text-shadow: 0 0 0 #bcc1cd;
 }
 
-.down {
-	transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
+.lightMode .showButton {
+	background-color:  #fff;
+	color: #3C3C3C;
+    box-shadow: 0px 0px 3px 1px #e1e1e1;
 }
 
-.up {
-	transform: rotate(-135deg);
-	-webkit-transform: rotate(-135deg);
+.lightMode .showButton:hover {
+	background-color:  #fcfcfc;
+    box-shadow: 0px 0px 3px 0px #e1e1e1;
 }
+
+.lightMode .showButton:active {
+	background-color:  #fcfcfc;
+    box-shadow: none;
+    border: 1px solid #e1e1e1;
+}
+
+.lightMode .showButton:-moz-focusring {
+	text-shadow: 0 0 0 #3C3C3C;
+}
+
+button:focus {outline: 1px solid #FFF;}
+.lightMode button:focus {outline: 1px solid #000;}
+button:active {outline: 0;}
+.lightMode button:active {outline: 0;}
+
+button:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #d8dbe2;
+}
+
+@media only screen and (max-width: 550px){.showButton{font-size: 105%;}}
+@media only screen and (max-width: 465px){.showButton{font-size: 100%;}}
+@media only screen and (max-width: 400px){.showButton{font-size: 97%;}}
+@media only screen and (max-width: 360px){.showButton{font-size: 96%;}}
+@media only screen and (max-width: 340px){.showButton{font-size: 88%;}}
 </style>

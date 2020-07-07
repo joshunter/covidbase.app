@@ -67,8 +67,8 @@
 		</div>
 		<div class="bottomRow">
 			<button class="showButton hidden" id="min" style="right: 90px;" @click="showMin()">min</button>
-			<button class="showButton arrowButton hidden" id="less"  style="right: 5px;" @click="showLess()">-</button>
-			<button class="showButton arrowButton" id="more" style="left: 5px;" @click="showMore()">+</button>
+			<button class="showButton addremoveButton hidden" id="less"  style="right: 5px;" @click="showLess()">-</button>
+			<button class="showButton addremoveButton" id="more" style="left: 5px;" @click="showMore()">+</button>
 			<button class="showButton" id="all" style="left: 90px;" @click="showAll()">all</button>
 		</div>
 	</div>
@@ -655,19 +655,20 @@ button.subNumber{font-size: 81%;}
 }
 
 .lightMode .showButton {
-	background-color:  #f4f4f4;
+	background-color:  #fff;
+	color: #3C3C3C;
+    box-shadow: 0px 0px 3px 1px #e1e1e1;
 }
 
 .lightMode .showButton:hover {
-	background-color:  #ededed;
-	color: #3C3C3C;
-	text-decoration: none;
+	background-color:  #fcfcfc;
+    box-shadow: 0px 0px 3px 0px #e1e1e1;
 }
 
 .lightMode .showButton:active {
-	background-color:  #e1e1e1;
-	color: #3C3C3C;
-	text-decoration: none;
+	background-color:  #fcfcfc;
+    box-shadow: none;
+    border: 1px solid #e1e1e1;
 }
 
 .lightMode .showButton:-moz-focusring {
@@ -675,7 +676,7 @@ button.subNumber{font-size: 81%;}
 	text-shadow: 0 0 0 #3C3C3C;
 }
 
-.arrowButton{
+.addremoveButton{
 	font-size: 130%;
 	width: 28px;
 }
@@ -701,8 +702,8 @@ button:hover {
 	cursor: pointer;
 }
 button:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #d8dbe2;
+	color: transparent;
+	text-shadow: 0 0 0 #d8dbe2;
 }
 button.lightMode {
 	background-color: transparent;
@@ -710,8 +711,8 @@ button.lightMode {
 	box-shadow: none;
 }
 .lightMode button:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #3C3C3C;
+	color: transparent;
+	text-shadow: 0 0 0 #3C3C3C;
 }
 
 .hidden{
@@ -730,13 +731,15 @@ button.lightMode {
 .lightMode .hidden{
 	background-color: transparent;
 	color: transparent;
+    box-shadow: none;
 }
 .lightMode .hidden:hover{
 	background-color: transparent;
 	color: transparent;
 	pointer-events:none;
+	box-shadow:none;
 }
-.lightMode .hidden:focus {outline: none;}
+.lightMode .hidden:focus {outline: none; border:none;}
 .lightMode .hidden:active {
 	background-color: transparent;
 	color: transparent;
@@ -744,10 +747,10 @@ button.lightMode {
 }
 .lightMode .hidden:-moz-focusring {text-shadow: none;}
 
-@media only screen and (max-width: 550px){.showButton {font-size: 85%;} .arrowButton{font-size: 105%;}}
-@media only screen and (max-width: 465px){.showButton {font-size: 70%;} .arrowButton{font-size: 100%;}}
-@media only screen and (max-width: 400px){.showButton {font-size: 67%;} .arrowButton{font-size: 97%;}}
-@media only screen and (max-width: 360px){.showButton {font-size: 66%;} .arrowButton{font-size: 96%;}}
-@media only screen and (max-width: 340px){.showButton {font-size: 58%;} .arrowButton{font-size: 88%;}}
+@media only screen and (max-width: 550px){.showButton {font-size: 85%;} .addremoveButton{font-size: 105%;}}
+@media only screen and (max-width: 465px){.showButton {font-size: 70%;} .addremoveButton{font-size: 100%;}}
+@media only screen and (max-width: 400px){.showButton {font-size: 67%;} .addremoveButton{font-size: 97%;}}
+@media only screen and (max-width: 360px){.showButton {font-size: 66%;} .addremoveButton{font-size: 96%;}}
+@media only screen and (max-width: 340px){.showButton {font-size: 58%;} .addremoveButton{font-size: 88%;}}
 
 </style>
