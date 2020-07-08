@@ -17,14 +17,21 @@ app.use('/api/wData', wData);
 app.use('/api/usData', usData);
 app.use('/api/statesData', statesData);
 
-// Handle production
-if (process.env.NODE_ENV === 'production') {
-  // Static folder
-  app.use(express.static(__dirname + '/public/'));
+app.use(function(req, res, next) {
+	res.set({
+		"Access-Control-Allow-Origin" : "https://covidbase.app",
+		"Vary" : "Origin",
+		"X-Powered-By": "JH",
+		"Content-Security-Policy" : "default-src 'none'",
+		"X-Content-Type-Options" : "nosniff",
+		"X-Frame-Options" : "DENY",
+		"X-XSS-Protection" : "1; mode=block"});
 
-  // Handle SPA
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
+	return next();
+});
+
+app.use(express.static(__dirname + '/public/'));
+app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 
 const port = process.env.PORT || 80;
 

@@ -5,6 +5,15 @@ const router = express.Router();
 
 // Get Posts
 router.get('/', async (req, res) => {
+  res.set({
+  "Access-Control-Allow-Origin" : "https://covidbase.app",
+  "Vary" : "Origin",
+  "X-Powered-By": "JH",
+  "Content-Security-Policy" : "default-src 'none'",
+  "X-Content-Type-Options" : "nosniff",
+  "X-Frame-Options" : "DENY",
+  "X-XSS-Protection" : "1; mode=block"});
+  
   const posts = await loadPostsCollection();
   res.send(await posts.find({}).toArray());
 });
