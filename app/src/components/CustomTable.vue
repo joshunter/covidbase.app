@@ -634,6 +634,7 @@ button.subNumber{font-size: 81%;}
 .showButton {
 	position: static;
 	background-color: #24497a;
+	box-shadow: 0px 0px 4px 0px #182a43;
 	border-radius: 14px;
 	width: 60px;
 	height: 28px;
@@ -644,10 +645,13 @@ button.subNumber{font-size: 81%;}
 	background-color:  #20406a;
 	color: #bcc1cd;
 	text-decoration: none;
+	box-shadow: 0px 0px 2px 0px #182a43;
 }
 
 .showButton:active {
 	background-color:  #183353;
+	box-shadow: none;
+	border: 1px solid #182a43;
 }
 .showButton:-moz-focusring {
 	color: transparent;
@@ -710,30 +714,36 @@ button.lightMode {
 	border: none;
 	box-shadow: none;
 }
-.lightMode button:-moz-focusring {
+.lightMode:-moz-focusring {
 	color: transparent;
 	text-shadow: 0 0 0 #3C3C3C;
 }
 
-.hidden{
+.hidden {
 	background-color: transparent;
 	color: transparent;
+	box-shadow: none;
 }
-.hidden:hover{
+.hidden:hover {
+	background-color: transparent;
+	color: transparent;
+	pointer-events:none;
+	box-shadow:none;
+}
+.hidden:focus {outline: none; border:none;}
+.hidden:active {
 	background-color: transparent;
 	color: transparent;
 	pointer-events:none;
 }
-.hidden:focus {outline: none;}
-.hidden:active {pointer-events:none;}
-.hidden:-moz-focusring {text-shadow: none;}
+.hidden:-moz-focusring {text-shadow:none;}
 
-.lightMode .hidden{
+.lightMode .hidden {
 	background-color: transparent;
 	color: transparent;
-    box-shadow: none;
+	box-shadow: none;
 }
-.lightMode .hidden:hover{
+.lightMode .hidden:hover {
 	background-color: transparent;
 	color: transparent;
 	pointer-events:none;
@@ -745,7 +755,7 @@ button.lightMode {
 	color: transparent;
 	pointer-events:none;
 }
-.lightMode .hidden:-moz-focusring {text-shadow: none;}
+.lightMode .hidden:-moz-focusring {text-shadow:none;}
 
 @media only screen and (max-width: 550px){.showButton {font-size: 85%;} .addremoveButton{font-size: 105%;}}
 @media only screen and (max-width: 465px){.showButton {font-size: 70%;} .addremoveButton{font-size: 100%;}}

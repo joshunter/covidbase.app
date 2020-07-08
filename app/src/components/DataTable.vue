@@ -3,17 +3,6 @@
 		<div class="title">{{title}}</div>
 		<div class="population" v-show="data.population">Population: {{data.population}}</div>
 		<DataDisplay v-bind:data="data"/>
-<!-- 		<div class="countryRowPar2" v-bind:key="index" v-for="(continent, index) in moreData">
-			<DataDisplay v-bind:data="moreData.data" v-bind:title="moreData.name" v-show="showMore"/>
-		</div>  -->
-<!-- 		<div class="countryRowPar2" v-show="showMore">
-			<DataDisplay v-bind:data="data" v-bind:title="data.name" />
-			<DataDisplay v-bind:data="data" v-bind:title="'Asia'"/>
-			<DataDisplay v-bind:data="data" v-bind:title="'Australia'"/>
-			<DataDisplay v-bind:data="data" v-bind:title="'Europe'"/>
-			<DataDisplay v-bind:data="data" v-bind:title="'North America'"/>
-			<DataDisplay v-bind:data="data" v-bind:title="'South America'"/>
-		</div>  -->
 		<div class="bottomRow" v-show="moreData">
 			<button class="showButton" id="showMoreButton" @click="toggleExpand()">+</button>
 		</div>
@@ -86,27 +75,28 @@ button.showButton {
 	position: static;
 	background-color: #24497a;
 	color: #d8dbe2;
+	box-shadow: 0px 0px 4px 0px #182a43;
 	border-radius: 10px;
-	font-size: 110%;
 	width: 20px;
 	height: 20px;
+	font-size: 110%;
 	margin: 5px;
 	outline: 0;
 	border: none;
 	vertical-align: center;
 	text-decoration: none;
 }
-button.showButton:hover {
-	cursor: pointer;
-}
-
 .showButton:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 2px 0px #182a43;
 	background-color:  #20406a;
 	color: #bcc1cd;
 }
 
 .showButton:active {
 	background-color:  #183353;
+	box-shadow: none;
+	border: 1px solid #182a43;
 }
 .showButton:-moz-focusring {
 	color: transparent;
@@ -114,7 +104,7 @@ button.showButton:hover {
 }
 
 .lightMode .showButton {
-	background-color:  #fff;
+	background-color: #FFFFFF;
 	color: #3C3C3C;
     box-shadow: 0px 0px 3px 1px #e1e1e1;
 }
@@ -144,9 +134,9 @@ button:-moz-focusring {
   text-shadow: 0 0 0 #d8dbe2;
 }
 
-@media only screen and (max-width: 550px){.showButton{font-size: 105%;}}
-@media only screen and (max-width: 465px){.showButton{font-size: 100%;}}
-@media only screen and (max-width: 400px){.showButton{font-size: 97%;}}
-@media only screen and (max-width: 360px){.showButton{font-size: 96%;}}
-@media only screen and (max-width: 340px){.showButton{font-size: 88%;}}
+@media only screen and (max-width: 550px){button.showButton{font-size: 85%;}}
+
+@media only screen and (max-width: 465px){button.showButton{font-size: 75%;}}
+
+@media only screen and (max-width: 360px){button.showButton{font-size: 66%;}}
 </style>

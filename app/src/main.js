@@ -130,7 +130,6 @@ const worldModule = {
 	state: {
 		countryData: [{name:"",population:"",total:"",active:"",recovered:"",critical:"",deaths:"",tests:"",casesPM:"",deathsPM:"",testsPM:"",continent:""}],
 		worldData: {},
-		continentData: {},
 		filteredData: {},
 		searchedData: {},
 		currentContinent: 'Global Data',
