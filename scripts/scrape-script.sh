@@ -14,6 +14,8 @@ curl https://www.worldometers.info/coronavirus/ >> worldometer.html
 input="worldometer.html"
 wFile="worldInfo"
 wFile2="cutWorldInfo"
+cFile="continentInfo"
+cFile2="cutContinentInfo"
 file="countryData"
 file2="cutData"
 
@@ -24,6 +26,7 @@ found=0
 i=0
 
 # Keys that let me know when to start/stop saving data
+contInfoStart='<tr class="total_row_world row_continent" data-continent="North America"'
 worldinfoStart='<td style="display:none;" data-continent=""></td>'
 table='<table id="main_table_countries_today"'
 tableEnd='<td><strong>Total:</strong></td'
@@ -34,17 +37,23 @@ regex='\+?(\w+\.?\s?/?\w*|\d*,?\d*,?\d*\s*)+</(a|td)>'
 while IFS= read -r line
 do
 	if [[ $line =~ $regex && $found -eq 1 ]]; then
-		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $wFile
+		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $cFile
 	fi
 	if [[ $line =~ $regex && $found -eq 2 ]]; then
+		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $wFile
+	fi
+	if [[ $line =~ $regex && $found -eq 3 ]]; then
 		echo "${BASH_REMATCH[0]//'</td>'/''}" >> $file
 	fi
 	# find <table id="main_table_countries_today"
-	if [[ $line =~ $worldinfoStart ]]; then
+	if [[ $line =~ $contInfoStart ]]; then
 		found=1
 	fi
-	if [[ $line == *"All</td>"* ]]; then
+	if [[ $line =~ $worldinfoStart ]]; then
 		found=2
+	fi
+	if [[ $line == *"All</td>"* ]]; then
+		found=3
 	fi
 	if [[ $line =~ $tableEnd ]]; then
 		break
@@ -60,11 +69,48 @@ do
 	# echo "${line//'</a>'/''}" >> $file2
 done < "$file"
 
+tail -n +4 $wFile > $wFile2
+tail -n +3 $cFile > $cFile2
+
 # Data is now cut into a format to package.
 
-# Start parsing global information.
-tail -n +4 $wFile > $wFile2
+# Parsing continent information.
+declare -a dataFields=("total" "newActive" "deaths" "newDeaths" "recovered" "newRecovered" "active" "critical" "name")
 
+while IFS= read -r line
+do
+	if [[ i -lt 8 ]]; then
+		data+="${dataFields[$i]}: \"$line\", "
+	fi
+
+	if [[ i -eq 13 ]]; then
+		data+="name: \"$line\""
+		name=$line
+	fi
+
+	if [[ i -eq 18 ]]; then
+		let "count=count+1"
+		let "i=0"
+
+		# add to world database
+		toEval='db.worldData.update({ name: "'$name'" }, {'$data'},{upsert: true});'
+		mongo --eval "$toEval" world >> dbWorld
+		# echo $toEval >> $cFile
+
+		data=""
+	else
+		let "i=i+1"
+	fi
+
+	if [[ count -eq 6 ]]; then
+		break
+	fi
+
+done < "$cFile2"
+
+
+
+# Parsing World information.
 i=0
 declare -a dataFields=( "rank" "name" "total" "newActive" "deaths" "newDeaths" "recovered" "newRecovered" "active" "critical" "casesPM" "deathsPM")
 
@@ -146,6 +192,8 @@ mongo --eval "$toEval" world >> dbCounty
 rm cutWorldInfo
 rm worldometer.html
 rm countryData
+rm continentInfo
+rm cutContinentInfo
 rm worldInfo
 rm cutData
 rm dbCounty
