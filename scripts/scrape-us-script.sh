@@ -190,5 +190,6 @@ done
 rm worldometerUS.html
 rm worldometerUSstate.html
 rm usStateData
+rm statesData
 rm usInfo
 rm cutUSInfo
