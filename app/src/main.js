@@ -10,9 +10,6 @@ import Homepage from './Homepage.vue'
 import USA from './USA.vue'
 import StatePage from './StatePage.vue'
 
-// var myHeaders = new Headers();
-// myHeaders.set('Content-Security-Policy', 'default-src \'self\' *.covidbase.app;');
-
 Vue.config.productionTip = false
 
 Vue.use(Vuex);
@@ -252,7 +249,7 @@ const routes = [
 const router = new VueRouter({ 
 	routes,
 	base: __dirname,
-	// mode: 'history'
+	mode: 'history'
 });
 
 new Vue({
