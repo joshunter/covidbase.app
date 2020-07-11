@@ -17,12 +17,15 @@
 
 		<div class="sources">
 			<h2><p>Sources:</p></h2>
-			<a href="https://cloud.google.com/blog/products/data-analytics/free-public-datasets-for-covid19"><img class="sourceImage" src="./components/images/google_cloud_logo.png" alt="gcloud_logo"></a>
-			<a href="https://www.worldometers.info/coronavirus/"><img class="sourceImage" src="./components/images/worldometers-logo.jpg" alt="WoM_Logo"></a>
+			<a href="https://cloud.google.com/blog/products/data-analytics/free-public-datasets-for-covid19">
+				<img class="sourceImage" src="./components/images/google_cloud_logo.jpg" alt="gcloud_logo"></a>
+			<a href="https://www.worldometers.info/coronavirus/">
+				<img class="sourceImage" src="./components/images/worldometers-logo.jpg" alt="WoM_Logo"></a>
 		</div>
 
 		<p>
-			help me keep the lights on: <a href="https://ko-fi.com/joshunter" class="covfefeIcon"><img class="covfefe" src="./components/images/kofi(small).png" alt="HTML5 Icon" style="width:27.6px;height:18px;"></a><br>
+			help me keep the lights on: <a href="https://ko-fi.com/joshunter" class="covfefeIcon">
+				<img class="covfefe" src="./components/images/kofi(small).png" alt="HTML5 Icon" style="width:27.6px;height:18px;"></a><br>
 			comments & suggestions: <a href="mailto:josh@covidbase.app" class="email">josh@covidbase.app</a>
 		</p>
 	</div>
