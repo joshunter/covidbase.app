@@ -1,0 +1,125 @@
+add "show more" for datatable
+
+make search instant (while typing) -- mobile
+
+fix issue with changing continents and showing number of rows min + - all
+
+auto check for link -- states
+
+globe
+
+
+
+
+<!-- set up history mode (#) -->
+<!-- install set headers and remove # -->
+<!-- set homepage for db.*.app -->
+<!-- scrape continent total numbers -->
+<!-- add sources, and proper about page -->
+<!-- set correct spacing for states page -->
+<!-- tables do not paint well on refresh states page -->
+<!-- search does not work on states page -->
+<!-- add counties to states -->
+<!-- unfocus search bar on "enter" -- mobile -->
+<!-- fetch USAData after completion of regular data -->
+<!-- fetch countyData on USA page to be ready for click. -->
+<!-- fix direct URL bug -->
+<!-- fix sorting on USA page -->
+<!-- Add scrape-us to cronjobs -->
+<!-- scrape counties for each state -->
+<!-- implement vuex -->
+<!-- UPDATE LOCAL CLOUD-INIT -->
+<!-- add USA page -->
+<!-- add "show more" -->
+<!-- remove ships on db-files server -->
+<!-- number on filter correctly -->
+<!-- zebrafication--correctly -->
+<!-- nginx proxy for db-->
+<!-- FETCH BUG-->
+<!-- unfocus search bar-->
+<!-- add up arrow to go to top-->
+<!-- highlight row on mouseover-->
+<!-- stop focus on search-->
+<!-- favicon-->
+<!-- darken fonts on light mode-->
+<!-- Dark mode -> dark mode-->
+<!-- routerlink screws up color on light mode-->
+<!-- colors go ape on About .. localsession may help-->
+<!-- make continent thing smaller ffs-->
+<!-- remove links for countries/states that don't have pages -->
+<!-- make query and currCont "global" so that sorting works with searchedData -->
+
+
+# gcloud builds submit --tag gcr.io/world-278908/world
+
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: world
+  namespace: '79845184457'
+  selfLink: /apis/serving.knative.dev/v1/namespaces/79845184457/services/world
+  uid: 9727dad5-d539-4303-82be-ee2b55d75f2b
+  resourceVersion: AAWo3LJRsTg
+  generation: 20
+  creationTimestamp: '2020-05-31T08:49:12.882541Z'
+  labels:
+    cloud.googleapis.com/location: us-west1
+  annotations:
+    run.googleapis.com/client-name: cloud-console
+    serving.knative.dev/creator: hunterjoshdaniel@gmail.com
+    serving.knative.dev/lastModifier: hunterjoshdaniel@gmail.com
+    client.knative.dev/user-image: gcr.io/world-278908/world@sha256:63335b14fa4272c83c9ca6aa063acd23d68eb5b33eda88bc0e0a89935c1400e0
+spec:
+  template:
+    metadata:
+      name: world-00020-ciw
+      annotations:
+        run.googleapis.com/client-name: cloud-console
+        autoscaling.knative.dev/maxScale: '1000'
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: 79845184457-compute@developer.gserviceaccount.com
+      containers:
+      - image: gcr.io/world-278908/world@sha256:63335b14fa4272c83c9ca6aa063acd23d68eb5b33eda88bc0e0a89935c1400e0
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 256Mi
+  traffic:
+  - percent: 100
+    latestRevision: true
+status:
+  observedGeneration: 20
+  conditions:
+  - type: Ready
+    status: 'True'
+    lastTransitionTime: '2020-06-24T23:18:41.407Z'
+  - type: ConfigurationsReady
+    status: 'True'
+    lastTransitionTime: '2020-06-24T23:18:36.121Z'
+  - type: RoutesReady
+    status: 'True'
+    lastTransitionTime: '2020-06-24T23:18:41.523Z'
+  latestReadyRevisionName: world-00020-ciw
+  latestCreatedRevisionName: world-00020-ciw
+  traffic:
+  - revisionName: world-00020-ciw
+    percent: 100
+    latestRevision: true
+  url: https://world-exl4rlqfsq-uw.a.run.app
+  address:
+    url: https://world-exl4rlqfsq-uw.a.run.app
+
+
+
+
+content-security-policy: block-all-mixed-content; default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self'; connect-src 'none'; font-src 'self'; object-src 'none'; media-src 'self'; frame-src 'none'; form-action 'none'; frame-ancestors 'none'; base-uri 'self'; worker-src 'none'; manifest-src 'none'; sandbox allow-same-origin allow-downloads
+access-control-allow-origin: https://www.defcon.org/
+cross-origin-resource-policy: same-origin
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-xss-protection: 0
