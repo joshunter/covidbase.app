@@ -168,7 +168,6 @@ methods: {
 		if(this.show!='search'){
 			sessionStorage.setItem('prevShow', this.show);
 			this.show='search';
-			console.log(this.show)
 		}
 
 		if(this.$store.state.world.query=='') {
