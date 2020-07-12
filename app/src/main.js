@@ -64,9 +64,6 @@ const USModule = {
 		},
 		getCitiesBySearch: (state, getters) => {
 			var data = getters.getStateDataBySearch(state.currentState)[0].data;
-
-			console.log(state.cityQuery)
-			console.log(data.filter(curr => curr.name.toLowerCase().includes(state.cityQuery)))
 			return data.filter(curr => curr.name.toLowerCase().includes(state.cityQuery));
 		},
 	},
