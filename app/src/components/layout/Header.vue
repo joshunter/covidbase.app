@@ -1,8 +1,8 @@
 <template>
 	<header>
 		<div class="header">
-			<router-link class="title button" onclick="this.blur()" :to="{ name: 'Homepage' }">covidbase</router-link>
-			<router-link class="about button" onclick="this.blur()" :to="{ name: 'about' }">about</router-link>
+			<router-link class="title button" id="title" @click.native="blur()" :to="{ name: 'Homepage' }">covidbase</router-link>
+			<router-link class="about button" id="about" @click.native="blur()" :to="{ name: 'about' }">about</router-link>
 			<br>
 			<button @click="toggleDM()" class="darkmode" id="darkmode">
 				dark mode
@@ -11,7 +11,7 @@
 					<span class="slider round"></span>
 				</label>
 			</button>
-<!-- 			<a class="covfefeIcon" href="https://ko-fi.com/joshunter"><img class="covfefePicture" src="./kofi(small).png" alt="Covfefe"></a>-->				</div>
+		</div>
 	</header>
 </template>
 
@@ -31,6 +31,10 @@ export default {
 			}
 			this.$emit('changeTheme',currTheme);
 			document.getElementById("darkmode").blur();
+		},
+		blur() {
+			document.getElementById('title').blur();
+			document.getElementById('about').blur();
 		}
 	}
 }
