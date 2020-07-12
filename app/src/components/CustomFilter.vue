@@ -48,6 +48,7 @@ input {
 }
 input:focus {
     box-shadow: 0px 0px 4px 0px #152b47;
+	outline:none;
     border:none;
 }
 input:hover{
