@@ -39,7 +39,12 @@ export default {
 		}
 	},
 	computed: {
-		path() {return this.$route.fullPath + this.data.name.toLowerCase().replace(/\s/g,'-') + "/" },
+		path() {
+			if(this.$route.fullPath == '/#/')
+				return this.data.name.toLowerCase().replace(/\s/g,'-') + "/"
+
+			return this.$route.fullPath + this.data.name.toLowerCase().replace(/\s/g,'-') + "/"
+		},
 	}
 }
 </script>
@@ -51,13 +56,16 @@ export default {
 	text-decoration-thickness: 1px;
 	outline: 0;
 }
+.link:focus {
+	outline: 1px solid #FFFFFF;
+}
 .link:hover {
 	font-weight: bold;
 	color: #ffffff;
 	text-decoration-thickness: 1px;
 }
 .lightMode .link {color: #3C3C3C;}
-
+.lightMode .link:focus {outline: 1px solid #3C3C3C;}
 .dataRow {
 	background-color: transparent;
 	transition: background-color 0.3s;
