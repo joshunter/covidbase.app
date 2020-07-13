@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app">
+    <a class="skipLink" href="#/">Skip to Table</a>
     <Header @changeTheme="setTheme($event)"/>
     <transition name="fade">
       <router-view></router-view>
@@ -54,7 +55,7 @@ export default {
       "casesPMButton","deathsPMButton","testsPMButton","searchBar","arrowButton",
       "showButton","customTable","dataTable","continentSel"];
       const Ids = ["app","name","population","total","active","recovered","critical",
-                    "deaths","tests","casesPM","deathsPM","testsPM","ArrowBox"];
+                    "deaths","tests","casesPM","deathsPM","testsPM","ArrowBox", "skipLink"];
       var errorMessages = "";
 
       if(Theme == "dark") {
@@ -168,6 +169,23 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background-color:  #1a2c47;
   color: #d8dbe2;
+}
+
+.skipLink {
+  position: absolute;
+  top: -40px;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 8px;
+  z-index: 100;
+}
+.skipLink:focus {
+  top: 0;
+}
+
+.lightMode .skipLink {
+  background: #FFFFFF;
+  color: #000000;
 }
 
 .router-view {
