@@ -124,6 +124,7 @@ const worldModule = {
 	state: {
 		countryData: [{name:"",population:"",total:"",active:"",recovered:"",critical:"",deaths:"",tests:"",casesPM:"",deathsPM:"",testsPM:"",continent:""}],
 		worldData: {},
+		continentData: {},
 		filteredData: {},
 		searchedData: {},
 		currentContinent: 'Global Data',
@@ -135,6 +136,9 @@ const worldModule = {
 		},
 		assignWorldData(state, payload){
 			state.worldData = payload;
+		},
+		assignContinentData(state, payload){
+			state.continentData = payload;
 		},
 		assignFilteredData(state, payload){
 			state.filteredData = payload;
@@ -175,7 +179,8 @@ const worldModule = {
 					}
 				})
 				.then(response => {
-					commit('assignWorldData', response[0]);
+					commit('assignContinentData', response);
+					commit('assignWorldData', response[6]);
 				})
 				.catch(err => {
 					console.log(err);

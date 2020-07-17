@@ -3,6 +3,9 @@
 		<div class="title">{{title}}</div>
 		<div class="population" v-show="data.population">Population: {{data.population}}</div>
 		<DataDisplay v-bind:data="data"/>
+		<div v-show="showMore" v-bind:key="index" v-for="(datum, index) in moreData">
+			<DataDisplay v-show="datum.name !='World'" v-bind:data="datum" v-bind:title="datum.name"/>
+		</div>
 		<div class="bottomRow" v-show="moreData">
 			<button class="showButton" id="showMoreButton" @click="toggleExpand()">+</button>
 		</div>
