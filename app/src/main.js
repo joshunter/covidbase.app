@@ -134,8 +134,8 @@ const worldModule = {
 		assignCountryData(state, payload){
 			state.countryData = payload;
 		},
-		assignWorldData(state, payload){
-			state.worldData = payload;
+		assignWorldData(state){
+			state.worldData = state.continentData.filter(entry => entry.name.toLowerCase().includes('world'))[0];
 		},
 		assignContinentData(state, payload){
 			state.continentData = payload;
@@ -180,7 +180,7 @@ const worldModule = {
 				})
 				.then(response => {
 					commit('assignContinentData', response);
-					commit('assignWorldData', response[6]);
+					commit('assignWorldData');
 				})
 				.catch(err => {
 					console.log(err);
