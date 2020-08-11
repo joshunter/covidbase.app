@@ -8,51 +8,51 @@
 				</div>
 			</div>
 			<div class="rowElement" v-show="data[0].name">
-				<button id="name" class="country nameButton" @click="sortBy('name')">{{type}}
+				<button id="name" class="country nameButton" @click="sortByName()">{{type}}
 				</button>
-				<button id="population" class="subNumber populationButton" v-show="data[0].population" @click="sortBy('population')">Population
+				<button id="population" class="subNumber populationButton" v-show="data[0].population" @click="sortByPopulation()">Population
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].total">
-				<button id="total" class="totalButton" @click="sortBy('total')">Total Cases
+				<button id="total" class="totalButton" @click="sortByTotal()">Total Cases
 				</button>
-				<button id="newCases" class="totalButton subNumber" @click="sortBy('newCases')">New Cases
+				<button id="newCases" class="totalButton subNumber" @click="sortByNewCases()">New Cases
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].active" >
-				<button id="active" class="active activeButton" @click="sortBy('active')">Active
+				<button id="active" class="active activeButton" @click="sortByActive()">Active
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].recovered" >
-				<button id="recovered" class="recovered recoveredButton" @click="sortBy('recovered')">Recovered
+				<button id="recovered" class="recovered recoveredButton" @click="sortByRecovered()">Recovered
 				</button>
-				<button id="newRecovered" class="recovered recoveredButton subNumber" @click="sortBy('newRecovered')">New Rec.
+				<button id="newRecovered" class="recovered recoveredButton subNumber" @click="sortByNewRecovered()">New Rec.
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].critical" >
-				<button id="critical" class="critical criticalButton" @click="sortBy('critical')">Critical
+				<button id="critical" class="critical criticalButton" @click="sortByCritical()">Critical
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].deaths" >
-				<button id="deaths" class="deaths deathsButton" @click="sortBy('deaths')">Deaths
+				<button id="deaths" class="deaths deathsButton" @click="sortByDeaths()">Deaths
 				</button>
-				<button id="newDeaths" class="deaths deathsButton subNumber" @click="sortBy('newDeaths')">New Deaths
+				<button id="newDeaths" class="deaths deathsButton subNumber" @click="sortByNewDeaths()">New Deaths
 				</button>
 			</div>
 			<div class="rowElement tests expend1" v-show="data[0].tests">
-				<button id="tests" class="tests testsButton" @click="sortBy('tests')">Tests
+				<button id="tests" class="tests testsButton" @click="sortByTests()">Tests
 				</button>
 			</div>
 			<div class="rowElement expend2" v-show="data[0].casesPM" >
-				<button id="casesPM" class="casesPMButton" @click="sortBy('casesPM')">Cases/1M
+				<button id="casesPM" class="casesPMButton" @click="sortByCasesPM()">Cases/1M
 				</button>
 			</div>
 			<div class="rowElement expend3" v-show="data[0].deathsPM" >
-				<button id="deathsPM" class="deaths deathsPMButton" @click="sortBy('deathsPM')">Deaths/1M
+				<button id="deathsPM" class="deaths deathsPMButton" @click="sortByDeathsPM()">Deaths/1M
 				</button>
 			</div>
 			<div class="rowElement expend4" v-show="data[0].testsPM" >
-				<button id="testsPM" class="tests testsPMButton" @click="sortBy('testsPM')">Tests/1M
+				<button id="testsPM" class="tests testsPMButton" @click="sortByTestsPM()">Tests/1M
 				</button>
 			</div>
 		</div>
@@ -203,354 +203,513 @@ methods: {
 		})
 
 	},
-	sortBy(type){
+	sortByName(){
 		let sortedBy = sessionStorage.getItem('sortedBy');
 		let id = sortedBy.substring(0, sortedBy.length - 1);
 
+		// el is the previous sortedBy text
 		let el = document.getElementById(id);
-		//replace arrows for current column
 		el.style.fontWeight = "normal";
 		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
 
-		switch(type){
-			case "name":
-				el = document.getElementById("name");
-
-				el.style.fontWeight = "bold";
-				if(sortedBy=='nameA') {el.innerHTML=this.type+'&#8593;'}
-				else {el.innerHTML=this.type+'&#8595;'}
-				
-				this.data.sort(function (a, b) {
-					if(sortedBy=='nameA'){
-						sessionStorage.setItem('sortedBy', 'nameD');
-						if (a.name < b.name) {return 1;}
-						if (a.name > b.name) {return -1;}
-					}
-
-					sessionStorage.setItem('sortedBy', 'nameA');
-					if (a.name < b.name) {return -1;}
-					if (a.name > b.name) {return 1;}
-				});
-				break;
-			case "population":
-				el = document.getElementById("population");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='populationD') {el.innerHTML='Population&#8593;'}
-				else {el.innerHTML='Population&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.population.replace(/\D/g,''));
-					var num2 = parseInt(b.population.replace(/\D/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='populationD'){
-						sessionStorage.setItem('sortedBy', 'populationA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'populationD');
-					return num2 - num1;
-				});
-				break;
-			case "total":
-				el = document.getElementById("total");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='totalD') {el.innerHTML='Total Cases&#8593;'}
-				else {el.innerHTML='Total Cases&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.total.replace(/,/g,''));
-					var num2 = parseInt(b.total.replace(/,/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='totalD'){
-						sessionStorage.setItem('sortedBy', 'totalA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'totalD');
-					return num2 - num1;
-				});
-				break;
-			case "newCases":
-				el = document.getElementById("newCases");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='newCasesD') {el.innerHTML='New Cases&#8593;'}
-				else {el.innerHTML='New Cases&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.newActive.replace(/(\+|,)/g,''));
-					var num2 = parseInt(b.newActive.replace(/(\+|,)/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='newCasesD'){
-						sessionStorage.setItem('sortedBy', 'newCasesA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'newCasesD');
-					return num2 - num1;
-				});
-				break;
-			case "active":
-				el = document.getElementById("active");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='activeD'){el.innerHTML='Active&#8593;'}
-				else {el.innerHTML='Active&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.active.replace(/,/g,''));
-					var num2 = parseInt(b.active.replace(/,/g,''));
+		// Now el will be the current sortBy text
+		el = document.getElementById("name");
+		el.style.fontWeight = "bold";
+
+		// If already sorted by this, change the direction of the arrow
+		if(sortedBy=='nameA') {el.innerHTML=this.type+'&#8593;'}
+		else {el.innerHTML=this.type+'&#8595;'}
+		
+		this.data.sort(function (a, b) {
+			if(sortedBy=='nameA'){
+				sessionStorage.setItem('sortedBy', 'nameD');
+				if (a.name < b.name) {return 1;}
+				if (a.name > b.name) {return -1;}
+			}
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='activeD') {
-						sessionStorage.setItem('sortedBy', 'activeA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'activeD');
-					return num2 - num1;
-				});
-				break;
-			case "recovered":
-				el = document.getElementById("recovered");
-
-				el.style.fontWeight = "bold";
+			sessionStorage.setItem('sortedBy', 'nameA');
+			if (a.name < b.name) {return -1;}
+			if (a.name > b.name) {return 1;}
+		});
 
-				if(sortedBy=='recoveredD') {el.innerHTML='Recovered&#8593;'}
-				else {el.innerHTML='Recovered&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.recovered.replace(/,/g,''));
-					var num2 = parseInt(b.recovered.replace(/,/g,''));
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='recoveredD'){
-						sessionStorage.setItem('sortedBy', 'recoveredA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'recoveredD');
-					return num2 - num1;
-				});
-				break;
-			case "newRecovered":
-				el = document.getElementById("newRecovered");
-
-				el.style.fontWeight = "bold";
+		this.afterSortBy(el);
 
-				if(sortedBy=='newRecoveredD') {el.innerHTML='New Rec.&#8593;'}
-				else {el.innerHTML='New Rec.&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.newRecovered.replace(/(\+|,)/g,''));
-					var num2 = parseInt(b.newRecovered.replace(/(\+|,)/g,''));
+	},
+	sortByPopulation(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='newRecoveredD'){
-						sessionStorage.setItem('sortedBy', 'newRecoveredA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'newRecoveredD');
-					return num2 - num1;
-				});
-				break;
-			case "critical":
-				el = document.getElementById("critical");
-
-				el.style.fontWeight = "bold";
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
 
-				if(sortedBy=='criticalD') {el.innerHTML='Critical&#8593;'}
-				else {el.innerHTML='Critical&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.critical.replace(/,/g,''));
-					var num2 = parseInt(b.critical.replace(/,/g,''));
+		// Now el will be the current sortBy text
+		el = document.getElementById("population");
+		el.style.fontWeight = "bold";
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='criticalD'){
-						sessionStorage.setItem('sortedBy', 'criticalA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'criticalD');
-					return num2 - num1;
-				});
-				break;
-			case "deaths":
-				el = document.getElementById("deaths");
-
-				el.style.fontWeight = "bold";
+		// If already sorted by this, change the direction of the arrow
+		if(sortedBy=='populationD') {el.innerHTML='Population&#8593;'}
+		else {el.innerHTML='Population&#8595;'}
 
-				if(sortedBy=='deathsD') {el.innerHTML='Deaths&#8593;'}
-				else {el.innerHTML='Deaths&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.deaths.replace(/,/g,''));
-					var num2 = parseInt(b.deaths.replace(/,/g,''));
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.population.replace(/\D/g,''));
+			var num2 = parseInt(b.population.replace(/\D/g,''));
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='deathsD'){
-						sessionStorage.setItem('sortedBy', 'deathsA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'deathsD');
-					return num2 - num1;
-				});
-				break;
-			case "newDeaths":
-				el = document.getElementById("newDeaths");
-
-				el.style.fontWeight = "bold";
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
 
-				if(sortedBy=='newDeathsD') {el.innerHTML='New Deaths&#8593;'}
-				else {el.innerHTML='New Deaths&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.newDeaths.replace(/(\+|,)/g,''));
-					var num2 = parseInt(b.newDeaths.replace(/(\+|,)/g,''));
+			if(sortedBy=='populationD'){
+				sessionStorage.setItem('sortedBy', 'populationA');
+				return num1 - num2;
+			}
 
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='newDeathsD'){
-						sessionStorage.setItem('sortedBy', 'newDeathsA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'newDeathsD');
-					return num2 - num1;
-				});
-				break;
-			case "deathsPM":
-				el = document.getElementById("deathsPM");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='deathsPMD') {el.innerHTML='Deaths/1M&#8593;'}
-				else {el.innerHTML='Deaths/1M&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseFloat(a.deathsPM.replace(/[^\d.-]/g,''));
-					var num2 = parseFloat(b.deathsPM.replace(/[^\d.-]/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='deathsPMD') {
-						sessionStorage.setItem('sortedBy', 'deathsPMA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'deathsPMD');
-					return num2 - num1;
-				});
-				break;
-			case "casesPM":
-				el = document.getElementById("casesPM");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='casesPMD') {el.innerHTML='Cases/1M&#8593;'}
-				else {el.innerHTML='Cases/1M&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseFloat(a.casesPM.replace(/,/g,''));
-					var num2 = parseFloat(b.casesPM.replace(/,/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='casesPMD') {
-						sessionStorage.setItem('sortedBy', 'casesPMA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'casesPMD');
-					return num2 - num1;
-				});
-				break;
-			case "tests":
-				el = document.getElementById("tests");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='testsD') {el.innerHTML='Tests&#8593;'}
-				else {el.innerHTML='Tests&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseInt(a.tests.replace(/,/g,''));
-					var num2 = parseInt(b.tests.replace(/,/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='testsD') {
-						sessionStorage.setItem('sortedBy', 'testsA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'testsD');
-					return num2 - num1;
-				});
-				break;
-			case "testsPM":
-				el = document.getElementById("testsPM");
-
-				el.style.fontWeight = "bold";
-
-				if(sortedBy=='testsPMD') {el.innerHTML='Tests/1M&#8593;'}
-				else {el.innerHTML='Tests/1M&#8595;'}
-
-				this.data.sort(function (a, b) {
-					var num1 = parseFloat(a.testsPM.replace(/,/g,''));
-					var num2 = parseFloat(b.testsPM.replace(/,/g,''));
-
-					if(num1=='' || isNaN(num1)) {num1=0;}
-					if(num2=='' || isNaN(num2)) {num2=0;}
-
-					if(sortedBy=='testsPMD'){
-						sessionStorage.setItem('sortedBy', 'testsPMA');
-						return num1 - num2;
-					}
-
-					sessionStorage.setItem('sortedBy', 'testsPMD');
-					return num2 - num1;
-				});
-				break;
-		}
+			sessionStorage.setItem('sortedBy', 'populationD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByTotal(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("total");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='totalD') {el.innerHTML='Total Cases&#8593;'}
+		else {el.innerHTML='Total Cases&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.total.replace(/,/g,''));
+			var num2 = parseInt(b.total.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='totalD'){
+				sessionStorage.setItem('sortedBy', 'totalA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'totalD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByNewCases(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("newCases");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='newCasesD') {el.innerHTML='New Cases&#8593;'}
+		else {el.innerHTML='New Cases&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.newActive.replace(/(\+|,)/g,''));
+			var num2 = parseInt(b.newActive.replace(/(\+|,)/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='newCasesD'){
+				sessionStorage.setItem('sortedBy', 'newCasesA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'newCasesD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByActive(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("active");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='activeD'){el.innerHTML='Active&#8593;'}
+		else {el.innerHTML='Active&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.active.replace(/,/g,''));
+			var num2 = parseInt(b.active.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='activeD') {
+				sessionStorage.setItem('sortedBy', 'activeA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'activeD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByRecovered(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("recovered");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='recoveredD') {el.innerHTML='Recovered&#8593;'}
+		else {el.innerHTML='Recovered&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.recovered.replace(/,/g,''));
+			var num2 = parseInt(b.recovered.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='recoveredD'){
+				sessionStorage.setItem('sortedBy', 'recoveredA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'recoveredD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByNewRecovered(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("newRecovered");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='newRecoveredD') {el.innerHTML='New Rec.&#8593;'}
+		else {el.innerHTML='New Rec.&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.newRecovered.replace(/(\+|,)/g,''));
+			var num2 = parseInt(b.newRecovered.replace(/(\+|,)/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='newRecoveredD'){
+				sessionStorage.setItem('sortedBy', 'newRecoveredA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'newRecoveredD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByCritical(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("critical");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='criticalD') {el.innerHTML='Critical&#8593;'}
+		else {el.innerHTML='Critical&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.critical.replace(/,/g,''));
+			var num2 = parseInt(b.critical.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='criticalD'){
+				sessionStorage.setItem('sortedBy', 'criticalA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'criticalD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByDeaths(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("deaths");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='deathsD') {el.innerHTML='Deaths&#8593;'}
+		else {el.innerHTML='Deaths&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.deaths.replace(/,/g,''));
+			var num2 = parseInt(b.deaths.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='deathsD'){
+				sessionStorage.setItem('sortedBy', 'deathsA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'deathsD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByNewDeaths(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("newDeaths");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='newDeathsD') {el.innerHTML='New Deaths&#8593;'}
+		else {el.innerHTML='New Deaths&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.newDeaths.replace(/(\+|,)/g,''));
+			var num2 = parseInt(b.newDeaths.replace(/(\+|,)/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='newDeathsD'){
+				sessionStorage.setItem('sortedBy', 'newDeathsA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'newDeathsD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByDeathsPM(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("deathsPM");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='deathsPMD') {el.innerHTML='Deaths/1M&#8593;'}
+		else {el.innerHTML='Deaths/1M&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseFloat(a.deathsPM.replace(/[^\d.-]/g,''));
+			var num2 = parseFloat(b.deathsPM.replace(/[^\d.-]/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='deathsPMD') {
+				sessionStorage.setItem('sortedBy', 'deathsPMA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'deathsPMD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByCasesPM(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("casesPM");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='casesPMD') {el.innerHTML='Cases/1M&#8593;'}
+		else {el.innerHTML='Cases/1M&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseFloat(a.casesPM.replace(/,/g,''));
+			var num2 = parseFloat(b.casesPM.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='casesPMD') {
+				sessionStorage.setItem('sortedBy', 'casesPMA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'casesPMD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByTests(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("tests");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='testsD') {el.innerHTML='Tests&#8593;'}
+		else {el.innerHTML='Tests&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseInt(a.tests.replace(/,/g,''));
+			var num2 = parseInt(b.tests.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='testsD') {
+				sessionStorage.setItem('sortedBy', 'testsA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'testsD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	sortByTestsPM(){
+		let sortedBy = sessionStorage.getItem('sortedBy');
+		let id = sortedBy.substring(0, sortedBy.length - 1);
+
+		// el is the previous sortedBy text
+		let el = document.getElementById(id);
+		el.style.fontWeight = "normal";
+		el.innerHTML = el.innerHTML.substring(0, el.innerHTML.length - 1);
+
+		// Now el will be the current sortBy text
+		el = document.getElementById("testsPM");
+
+		el.style.fontWeight = "bold";
+
+		if(sortedBy=='testsPMD') {el.innerHTML='Tests/1M&#8593;'}
+		else {el.innerHTML='Tests/1M&#8595;'}
+
+		this.data.sort(function (a, b) {
+			var num1 = parseFloat(a.testsPM.replace(/,/g,''));
+			var num2 = parseFloat(b.testsPM.replace(/,/g,''));
+
+			if(num1=='' || isNaN(num1)) {num1=0;}
+			if(num2=='' || isNaN(num2)) {num2=0;}
+
+			if(sortedBy=='testsPMD'){
+				sessionStorage.setItem('sortedBy', 'testsPMA');
+				return num1 - num2;
+			}
+
+			sessionStorage.setItem('sortedBy', 'testsPMD');
+			return num2 - num1;
+		});
+
+		this.afterSortBy(el);
+
+	},
+	afterSortBy(el){
+		el.blur();
 
 		this.$store.dispatch('filterData');
 		this.$store.dispatch('searchCountry');
 		this.$store.dispatch('searchStatesData');
-
-		el.blur();
 	}
 }
 }
