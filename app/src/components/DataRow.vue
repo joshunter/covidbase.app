@@ -35,7 +35,7 @@ export default {
 	],
 	data() {
 		return {
-			paths: ["USA", "New York","California", "Texas", "Florida", "Pennsylvania", "Ohio", "Washington"]
+			paths: []//["USA", "New York","California", "Texas", "Florida", "Pennsylvania", "Ohio", "Washington"]
 		}
 	},
 	computed: {
