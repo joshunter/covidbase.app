@@ -1,2 +1,2 @@
-*/10 * * * * bash ~/db-files/scripts/scrape-script.sh
-*/10 * * * * bash ~/db-files/scripts/scrape-us-script.sh
+*/30 * * * * bash ~/db-files/scripts/scrape-script.sh
+*/30 * * * * bash ~/db-files/scripts/scrape-us-script.sh
