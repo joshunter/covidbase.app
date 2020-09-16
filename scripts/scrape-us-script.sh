@@ -53,11 +53,11 @@ do
 	fi
 done < "$usFile"
 
-tail -n +13 $usFile2 > $usFile
+tail -n +17 $usFile2 > $usFile
 # Data is now cut into a format to package and upload.
 
 i=0
-declare -a dataFields=("name" "total" "newActive" "deaths" "newDeaths" "active" "casesPM" "deathsPM" "tests" "testsPM")
+declare -a dataFields=("name" "total" "newActive" "deaths" "newDeaths" "recovered" "active" "casesPM" "deathsPM" "tests" "testsPM" "population")
 states=()
 
 while IFS= read -r line
@@ -72,16 +72,16 @@ do
 	fi
 
 	if [[ $line == "" ]]; then
-		if [[ i -eq 3 || i -eq 5 || i -eq 6 || i -eq 7 || i -eq 8 || i -eq 9 ]] ; then
+		if [[ i -eq 3 || i -eq 5 || i -eq 6 || i -eq 7 || i -eq 8 || i -eq 9 || i -eq 10 ]] ; then
 			line="N/A"
 		fi
 	fi
 
-	if [[ i -lt 9 ]]; then
+	if [[ i -lt 11 ]]; then
 		data+="${dataFields[$i]} : \"$line\", "
 	fi
 
-	if [[ i -eq 9 ]]; then
+	if [[ i -eq 11 ]]; then
 		data+="${dataFields[$i]} : \"$line\""
 
 
@@ -94,7 +94,7 @@ do
 
 	let "i=i+1"
 
-	if [[ i -eq 12 ]]; then
+	if [[ i -eq 15 ]]; then
 		let "i=0"
 	fi
 done < "$usFile"
@@ -180,7 +180,7 @@ do
 
 	data="${data%?}]"
 	toEval='db.statesData.update({ state: "'$state'" }, {'$data'},{upsert: true});'
-	echo $toEval >> $newFile
+	# echo $toEval >> $newFile
 	mongo --eval "$toEval" world >> statesData
 
 done
