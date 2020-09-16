@@ -60,7 +60,9 @@ export default {
 </script>
 
 <style>
-#StateTotal .rowElement{width: calc(100%/4);}
+#StateTotal .rowElement{width: calc(100%/3);}
+#StateTotal .population{display: none;}
+#StateTotal .population2{display: inline-block;}
 #StateTable .rowNumber{width: 7%}
 #StateTable .rowElement{width: calc(93%/5);}
 #StateTable .expend1{display: inline-block;}
@@ -68,8 +70,11 @@ export default {
 #StateTable .expend3{display: inline-block;}
 #StateTable .expend4{display: inline-block;}
 
+
 /*smaller screens*/
 @media only screen and (max-width: 630px){
+	#StateTotal .population{display: inline-block;}
+	#StateTotal .population2{display: none;}
 	#StateTotal .rowElement{width: calc(100%/3);}
 	#StateTable .rowElement{width: calc(100%/5);}
 	#StateTable .rowNumber{display: none;}

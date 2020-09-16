@@ -10,7 +10,7 @@
 			<div class="rowElement" v-show="data[0].name">
 				<button id="name" class="country nameButton" @click="sortByName()">{{type}}
 				</button>
-				<button id="population" class="subNumber populationButton" v-show="data[0].population" @click="sortByPopulation()">Population
+				<button id="population" class="subNumber populationButton" v-show="data[20].population" @click="sortByPopulation()">Population
 				</button>
 			</div>
 			<div class="rowElement" v-show="data[0].total">

@@ -52,7 +52,7 @@ export default {
 <style>
 .link {
 	color: #d8dbe2;
-	text-underline-position: under;
+	/*text-underline-position: under;*/
 	text-decoration-thickness: 1px;
 	outline: 0;
 }

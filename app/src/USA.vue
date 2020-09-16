@@ -32,7 +32,7 @@ export default {
 #USDataTotal .population{display: none;}
 #USDataTotal .population2{display: inline-block;}
 #USDataTotal .rowElement{width: calc(100%/5);}
-#USDataTable .rowElement {width: calc(97%/8);}
+#USDataTable .rowElement {width: calc(97%/9);}
 #USDataTable .expend1{display: inline-block;}
 #USDataTable .expend2{display: inline-block;}
 #USDataTable .expend3{display: inline-block;}
@@ -43,21 +43,19 @@ export default {
 	#USDataTotal .population{display: inline-block;}
 	#USDataTotal .population2{display: none;}
 	#USDataTotal .rowElement{width: calc(100%/3);}
+	#USDataTable .expend4{display: none;}
+	#USDataTable .rowElement{width: calc(97%/8);}
 }
 @media only screen and (max-width: 850px){
-	#USDataTable .expend4{display: none;}
+	#USDataTable .expend3{display: none;}
 	#USDataTable .rowElement{width: calc(97%/7);}
 }
 @media only screen and (max-width: 750px){
-	#USDataTable .expend3{display: none;}
-	#USDataTable .rowElement{width: calc(97%/6);}
-}
-@media only screen and (max-width: 630px){
 	#USDataTable .rowNumber{display: none;}
 	#USDataTable .expend2{display: none;}
-	#USDataTable .rowElement{width: calc(100%/5);}
+	#USDataTable .rowElement{width: calc(100%/6);}
 }
-@media only screen and (max-width: 550px){
+@media only screen and (max-width: 630px){
 	#USDataTotal .displayRow{font-size: 85%;}
 	#USDataTotal .population{font-size: 95%;}
 	#USDataTotal .title{font-size: 125%;}
